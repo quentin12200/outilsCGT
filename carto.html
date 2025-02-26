@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Cartographie des établissements - CGT</title>
+  <!-- Animate.css pour les animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <!-- Même feuille de style que pour index.html -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- Vue.js pour la réactivité -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
+  <header class="animate__animated animate__fadeInDown">
+    <h1>Cartographie des services</h1>
+  </header>
+
+  <main id="app">
+    <section class="container intro animate__animated animate__fadeInUp">
+      <h2>Réalisez la cartographie de votre établissement</h2>
+      <p>
+        Renseignez ci-dessous vos services : pour chacun, indiquez le nom, le nombre de salariés 
+        et le nombre de syndiqués. Cela vous permettra d’identifier les zones 
+        où l’action syndicale est forte ou à renforcer.
+      </p>
+    </section>
+
+    <!-- Formulaire pour saisir les services sous forme de "table" -->
+    <section class="container animate__animated animate__fadeInUp">
+      <h2>Ajouter des services</h2>
+      <form @submit.prevent="submitServices">
+        <!-- En-tête des colonnes -->
+        <div class="service-header">
+          <div class="col-service">Service</div>
+          <div class="col-number">Salariés</div>
+          <div class="col-number">Syndiqués</div>
+          <div class="col-action"></div>
+        </div>
+        <!-- Liste des services -->
+        <div v-for="(service, index) in services" :key="index" class="service-row">
+          <input type="text" v-model="service.name" class="col-service" placeholder="Nom du service" required>
+          <input type="number" v-model.number="service.salaries" class="col-number" placeholder="Salariés" required>
+          <input type="number" v-model.number="service.syndiques" class="col-number" placeholder="Syndiqués" required>
+          <button type="button" class="button" @click="removeService(index)">Supprimer</button>
+        </div>
+        <!-- Boutons -->
+        <div class="service-actions">
+          <button type="button" class="button" @click="addService">Ajouter un service</button>
+          <button type="submit" class="button animate__animated animate__pulse">Afficher la cartographie</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Rendu de la cartographie -->
+    <section v-if="services.length && submitted" class="container diagram-section animate__animated animate__fadeIn">
+      <div class="diagram-title">Cartographie des services</div>
+      <div class="services-container">
+        <div v-for="(service, index) in services" :key="index" class="service-block">
+          <h3>{{ service.name }}</h3>
+          <p>
+            <strong>Salariés :</strong> {{ service.salaries }}<br>
+            <strong>Syndiqués :</strong> {{ service.syndiques }}<br>
+            <strong>Taux :</strong> 
+            {{ service.salaries > 0 ? ((service.syndiques / service.salaries) * 100).toFixed(1) : 0 }}%
+          </p>
+          <!-- Grille de 50 carrés, dont un certain nombre en rouge selon le ratio -->
+          <div class="squares-container">
+            <div v-for="n in 50" :key="n" class="square"
+              :style="squareStyle(n, service)">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bouton de retour -->
+    <section class="container animate__animated animate__fadeInUp">
+      <button class="button" @click="goBack">Retour à l'outil principal</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 CGT - Cartographie des établissements</p>
+  </footer>
+
+  <!-- Script pour la cartographie -->
+  <script src="carto.js"></script>
+</body>
+</html>
