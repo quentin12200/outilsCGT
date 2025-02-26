@@ -1,0 +1,184 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* HEADER (BANNIÈRE ROUGE) */
+  header {
+    background-color: #b71c1c; /* Rouge CGT */
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+  header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0;
+  }
+  
+  /* MAIN */
+  main {
+    flex: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+  }
+  
+  /* CONTAINER (BLOC BLANC) */
+  .container {
+    background-color: #fff;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  .container h2 {
+    color: #b71c1c;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+  }
+  
+  /* FORMULAIRES */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  form label {
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  form input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .button {
+    display: inline-block;
+    background-color: #e53935;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    max-width: 250px;
+  }
+  .button:hover {
+    background-color: #d32f2f;
+  }
+  
+  /* DIAGRAMMES */
+  .diagram-section {
+    margin-top: 20px;
+  }
+  .diagram-title {
+    text-align: center;
+    font-weight: bold;
+    color: #b71c1c;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+  }
+  .diagram-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    flex-wrap: wrap; /* s'adapte aux petits écrans */
+    gap: 20px;
+  }
+  .box {
+    background-color: #fff;
+    border: 2px solid #b71c1c;
+    border-radius: 5px;
+    padding: 20px;
+    min-width: 150px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(183,28,28,0.8);
+  }
+  .diagram-arrow {
+    width: 200px;
+    height: 50px;
+    flex-shrink: 0;
+  }
+  .arrow-path {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: drawArrow 2s ease forwards;
+  }
+  @keyframes drawArrow {
+    to { stroke-dashoffset: 0; }
+  }
+  .diagram-label {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  .results {
+    margin-top: 20px;
+  }
+  .results p {
+    margin-bottom: 10px;
+  }
+  
+  /* CONCLUSION */
+  .conclusion {
+    margin-top: 20px;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .conclusion h3 {
+    color: #b71c1c;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+  }
+  
+  /* PIED DE PAGE */
+  footer {
+    background-color: #eee;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    main {
+      padding: 15px;
+    }
+    .container {
+      margin: 20px auto;
+      padding: 20px;
+    }
+    .diagram-container {
+      flex-direction: column;
+    }
+    .diagram-arrow {
+      margin: 20px 0;
+    }
+    .box {
+      min-width: 200px;
+    }
+    .button {
+      max-width: none;
+      width: 100%;
+    }
+  }
+  
