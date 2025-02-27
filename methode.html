@@ -18,6 +18,7 @@
       <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
       <li><a href="carto.html"><i class="fas fa-map-marked-alt"></i> Cartographie</a></li>
       <li><a href="methode.html" class="active"><i class="fas fa-tasks"></i> Méthode</a></li>
+      <li><a href="demarcherevendicative.html"><i class="fas fa-bullhorn"></i> Démarche Revendicative</a></li>
     </ul>
   </nav>
 
@@ -68,9 +69,9 @@
           <p><i class="fas fa-exclamation-triangle"></i> ATTENTION !!!</p>
           <p>Une AG des SYNDIQUES se construit</p>
           <ul>
-            <li>Courrier à CHAQUE SYNDIQUÉ précisant l'objet et les enjeux</li>
-            <li>Appel téléphonique de CHAQUE SYNDIQUÉ précisant l'objet et les enjeux</li>
-            <li>Tournées des syndiqués au poste de Travail</li>
+            <li>  Courrier à CHAQUE SYNDIQUÉ précisant l'objet et les enjeux</li>
+            <li>  Appel téléphonique de CHAQUE SYNDIQUÉ précisant l'objet et les enjeux</li>
+            <li>  Tournées des syndiqués au poste de Travail</li>
           </ul>
           <p>Ne pas oublier de terminer ce moment par un apéritif, pizzas etc !!!</p>
         </div>
@@ -80,12 +81,12 @@
           <li>Présentation des ENJEUX (salariat, syndiqués, précédent scrutin, bilan...)</li>
           <li>Présentation de la démarche ETAPE PAR ETAPE
             <ul>
-              <li>Avant... Pendant... Après...</li>
-              <li>Démarche (besoins, Revendications, mobilisation)</li>
-              <li>Place et le Rôle du Syndiqué</li>
-              <li>Démocratie</li>
-              <li>Communication</li>
-              <li>Place et le Rôle de la direction syndicale</li>
+              <li> Avant... Pendant... Après...</li>
+              <li> Démarche (besoins, Revendications, mobilisation)</li>
+              <li> Place et le Rôle du Syndiqué</li>
+              <li> Démocratie</li>
+              <li> Communication</li>
+              <li> Place et le Rôle de la direction syndicale</li>
             </ul>
           </li>
         </ul>
@@ -99,11 +100,11 @@
           <p>Appeler nos syndiqués à faire remplir le questionnaire dans leur service afin de gagner l'expression des besoins service par service et provoquer la prise de conscience et le débat avec les salariés. Pour cela remplir collectivement le questionnaire durant l'AG et se saisir de l'argumentaire.</p>
         </div>
         <ul>
-          <li>Appel à candidature et date mise à disposition candidatures</li>
-          <li>Présentation des Etapes du processus électoral</li>
-          <li>Passage des élus dans les services</li>
-          <li>Date prochaine AG</li>
-          <li>Feuille d'émargement présence (téléphone, mail etc...)</li>
+          <li>  Appel à candidature et date mise à disposition candidatures</li>
+          <li>  Présentation des Etapes du processus électoral</li>
+          <li>  Passage des élus dans les services</li>
+          <li>  Date prochaine AG</li>
+          <li>  Feuille d'émargement présence (téléphone, mail etc...)</li>
         </ul>
       </div>
     </section>
@@ -120,36 +121,36 @@
           <strong>Étape 1 :</strong> Cartographie de l'entreprise et de son environnement
         </p>
         <ul>
-          <li>Analyse du tissu économique et social</li>
-          <li>Repérage des salariés potentiellement intéressés</li>
-          <li>Étude des enjeux et des besoins spécifiques</li>
+          <li>  Analyse du tissu économique et social</li>
+          <li>  Repérage des salariés potentiellement intéressés</li>
+          <li>  Étude des enjeux et des besoins spécifiques</li>
         </ul>
         
         <p>
           <strong>Étape 2 :</strong> Premiers contacts et sensibilisation
         </p>
         <ul>
-          <li>Organisation de rencontres individuelles</li>
-          <li>Diffusion de matériel d'information</li>
-          <li>Participation à des événements sociaux</li>
+          <li>  Organisation de rencontres individuelles</li>
+          <li>  Diffusion de matériel d'information</li>
+          <li>  Participation à des événements sociaux</li>
         </ul>
         
         <p>
           <strong>Étape 3 :</strong> Constitution d'un premier noyau
         </p>
         <ul>
-          <li>Identification des leaders naturels</li>
-          <li>Formation d'un groupe initial de référents</li>
-          <li>Élaboration collective des premières revendications</li>
+          <li>  Identification des leaders naturels</li>
+          <li>  Formation d'un groupe initial de référents</li>
+          <li>  Élaboration collective des premières revendications</li>
         </ul>
         
         <p>
           <strong>Étape 4 :</strong> Officialisation de la présence syndicale
         </p>
         <ul>
-          <li>Désignation d'un représentant de section</li>
-          <li>Communication auprès de l'employeur</li>
-          <li>Déploiement d'un plan de développement</li>
+          <li>  Désignation d'un représentant de section</li>
+          <li>  Communication auprès de l'employeur</li>
+          <li>  Déploiement d'un plan de développement</li>
         </ul>
         
         <div class="info-box">
@@ -182,6 +183,13 @@
       <div class="timeline-steps" id="timelineSteps">
         <!-- Les étapes seront générées par JavaScript -->
       </div>
+      
+      <!-- Nouveau conteneur pour la description détaillée -->
+      <div id="stepDetailContainer" class="step-detail-container animate__animated animate__fadeIn" style="display:none;">
+        <h3 id="stepDetailTitle" class="step-detail-title"></h3>
+        <div id="stepDetailDate" class="step-detail-date"></div>
+        <p id="stepDetailDescription" class="step-detail-description"></p>
+      </div>
     </section>
 
     <!-- Bouton de retour -->
@@ -204,7 +212,267 @@
     </div>
   </footer>
 
-  <!-- Script séparé pour la méthode -->
-  <script src="js/methode.js"></script>
+  <!-- Ajouter les styles spécifiques pour la timeline modifiée -->
+  <style>
+    /* Styles pour la nouvelle présentation des détails d'étape */
+    .step-detail-container {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-left: 4px solid var(--primary-color);
+      border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    }
+    
+    .step-detail-title {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+    
+    .step-detail-date {
+      font-style: italic;
+      color: var(--text-light);
+      margin-bottom: 15px;
+    }
+    
+    .step-detail-description {
+      line-height: 1.6;
+    }
+    
+    /* Modification des étapes de la timeline */
+    .timeline-step {
+      position: relative;
+      z-index: 2;
+      cursor: pointer;
+      padding: 5px;
+      transition: var(--transition);
+    }
+    
+    .timeline-step:hover .circle {
+      transform: scale(1.1);
+      background-color: var(--primary-dark);
+    }
+    
+    .timeline-step.active .circle {
+      background-color: var(--primary-dark);
+      transform: scale(1.1);
+    }
+    
+    /* Suppression des descriptions initialement visibles sous chaque étape */
+    .step-description {
+      display: none;
+    }
+  </style>
+
+  <!-- Script modifié pour la méthode -->
+  <script>
+    /**
+     * Application pour la page méthode CGT
+     * Gère l'affichage des méthodes et la timeline
+     */
+    const methodeApp = {
+      // Données pour la timeline
+      timelineSteps: [
+        {
+          offset: -12,
+          title: 'Préparation',
+          description: 'Organisation initiale et définition des fondamentaux.'
+        },
+        {
+          offset: -11,
+          title: 'Analyse du Scrutin',
+          description: 'Étude globale et par collège du précédent scrutin.'
+        },
+        {
+          offset: -10,
+          title: 'Évaluation de l\'Organisation',
+          description: 'Analyse de l\'organisation cogitielle, KBIS, etc.'
+        },
+        {
+          offset: -9,
+          title: 'Planification Ciblée',
+          description: 'Définition du plan de travail "cousu main".'
+        },
+        {
+          offset: -8,
+          title: 'Mobilisation Préliminaire',
+          description: 'Visites syndicales, mobilisation départements spécifiques (ICT, etc.).'
+        },
+        {
+          offset: -6,
+          title: 'Formation-action',
+          description: 'Formation du syndicat, rétroplanning en 3 temps.'
+        },
+        {
+          offset: -4,
+          title: 'Déploiement sur le Terrain',
+          description: 'Mise en œuvre des visites, communication offensive.'
+        },
+        {
+          offset: -3,
+          title: 'Suivi et Réunion d\'Étape',
+          description: 'Rencontre d\'étape pour ajuster la campagne.'
+        },
+        {
+          offset: -2,
+          title: 'Validation Démocratique',
+          description: 'AG des syndiqués pour valider le plan d\'action.'
+        },
+        {
+          offset: -1,
+          title: 'Pérennisation & Déploiement',
+          description: 'Plan de syndicalisation durable, déploiement interpro.'
+        }
+      ],
+      
+      /**
+       * Initialisation de l'application
+       */
+      init: function() {
+        // Afficher la méthode de renforcement par défaut
+        this.showMethod('renforcement');
+        
+        // Pré-remplir avec une date dans 6 mois pour l'exemple
+        const today = new Date();
+        today.setMonth(today.getMonth() + 6);
+        const dateStr = today.toISOString().split('T')[0];
+        document.getElementById('startDate').value = dateStr;
+      },
+      
+      /**
+       * Affiche la méthode sélectionnée
+       * @param {string} method - 'renforcement' ou 'implantation'
+       */
+      showMethod: function(method) {
+        // Masquer les deux contenus
+        document.getElementById('renforcementContent').style.display = 'none';
+        document.getElementById('implantationContent').style.display = 'none';
+        
+        // Afficher celui sélectionné
+        document.getElementById(method + 'Content').style.display = 'block';
+        
+        // Scroll vers la section
+        document.getElementById(method + 'Content').scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      },
+      
+      /**
+       * Affiche les détails d'une étape dans la section horizontale
+       * @param {number} index - L'index de l'étape
+       */
+      toggleStep: function(index) {
+        // Désactiver toutes les étapes
+        document.querySelectorAll('.timeline-step').forEach(function(el) {
+          el.classList.remove('active');
+        });
+        
+        const step = this.timelineSteps[index];
+        const detailContainer = document.getElementById('stepDetailContainer');
+        const detailTitle = document.getElementById('stepDetailTitle');
+        const detailDate = document.getElementById('stepDetailDate');
+        const detailDescription = document.getElementById('stepDetailDescription');
+        
+        // Marquer l'étape comme active
+        document.getElementById('timeline-step-' + index).classList.add('active');
+        
+        // Mettre à jour les informations
+        detailTitle.textContent = step.title;
+        
+        // Calculer et afficher la date
+        let start = new Date(document.getElementById('startDate').value);
+        let stepDate = new Date(start);
+        stepDate.setMonth(stepDate.getMonth() + step.offset);
+        detailDate.textContent = this.formatDate(stepDate);
+        
+        // Afficher la description
+        detailDescription.textContent = step.description;
+        
+        // Afficher le conteneur de détails
+        detailContainer.style.display = 'block';
+        
+        // Animer
+        detailContainer.classList.remove('animate__fadeIn');
+        void detailContainer.offsetWidth; // Force reflow
+        detailContainer.classList.add('animate__fadeIn');
+      },
+      
+      /**
+       * Calcule les dates pour chaque étape de la timeline
+       */
+      computeDates: function() {
+        const startDateInput = document.getElementById('startDate');
+        if (!startDateInput.value) {
+          alert("Veuillez choisir une date de départ (élection) !");
+          return;
+        }
+        
+        // On parse la date de départ
+        const start = new Date(startDateInput.value);
+        
+        // Générer la timeline
+        let timelineHTML = '<div class="timeline-line"></div>';
+        
+        for (let i = 0; i < this.timelineSteps.length; i++) {
+          const step = this.timelineSteps[i];
+          
+          // Calculer la date pour cette étape
+          let d = new Date(start);
+          d.setMonth(d.getMonth() + step.offset);
+          const formattedDate = this.formatDate(d);
+          
+          // Créer l'élément HTML pour cette étape
+          timelineHTML += `<div id="timeline-step-${i}" class="timeline-step" onclick="methodeApp.toggleStep(${i})">`;
+          timelineHTML += `<div class="circle">${i + 1}</div>`;
+          timelineHTML += `<div class="step-info">`;
+          timelineHTML += `<span class="step-date">${formattedDate}</span>`;
+          timelineHTML += `<div class="step-title">${step.title}</div>`;
+          timelineHTML += `</div>`;
+          timelineHTML += `</div>`;
+        }
+        
+        // Insérer le HTML généré dans la page
+        document.getElementById('timelineSteps').innerHTML = timelineHTML;
+        
+        // Afficher la section timeline
+        document.getElementById('timelineSection').style.display = 'block';
+        
+        // Masquer initialement le conteneur de détails
+        document.getElementById('stepDetailContainer').style.display = 'none';
+        
+        // Scroll vers la section timeline
+        document.getElementById('timelineSection').scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+        
+        // Afficher par défaut les détails de la première étape
+        this.toggleStep(0);
+      },
+      
+      /**
+       * Formate une date au format dd/mm/yyyy
+       * @param {Date} date - La date à formater
+       * @returns {string} La date formatée
+       */
+      formatDate: function(date) {
+        let dd = date.getDate();
+        let mm = date.getMonth() + 1; // Jan = 0
+        let yyyy = date.getFullYear();
+        
+        // Ajouter un 0 si besoin
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+        
+        return dd + '/' + mm + '/' + yyyy;
+      }
+    };
+    
+    // Initialiser l'application au chargement de la page
+    document.addEventListener('DOMContentLoaded', function() {
+      methodeApp.init();
+    });
+  </script>
 </body>
 </html>

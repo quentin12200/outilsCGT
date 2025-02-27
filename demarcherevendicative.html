@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Démarche Revendicative CGT - Détails</title>
+    
+    <!-- Animate.css pour les animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- Fontawesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Feuille de style commune -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Menu de navigation -->
+    <nav class="menu">
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="carto.html"><i class="fas fa-map-marked-alt"></i> Cartographie</a></li>
+            <li><a href="methode.html"><i class="fas fa-tasks"></i> Méthode</a></li>
+            <li><a href="demarcherevendicative.html" class="active"><i class="fas fa-bullhorn"></i> Démarche Revendicative</a></li>
+        </ul>
+    </nav>
+
+    <header class="animate__animated animate__fadeInDown">
+        <h1><i class="fas fa-bullhorn"></i> La Démarche Revendicative CGT</h1>
+    </header>
+
+    <main>
+        <section class="container animate__animated animate__fadeInUp">
+            <h2><i class="fas fa-info-circle"></i> Les Dimensions Clés de la Démarche</h2>
+            <p>
+                La démarche revendicative est au cœur de l'action syndicale CGT. Elle permet de construire le rapport de force 
+                pour obtenir des avancées sociales concrètes pour les salariés.
+            </p>
+            
+            <div id="root" class="approach-blocks">
+                <!-- Le contenu React sera rendu ici -->
+            </div>
+        </section>
+
+        <section class="container animate__animated animate__fadeInUp">
+            <div class="highlight-box">
+                <h4>La Stratégie Globale</h4>
+                <p>La démarche, c'est mener la bataille revendicative, c'est la construction de la mobilisation pour GAGNER !</p>
+            </div>
+        </section>
+
+        <!-- Bouton de retour -->
+        <section class="container animate__animated animate__fadeInUp">
+            <a href="index.html" class="button">
+                <i class="fas fa-home"></i> Retour à l'outil principal
+            </a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="img/logo-cgt.png" alt="Logo CGT" width="40">
+            </div>
+            <div class="footer-text">
+                <p>&copy; 2025 CGT - Démarche Syndicale</p>
+                <p>L'informatique au service du militantisme CGT</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Charger React et React DOM -->
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    
+    <!-- Charger Babel pour la transformation JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <script type="text/babel">
+        const { useState, createElement } = React;
+
+        // Composants d'icônes avec Font Awesome
+        const Icons = {
+            Target: () => <i className="fas fa-bullseye fa-3x" style={{color: "#b71c1c"}}></i>,
+            Flag: () => <i className="fas fa-flag fa-3x" style={{color: "#b71c1c"}}></i>,
+            Users: () => <i className="fas fa-users fa-3x" style={{color: "#b71c1c"}}></i>,
+            BookOpen: () => <i className="fas fa-book-open fa-3x" style={{color: "#b71c1c"}}></i>
+        };
+
+        const RevendicativeApproachPage = () => {
+            const [activeSection, setActiveSection] = useState(null);
+
+            const approachSections = [
+                {
+                    title: "C'est quoi ?",
+                    mobilise: "C'est MOBILISER",
+                    construction: "« La démarche, c'est mener la bataille revendicative c'est construire le rapport de force ! » ",
+                    icon: <Icons.Target />
+                },
+                {
+                    title: "Pourquoi ?",
+                    mobilise: "Pour GAGNER",
+                    construction: "« La démarche, c'est mener la bataille revendicative c'est construire le rapport de force pour GAGNER ! » ",
+                    icon: <Icons.Flag />
+                },
+                {
+                    title: "Comment ?",
+                    mobilise: "En allant convaincre à se mobiliser",
+                    qui: "les Salariés",
+                    ou: "Au poste de travail",
+                    construction: "«La démarche, c'est mener la bataille revendicative c'est construire le rapport de force en allant convaincre au plus près du poste de travail le plus grand nombre de salariés à se mobiliser pour GAGNER ! »",
+                    icon: <Icons.Users />
+                },
+                {
+                    title: "Avec quoi ?",
+                    mobilise: "Avec le Cahier Revendicatif",
+                    construction: "«La démarche, c'est mener la bataille revendicative c'est construire le rapport de force à partir de la construction d'un cahier revendicatif répondant aux besoins et s'appuyant sur la bataille d'idée pour convaincre à se mobiliser le plus grand nombre de salariés pour GAGNER ! »",
+                    details: "de l'expression des besoins des salariés service par service catégorie par catégorie permettant d'amorcer la bataille d'idées...",
+                    icon: <Icons.BookOpen />
+                },
+                {
+                    title: "Avec qui ?",
+                    mobilise: "Les Syndiqués",
+                    construction: "«La démarche, c'est mener la bataille revendicative c'est construire le rapport de force à partir de la capacité de la CGT de mobiliser sa force organisée par des pratiques démocratiques pour construire un cahier revendicatif répondant aux besoins et s'appuyant sur la bataille d'idée pour convaincre à se mobiliser le plus grand nombre de salariés pour GAGNER ! »",
+                    icon: <Icons.Users />
+                }
+            ];
+
+            return (
+                <div>
+                    <div className="approach-grid">
+                        {approachSections.map((section, index) => (
+                            <div
+                                key={index}
+                                className={`box ${activeSection === index ? 'active' : ''}`}
+                                onClick={() => setActiveSection(activeSection === index ? null : index)}
+                            >
+                                <div className="box-icon">
+                                    {section.icon}
+                                </div>
+                                <h3>{section.title}</h3>
+                                <div className="mobilise-text">
+                                    <strong>{section.mobilise}</strong>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    
+                    {/* Zone de détail en dessous des blocs */}
+                    {activeSection !== null && (
+                        <div className="detail-section animate__animated animate__fadeIn">
+                            <h4 className="detail-title">
+                                {approachSections[activeSection].title} : {approachSections[activeSection].mobilise}
+                            </h4>
+                            <div className="detail-content">
+                                <p className="construction-text">{approachSections[activeSection].construction}</p>
+                                
+                                {approachSections[activeSection].qui && (
+                                    <p className="detail-info"><strong>Qui ? </strong>{approachSections[activeSection].qui}</p>
+                                )}
+                                
+                                {approachSections[activeSection].ou && (
+                                    <p className="detail-info"><strong>Où ? </strong>{approachSections[activeSection].ou}</p>
+                                )}
+                                
+                                {approachSections[activeSection].details && (
+                                    <p className="detail-extra">{approachSections[activeSection].details}</p>
+                                )}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        // Rendre le composant avec gestion des erreurs
+        try {
+            ReactDOM.render(
+                <React.StrictMode>
+                    <RevendicativeApproachPage />
+                </React.StrictMode>,
+                document.getElementById('root')
+            );
+        } catch (error) {
+            console.error('Erreur de rendu:', error);
+            document.getElementById('root').innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Une erreur s'est produite lors du chargement de la page.</p>
+                    <p>${error.message}</p>
+                </div>
+            `;
+        }
+    </script>
+
+    <!-- Style spécifique pour cette page -->
+    <style>
+        /* Structure des blocs */
+        .approach-blocks {
+            margin-top: 30px;
+        }
+        
+        .approach-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .box {
+            width: 180px;
+            height: 180px;
+            background-color: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .box.active {
+            background-color: #f8f9fa;
+            border-width: 3px;
+            transform: scale(1.05);
+        }
+        
+        .box-icon {
+            margin-bottom: 15px;
+        }
+        
+        .box h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+        
+        .mobilise-text {
+            font-size: 0.9rem;
+        }
+        
+        /* Zone de détail */
+        .detail-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-left: 4px solid var(--primary-color);
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+        
+        .detail-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .detail-content {
+            line-height: 1.6;
+        }
+        
+        .construction-text {
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        
+        .detail-info {
+            margin: 10px 0;
+        }
+        
+        .detail-extra {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .error-message {
+            color: var(--error-color);
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .error-message i {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .approach-grid {
+                justify-content: center;
+            }
+            
+            .box {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</body>
+</html>
