@@ -2,50 +2,73 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Outil de point d'étape sur la syndicalisation - CGT</title>
   <!-- Animate.css pour les animations -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <!-- Fontawesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <!-- Feuille de style commune -->
-  <link rel="stylesheet" href="styles.css">
-  <!-- (Optionnel) Vue.js si vous en avez besoin pour d'autres pages -->
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- Vue.js pour d'autres pages si besoin -->
   <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 </head>
 <body>
   <!-- Menu de navigation -->
   <nav class="menu">
     <ul>
-      <li><a href="index.html">Accueil</a></li>
-      <li><a href="carto.html">Cartographie</a></li>
-      <li><a href="methode.html">Méthode</a></li>
+      <li><a href="index.html" class="active"><i class="fas fa-home"></i> Accueil</a></li>
+      <li><a href="carto.html"><i class="fas fa-map-marked-alt"></i> Cartographie</a></li>
+      <li><a href="methode.html"><i class="fas fa-tasks"></i> Méthode</a></li>
     </ul>
   </nav>
 
   <!-- En-tête -->
   <header class="animate__animated animate__fadeInDown">
-    <h1>Outil de point d'étape sur la syndicalisation</h1>
+    <h1><i class="fas fa-chart-line"></i> Outil de point d'étape sur la syndicalisation</h1>
   </header>
 
   <main id="app">
     <!-- 1) Constat initial -->
     <section class="container animate__animated animate__fadeInUp">
-      <h2>Données de base</h2>
+      <h2><i class="fas fa-clipboard-list"></i> Données de base</h2>
       <form id="initialForm">
-        <label for="total_salaries">Combien y a-t-il de salariés au total ?</label>
-        <input type="number" id="total_salaries" required>
+        <div class="form-group">
+          <label for="total_salaries">Combien y a-t-il de salariés au total ?</label>
+          <input type="number" id="total_salaries" required min="1" placeholder="Nombre total de salariés">
+        </div>
         
-        <label for="total_syndiques">Combien y a-t-il de syndiqués actuellement ?</label>
-        <input type="number" id="total_syndiques" required>
+        <div class="form-group">
+          <label for="total_syndiques">Combien y a-t-il de syndiqués actuellement ?</label>
+          <input type="number" id="total_syndiques" required min="0" placeholder="Nombre de syndiqués">
+        </div>
         
-        <label for="total_militants">Combien de militants parmi ces syndiqués ? (optionnel)</label>
-        <input type="number" id="total_militants">
+        <div class="form-group">
+          <label for="total_militants">Combien de militants parmi ces syndiqués ? (optionnel)</label>
+          <input type="number" id="total_militants" min="0" placeholder="Nombre de militants actifs">
+        </div>
         
-        <button type="submit" class="button animate__animated animate__pulse">Calculer le constat initial</button>
+        <button type="submit" class="button animate__animated animate__pulse">
+          <i class="fas fa-calculator"></i> Calculer le constat initial
+        </button>
       </form>
     </section>
 
     <!-- Bloc de résultats initiaux (diagramme 1) -->
     <section id="diagramInitial" class="container diagram-section animate__animated animate__fadeIn" style="display:none;">
       <div class="diagram-title">Constat initial (Recrutement actuel)</div>
+      
+      <!-- Barre de progression -->
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div id="initialProgressBar" class="progress-fill"></div>
+        </div>
+        <div class="progress-labels">
+          <span id="initialProgressLabel">0%</span>
+        </div>
+      </div>
+      
+      <!-- Diagramme avec boîtes et flèche -->
       <div class="diagram-container">
         <div class="box">
           <h3>Syndiqués initiaux</h3>
@@ -61,21 +84,36 @@
           <p id="initialSalairesValue">-</p>
         </div>
       </div>
+      
+      <!-- Triangle avec les valeurs (nouveau élément) -->
+      <div class="triangle-container">
+        <div class="triangle">
+          <div class="triangle-left">
+            <span id="triangleLeftValue">-</span>
+          </div>
+          <div class="triangle-shape"></div>
+          <div class="triangle-right">
+            <span id="triangleRightValue">-</span>
+          </div>
+        </div>
+      </div>
+      
       <p class="diagram-label" id="initialRatioLabel"></p>
-
       <div class="results" id="initialResultText"></div>
     </section>
 
     <!-- 2) Démarche « Renforcer la CGT des principes et des actes » -->
     <section id="formationSection" class="container animate__animated animate__fadeInUp" style="display:none;">
-      <h2>Démarche « Renforcer la CGT des principes et des actes »</h2>
+      <h2><i class="fas fa-graduation-cap"></i> Démarche « Renforcer la CGT des principes et des actes »</h2>
       <p>Après avoir formé les syndiqué·e·s, indiquez le nombre de nouveaux syndiqués réalisés :</p>
       <form id="formationForm">
-        <label for="nouveaux_syndiques">Nouveaux syndiqués réalisés :</label>
-        <input type="number" id="nouveaux_syndiques" required>
+        <div class="form-group">
+          <label for="nouveaux_syndiques">Nouveaux syndiqués réalisés :</label>
+          <input type="number" id="nouveaux_syndiques" required min="0" placeholder="Nombre de nouveaux syndiqués">
+        </div>
 
         <button type="submit" class="button animate__animated animate__pulse">
-          Mettre à jour
+          <i class="fas fa-sync-alt"></i> Mettre à jour les résultats
         </button>
       </form>
     </section>
@@ -83,6 +121,18 @@
     <!-- Bloc de résultats après formation (diagramme 2) -->
     <section id="diagramUpdated" class="container diagram-section animate__animated animate__fadeIn" style="display:none;">
       <div class="diagram-title">Après formation et suivi annuel</div>
+      
+      <!-- Barre de progression -->
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div id="updatedProgressBar" class="progress-fill"></div>
+        </div>
+        <div class="progress-labels">
+          <span id="updatedProgressLabel">0%</span>
+        </div>
+      </div>
+      
+      <!-- Diagramme avec boîtes et flèche -->
       <div class="diagram-container">
         <div class="box">
           <h3>Syndiqués après formation</h3>
@@ -90,7 +140,7 @@
         </div>
         <div class="diagram-arrow">
           <svg width="200" height="50">
-            <path id="arrowUpdated" class="arrow-path" d="M 0 25 L 200 25" stroke="#b71c1c" stroke-width="5" fill="none"/>
+            <path id="arrowUpdated" class="arrow-path" d="M 0 25 L 200 25" stroke="#388e3c" stroke-width="5" fill="none"/>
           </svg>
         </div>
         <div class="box">
@@ -98,32 +148,72 @@
           <p id="updatedSalairesValue">-</p>
         </div>
       </div>
+      
+      <!-- Triangle avec les valeurs (nouveau élément) -->
+      <div class="triangle-container">
+        <div class="triangle">
+          <div class="triangle-left">
+            <span id="updatedTriangleLeftValue">-</span>
+          </div>
+          <div class="triangle-shape green"></div>
+          <div class="triangle-right">
+            <span id="updatedTriangleRightValue">-</span>
+          </div>
+        </div>
+      </div>
+      
       <p class="diagram-label" id="updatedRatioLabel"></p>
-
       <div class="results" id="formationResultText"></div>
+      
+      <!-- Comparaison avant/après -->
+      <div class="comparison-box">
+        <div class="comparison-title">Progression</div>
+        <div id="comparisonResult" class="comparison-content">
+          <!-- Contenu dynamique -->
+        </div>
+      </div>
     </section>
 
     <!-- Conclusion -->
     <section id="conclusionSection" class="container conclusion animate__animated animate__fadeInUp" style="display:none;">
-      <h3>Conclusion</h3>
-      <p>
-        La direction syndicale doit mettre en mouvement <strong>l'ensemble</strong> des syndiqué·e·s,
-        pas seulement les militant·e·s, pour convaincre le plus grand nombre de salarié·e·s.
-        Plus on est nombreux à s'impliquer, moins chacun·e a d'effort à fournir, et plus on syndique vite et largement.
-      </p>
-      <p style="margin-top:10px;">
-        Grâce à la formation <em>“Renforcer la CGT des principes et des actes”</em>, 
-        vous pouvez mesurer concrètement l'effet d'une mobilisation accrue. 
-        Au final, c'est l'engagement collectif qui fait la force de la CGT !
-      </p>
+      <h3><i class="fas fa-flag-checkered"></i> Conclusion</h3>
+      <div class="conclusion-content">
+        <p>
+          La direction syndicale doit mettre en mouvement <strong>l'ensemble</strong> des syndiqué·e·s,
+          pas seulement les militant·e·s, pour convaincre le plus grand nombre de salarié·e·s.
+          Plus on est nombreux à s'impliquer, moins chacun·e a d'effort à fournir, et plus on syndique vite et largement.
+        </p>
+        <p>
+          Grâce à la formation <em>"Renforcer la CGT des principes et des actes"</em>, 
+          vous pouvez mesurer concrètement l'effet d'une mobilisation accrue. 
+          Au final, c'est l'engagement collectif qui fait la force de la CGT !
+        </p>
+      </div>
+      
+      <div class="action-buttons">
+        <a href="carto.html" class="button">
+          <i class="fas fa-map-marked-alt"></i> Réaliser une cartographie
+        </a>
+        <a href="methode.html" class="button">
+          <i class="fas fa-tasks"></i> Consulter la méthode
+        </a>
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 CGT - Outil de point d'étape sur la syndicalisation</p>
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img src="img/logo-cgt.png" alt="Logo CGT" width="40">
+      </div>
+      <div class="footer-text">
+        <p>&copy; 2025 CGT - Outil de point d'étape sur la syndicalisation</p>
+        <p>L'informatique au service du militantisme CGT</p>
+      </div>
+    </div>
   </footer>
 
-  <!-- Script de la page d'accueil (2 étapes : Constat initial + Renforcer la CGT) -->
-  <script src="script.js"></script>
+  <!-- Script de la page d'accueil -->
+  <script src="js/script.js"></script>
 </body>
 </html>

@@ -6,12 +6,12 @@
   <!-- Animate.css pour les animations -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <!-- Même feuille de style que pour index.html -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/styles.css">
   <!-- Vue.js pour la réactivité -->
   <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 </head>
 <body>
-      <!-- Menu de navigation -->
+  <!-- Menu de navigation -->
   <nav class="menu">
     <ul>
       <li><a href="index.html">Accueil</a></li>
@@ -27,8 +27,8 @@
     <section class="container intro animate__animated animate__fadeInUp">
       <h2>Réalisez la cartographie de votre établissement</h2>
       <p>
-        Renseignez ci-dessous vos services : pour chacun, indiquez le nom, le nombre de salariés et le nombre de syndiqués.
-        Cela vous permettra d’identifier les zones où l’action syndicale est forte ou à renforcer.
+        Renseignez ci-dessous vos services : pour chacun, indiquez le nom, le nombre de salariés et le nombre de syndiqués.
+        Cela vous permettra d'identifier les zones où l'action syndicale est forte ou à renforcer.
       </p>
     </section>
 
@@ -46,8 +46,8 @@
         <!-- Liste des services -->
         <div v-for="(service, index) in services" :key="index" class="service-row">
           <input type="text" v-model="service.name" class="col-service" placeholder="Nom du service" required>
-          <input type="number" v-model.number="service.salaries" class="col-number" placeholder="Salariés" required>
-          <input type="number" v-model.number="service.syndiques" class="col-number" placeholder="Syndiqués" required>
+          <input type="number" v-model.number="service.salaries" min="1" class="col-number" placeholder="Salariés" required>
+          <input type="number" v-model.number="service.syndiques" min="0" :max="service.salaries" class="col-number" placeholder="Syndiqués" required>
           <button type="button" class="button" @click="removeService(index)">Supprimer</button>
         </div>
         <!-- Boutons d'action -->
@@ -61,7 +61,7 @@
     <!-- Rendu cartographique des services -->
     <section v-if="services.length && submitted" class="container diagram-section animate__animated animate__fadeIn">
       <div class="diagram-title">Cartographie des services</div>
-      <div class="services-container">
+      <div id="servicesContainer" class="services-container">
         <div v-for="(service, index) in services" :key="index" class="service-block">
           <h3>{{ service.name }}</h3>
           <p>
@@ -92,6 +92,11 @@
       <div class="global-message" id="globalMessage"></div>
     </section>
 
+    <!-- Section d'export PDF -->
+    <section style="text-align: center; margin-top: 20px;">
+      <button class="button" id="exportPDFBtn" disabled>Exporter la cartographie en PDF</button>
+    </section>
+        
     <!-- Bouton de retour -->
     <section class="container animate__animated animate__fadeInUp">
       <button class="button" @click="goBack">Retour à l'outil principal</button>
@@ -102,7 +107,12 @@
     <p>&copy; 2025 CGT - Cartographie des établissements</p>
   </footer>
 
+  <!-- html2canvas pour convertir un élément du DOM en image -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <!-- jsPDF pour générer le PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
   <!-- Script pour la cartographie -->
-  <script src="carto.js"></script>
+  <script src="Js/carto.js"></script>
 </body>
 </html>
