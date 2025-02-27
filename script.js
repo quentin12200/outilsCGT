@@ -1,30 +1,30 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Récupération des éléments
+    // Éléments pour le constat initial
     const initialForm = document.getElementById("initialForm");
-    const initialResultsSection = document.getElementById("initialResultsSection");
+    const diagramInitial = document.getElementById("diagramInitial");
     const initialSyndiquesValue = document.getElementById("initialSyndiquesValue");
     const initialSalairesValue = document.getElementById("initialSalairesValue");
     const initialRatioLabel = document.getElementById("initialRatioLabel");
     const initialResultText = document.getElementById("initialResultText");
   
+    // Éléments pour la démarche "Renforcer la CGT"
     const formationSection = document.getElementById("formationSection");
     const formationForm = document.getElementById("formationForm");
-    const formationResultsSection = document.getElementById("formationResultsSection");
+    const diagramUpdated = document.getElementById("diagramUpdated");
     const updatedSyndiquesValue = document.getElementById("updatedSyndiquesValue");
     const updatedSalairesValue = document.getElementById("updatedSalairesValue");
     const updatedRatioLabel = document.getElementById("updatedRatioLabel");
     const formationResultText = document.getElementById("formationResultText");
   
+    // Conclusion
     const conclusionSection = document.getElementById("conclusionSection");
   
-    // Variables globales pour conserver l'état
+    // Variables globales
     let totalSalaries = 0;
     let totalSyndiques = 0;
     let totalMilitants = 0;
   
-    let updatedSyndiques = 0; // après formation
-  
-    // 1) Formulaire initial
+    // 1) Formulaire initial (Constat)
     initialForm.addEventListener("submit", function(e) {
       e.preventDefault();
   
@@ -44,12 +44,10 @@ document.addEventListener("DOMContentLoaded", function() {
   
       // Calcul
       const restants = totalSalaries - totalSyndiques;
-      // Combien chacun doit convaincre si tout le monde s'y met
       const recrutementParSyndique = restants > 0 ? (restants / totalSyndiques).toFixed(2) : 0;
-      // Optionnel : si seulement les militants
       const recrutementParMilitant = (totalMilitants > 0 && restants > 0) ? (restants / totalMilitants).toFixed(2) : 0;
   
-      // Affichage dans le diagramme initial
+      // Affichage dans le premier diagramme
       initialSyndiquesValue.textContent = totalSyndiques;
       initialSalairesValue.textContent = totalSalaries;
       if (restants > 0) {
@@ -88,46 +86,47 @@ document.addEventListener("DOMContentLoaded", function() {
       }
   
       initialResultText.innerHTML = html;
-      initialResultsSection.style.display = "block";
+      diagramInitial.style.display = "block";
   
-      // On réinitialise l'animation de la flèche
+      // Réinitialiser l'animation de la flèche 1
       resetArrowAnimation("arrowInitial");
   
-      // On affiche la section "formation" pour la suite
+      // On affiche la section "Renforcer la CGT" pour la suite
       formationSection.style.display = "block";
-      formationResultsSection.style.display = "none";
+      diagramUpdated.style.display = "none";
       conclusionSection.style.display = "none";
     });
   
     // 2) Formulaire "Renforcer la CGT"
     formationForm.addEventListener("submit", function(e) {
       e.preventDefault();
+  
       const nouveauxSyndiques = parseInt(document.getElementById("nouveaux_syndiques").value) || 0;
       if (nouveauxSyndiques < 0) {
         alert("Le nombre de nouveaux syndiqués doit être positif ou nul.");
         return;
       }
   
-      // On calcule le nouveau total
-      updatedSyndiques = totalSyndiques + nouveauxSyndiques;
-      if (updatedSyndiques > totalSalaries) {
-        updatedSyndiques = totalSalaries;
+      // Nouveau total après formation
+      let updated = totalSyndiques + nouveauxSyndiques;
+      if (updated > totalSalaries) {
+        updated = totalSalaries;
       }
   
-      // On remplit le second diagramme
-      updatedSyndiquesValue.textContent = updatedSyndiques;
+      // Affichage dans le second diagramme
+      updatedSyndiquesValue.textContent = updated;
       updatedSalairesValue.textContent = totalSalaries;
   
-      const restantsFinal = totalSalaries - updatedSyndiques;
+      const restantsFinal = totalSalaries - updated;
       if (restantsFinal > 0) {
-        const ratioFinal = (restantsFinal / updatedSyndiques).toFixed(2);
+        const ratioFinal = (restantsFinal / updated).toFixed(2);
         updatedRatioLabel.textContent = `Il reste ${restantsFinal} salarié·e·s à syndiquer, soit environ ${ratioFinal} par syndiqué·e.`;
       } else {
         updatedRatioLabel.textContent = `Tous les salarié·e·s sont désormais syndiqué·e·s, félicitations !`;
       }
   
       let html2 = `<p><strong>Après la formation "Renforcer la CGT des principes et des actes" :</strong></p>`;
-      html2 += `<p>Nous avons <strong>${nouveauxSyndiques}</strong> nouveaux syndiqué·e·s, portant le total à <strong>${updatedSyndiques}</strong>.</p>`;
+      html2 += `<p>Nous avons <strong>${nouveauxSyndiques}</strong> nouveaux syndiqué·e·s, portant le total à <strong>${updated}</strong>.</p>`;
       if (restantsFinal > 0) {
         html2 += `<p>Il manque encore <strong>${restantsFinal}</strong> salarié·e·s pour atteindre la syndicalisation complète.</p>`;
       } else {
@@ -135,10 +134,10 @@ document.addEventListener("DOMContentLoaded", function() {
       }
   
       formationResultText.innerHTML = html2;
-      formationResultsSection.style.display = "block";
+      diagramUpdated.style.display = "block";
       conclusionSection.style.display = "block";
   
-      // Réinitialiser l'animation de la seconde flèche
+      // Réinitialiser l'animation de la flèche 2
       resetArrowAnimation("arrowUpdated");
     });
   

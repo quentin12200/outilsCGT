@@ -11,6 +11,14 @@
   <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 </head>
 <body>
+      <!-- Menu de navigation -->
+  <nav class="menu">
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="carto.html">Cartographie</a></li>
+      <li><a href="methode.html">Méthode</a></li>
+    </ul>
+  </nav>
   <header class="animate__animated animate__fadeInDown">
     <h1>Cartographie des services</h1>
   </header>
@@ -19,13 +27,12 @@
     <section class="container intro animate__animated animate__fadeInUp">
       <h2>Réalisez la cartographie de votre établissement</h2>
       <p>
-        Renseignez ci-dessous vos services : pour chacun, indiquez le nom, le nombre de salariés 
-        et le nombre de syndiqués. Cela vous permettra d’identifier les zones 
-        où l’action syndicale est forte ou à renforcer.
+        Renseignez ci-dessous vos services : pour chacun, indiquez le nom, le nombre de salariés et le nombre de syndiqués.
+        Cela vous permettra d’identifier les zones où l’action syndicale est forte ou à renforcer.
       </p>
     </section>
 
-    <!-- Formulaire pour saisir les services sous forme de "table" -->
+    <!-- Formulaire pour saisir les services sous forme de "tableau" -->
     <section class="container animate__animated animate__fadeInUp">
       <h2>Ajouter des services</h2>
       <form @submit.prevent="submitServices">
@@ -43,7 +50,7 @@
           <input type="number" v-model.number="service.syndiques" class="col-number" placeholder="Syndiqués" required>
           <button type="button" class="button" @click="removeService(index)">Supprimer</button>
         </div>
-        <!-- Boutons -->
+        <!-- Boutons d'action -->
         <div class="service-actions">
           <button type="button" class="button" @click="addService">Ajouter un service</button>
           <button type="submit" class="button animate__animated animate__pulse">Afficher la cartographie</button>
@@ -51,7 +58,7 @@
       </form>
     </section>
 
-    <!-- Rendu de la cartographie -->
+    <!-- Rendu cartographique des services -->
     <section v-if="services.length && submitted" class="container diagram-section animate__animated animate__fadeIn">
       <div class="diagram-title">Cartographie des services</div>
       <div class="services-container">
@@ -60,10 +67,8 @@
           <p>
             <strong>Salariés :</strong> {{ service.salaries }}<br>
             <strong>Syndiqués :</strong> {{ service.syndiques }}<br>
-            <strong>Taux :</strong> 
-            {{ service.salaries > 0 ? ((service.syndiques / service.salaries) * 100).toFixed(1) : 0 }}%
+            <strong>Taux :</strong> {{ service.salaries > 0 ? ((service.syndiques / service.salaries) * 100).toFixed(1) : 0 }}%
           </p>
-          <!-- Grille de 50 carrés, dont un certain nombre en rouge selon le ratio -->
           <div class="squares-container">
             <div v-for="n in 50" :key="n" class="square"
               :style="squareStyle(n, service)">
@@ -71,6 +76,20 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- Bloc de synthèse globale -->
+    <section id="globalSection" class="container diagram-section animate__animated animate__fadeIn" style="display:none;">
+      <div class="diagram-title">Synthèse globale de l'entreprise</div>
+      <div class="global-block">
+        <h3>Ensemble</h3>
+        <p id="globalSalaries">Salariés totaux : -</p>
+        <p id="globalSyndiques">Syndiqués totaux : -</p>
+        <p id="globalRatio">Taux global : -%</p>
+        <!-- Grille de 50 petits carrés représentant le taux global -->
+        <div id="globalSquares" class="squares-container"></div>
+      </div>
+      <div class="global-message" id="globalMessage"></div>
     </section>
 
     <!-- Bouton de retour -->
