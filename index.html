@@ -5,54 +5,46 @@
   <title>Outil de point d'étape sur la syndicalisation - CGT</title>
   <!-- Animate.css pour les animations -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-  <!-- Feuille de style personnalisée -->
+  <!-- Feuille de style commune -->
   <link rel="stylesheet" href="styles.css">
-  <!-- (Optionnel) Vue.js si vous voulez une logique plus réactive -->
+  <!-- (Optionnel) Vue.js si vous en avez besoin pour d'autres pages -->
   <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 </head>
 <body>
-  <!-- Bannière rouge CGT -->
+  <!-- Menu de navigation -->
+  <nav class="menu">
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="carto.html">Cartographie</a></li>
+      <li><a href="methode.html">Méthode</a></li>
+    </ul>
+  </nav>
+
+  <!-- En-tête -->
   <header class="animate__animated animate__fadeInDown">
     <h1>Outil de point d'étape sur la syndicalisation</h1>
   </header>
 
   <main id="app">
-    <!-- Introduction -->
-    <section class="container intro animate__animated animate__fadeInUp">
-      <h2>Bienvenue sur l'outil de la démarche démocratique CGT</h2>
-      <p>
-        Cet outil vous permet de faire un point d'étape sur la syndicalisation, 
-        de mesurer l'effort à fournir pour atteindre vos objectifs, et de comprendre 
-        l'impact d'une démarche collective où chaque syndiqué·e s'implique. 
-      </p>
-      <p style="margin-top:10px;">
-        Ensemble, renforçons la CGT en mettant en mouvement 
-        <strong>l'ensemble des syndiqué·e·s</strong>, pas seulement les militant·e·s, 
-        pour convaincre le plus grand nombre de salarié·e·s.
-      </p>
-    </section>
-
-    <!-- Formulaire de saisie -->
+    <!-- 1) Constat initial -->
     <section class="container animate__animated animate__fadeInUp">
       <h2>Données de base</h2>
       <form id="initialForm">
         <label for="total_salaries">Combien y a-t-il de salariés au total ?</label>
         <input type="number" id="total_salaries" required>
-
+        
         <label for="total_syndiques">Combien y a-t-il de syndiqués actuellement ?</label>
         <input type="number" id="total_syndiques" required>
-
+        
         <label for="total_militants">Combien de militants parmi ces syndiqués ? (optionnel)</label>
         <input type="number" id="total_militants">
-
-        <button type="submit" class="button animate__animated animate__pulse">
-          Calculer le constat initial
-        </button>
+        
+        <button type="submit" class="button animate__animated animate__pulse">Calculer le constat initial</button>
       </form>
     </section>
 
     <!-- Bloc de résultats initiaux (diagramme 1) -->
-    <section id="initialResultsSection" class="container diagram-section animate__animated animate__fadeIn" style="display:none;">
+    <section id="diagramInitial" class="container diagram-section animate__animated animate__fadeIn" style="display:none;">
       <div class="diagram-title">Constat initial (Recrutement actuel)</div>
       <div class="diagram-container">
         <div class="box">
@@ -74,13 +66,10 @@
       <div class="results" id="initialResultText"></div>
     </section>
 
-    <!-- Scénario "Renforcer la CGT" (après formation) -->
+    <!-- 2) Démarche « Renforcer la CGT des principes et des actes » -->
     <section id="formationSection" class="container animate__animated animate__fadeInUp" style="display:none;">
       <h2>Démarche « Renforcer la CGT des principes et des actes »</h2>
-      <p>
-        Après avoir formé les syndiqué·e·s, indiquez le nombre de nouveaux syndiqués 
-        réellement obtenus suite à cette dynamique :
-      </p>
+      <p>Après avoir formé les syndiqué·e·s, indiquez le nombre de nouveaux syndiqués réalisés :</p>
       <form id="formationForm">
         <label for="nouveaux_syndiques">Nouveaux syndiqués réalisés :</label>
         <input type="number" id="nouveaux_syndiques" required>
@@ -91,8 +80,8 @@
       </form>
     </section>
 
-    <!-- Bloc de résultats "après formation" (diagramme 2) -->
-    <section id="formationResultsSection" class="container diagram-section animate__animated animate__fadeIn" style="display:none;">
+    <!-- Bloc de résultats après formation (diagramme 2) -->
+    <section id="diagramUpdated" class="container diagram-section animate__animated animate__fadeIn" style="display:none;">
       <div class="diagram-title">Après formation et suivi annuel</div>
       <div class="diagram-container">
         <div class="box">
@@ -114,12 +103,12 @@
       <div class="results" id="formationResultText"></div>
     </section>
 
-    <!-- Conclusion politique / syndicale -->
+    <!-- Conclusion -->
     <section id="conclusionSection" class="container conclusion animate__animated animate__fadeInUp" style="display:none;">
       <h3>Conclusion</h3>
       <p>
-        La direction syndicale doit mettre en mouvement <strong>l'ensemble</strong> 
-        des syndiqué·e·s, pas seulement les militant·e·s, pour convaincre le plus grand nombre de salarié·e·s.
+        La direction syndicale doit mettre en mouvement <strong>l'ensemble</strong> des syndiqué·e·s,
+        pas seulement les militant·e·s, pour convaincre le plus grand nombre de salarié·e·s.
         Plus on est nombreux à s'impliquer, moins chacun·e a d'effort à fournir, et plus on syndique vite et largement.
       </p>
       <p style="margin-top:10px;">
@@ -127,21 +116,14 @@
         vous pouvez mesurer concrètement l'effet d'une mobilisation accrue. 
         Au final, c'est l'engagement collectif qui fait la force de la CGT !
       </p>
-      <p style="margin-top:20px;">
-        <a href="carto.html" class="button">
-          Aller plus loin : réaliser la cartographie par service
-        </a>
-      </p>
-      
     </section>
   </main>
 
-  <!-- Pied de page -->
   <footer>
     <p>&copy; 2025 CGT - Outil de point d'étape sur la syndicalisation</p>
   </footer>
 
-  <!-- Script personnalisé -->
+  <!-- Script de la page d'accueil (2 étapes : Constat initial + Renforcer la CGT) -->
   <script src="script.js"></script>
 </body>
 </html>

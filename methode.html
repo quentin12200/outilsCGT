@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Méthode - Outil de syndicalisation CGT</title>
+  <!-- Animate.css pour les animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <!-- Feuille de style commune -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- Vue.js pour la réactivité -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+
+  <style>
+    /* Styles du menu, container, etc. peuvent être repris de styles.css */
+
+    /* Méthode - Boutons Renforcement / Implantation */
+    .method-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0;
+    }
+    .method-buttons .button {
+      max-width: 200px;
+      width: 100%;
+    }
+    .method-content {
+      display: none;
+      margin-top: 20px;
+    }
+    .method-content.active {
+      display: block;
+    }
+
+    /* Zone pour la saisie de la date */
+    .date-input-container {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .date-input-container label {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    .date-input-container input[type="date"] {
+      padding: 5px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .date-input-container button {
+      margin-left: 10px;
+    }
+
+    /* Frise horizontale (stepper) */
+    .horizontal-timeline {
+      margin: 40px auto;
+      text-align: center;
+      max-width: 900px;
+    }
+    .timeline-steps {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-start;
+      margin-top: 40px;
+    }
+    .timeline-line {
+      position: absolute;
+      top: 40px; /* aligné avec le centre des cercles */
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: #b71c1c;
+      z-index: 1;
+    }
+    .timeline-step {
+      position: relative;
+      flex: 1;
+      z-index: 2;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 5px;
+    }
+    .circle {
+      width: 40px;
+      height: 40px;
+      background-color: #b71c1c;
+      border-radius: 50%;
+      color: #fff;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      transition: transform 0.2s ease;
+    }
+    .timeline-step:hover .circle {
+      transform: scale(1.1);
+    }
+    .step-info {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .step-date {
+      display: block;
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 5px;
+    }
+    .step-title {
+      font-weight: bold;
+      color: #b71c1c;
+      font-size: 1rem;
+    }
+    /* Description masquée / affichée au clic */
+    .step-description {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+      padding: 0 10px;
+    }
+    .step-description.active {
+      max-height: 200px; /* ajustez selon la quantité de texte */
+      opacity: 1;
+      margin-bottom: 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .timeline-steps {
+        flex-direction: column;
+      }
+      .timeline-line {
+        display: none; /* ou adaptation en frise verticale */
+      }
+      .timeline-step {
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Menu de navigation -->
+  <nav class="menu">
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="carto.html">Cartographie</a></li>
+      <li><a href="methode.html">Méthode</a></li>
+    </ul>
+  </nav>
+
+  <header class="animate__animated animate__fadeInDown">
+    <h1>Méthode et démarche CGT</h1>
+  </header>
+
+  <main id="app" class="container animate__animated animate__fadeInUp">
+    <!-- Boutons Renforcement / Implantation -->
+    <h2>Choisissez la méthode à consulter</h2>
+    <div class="method-buttons">
+      <button class="button animate__animated animate__pulse" @click="showMethod('renforcement')">
+        Renforcement
+      </button>
+      <button class="button animate__animated animate__pulse" @click="showMethod('implantation')">
+        Implantation
+      </button>
+    </div>
+
+    <!-- Contenu Renforcement -->
+    <section id="renforcementContent" class="method-content">
+      <h3>Méthode de Renforcement</h3>
+      <p>
+        <strong>Avant :</strong> L’organisation se fonde sur les fondamentaux de la démarche et la préparation ciblée.
+      </p>
+      <!-- ... autres paragraphes ... -->
+    </section>
+
+    <!-- Contenu Implantation -->
+    <section id="implantationContent" class="method-content">
+      <h3>Méthode d'Implantation</h3>
+      <p>
+        Cette méthode se concentre sur le déploiement sur le terrain...
+      </p>
+      <!-- ... autres paragraphes ... -->
+    </section>
+
+    <!-- Input pour la date + bouton "Calculer" -->
+    <div class="date-input-container">
+      <label for="startDate">Date de l'élection :</label>
+      <input type="date" id="startDate" v-model="startDate">
+      <button class="button" @click="computeDates">Calculer la timeline</button>
+    </div>
+
+    <!-- Frise horizontale dynamique -->
+    <section class="horizontal-timeline">
+      <h2>Plan de Travail en 10 Étapes</h2>
+      <div class="timeline-steps">
+        <div class="timeline-line"></div>
+        <!-- Boucle sur timelineSteps -->
+        <div
+          v-for="(step, index) in timelineSteps"
+          :key="index"
+          class="timeline-step"
+          @click="toggleStep(index)"
+        >
+          <div class="circle">{{ index + 1 }}</div>
+          <div class="step-info">
+            <!-- Date calculée affichée ici -->
+            <span class="step-date">{{ step.computedDate }}</span>
+            <div class="step-title">{{ step.title }}</div>
+          </div>
+          <div class="step-description" :class="{ active: step.active }">
+            <p>{{ step.description }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bouton de retour -->
+    <section style="text-align:center; margin-top:20px;">
+      <a href="index.html" class="button animate__animated animate__pulse">Retour à l'outil principal</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 CGT - Méthode et démarche syndicale</p>
+  </footer>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        currentMethod: '',        // renforcement / implantation
+        startDate: '',            // date saisie par l'utilisateur
+        timelineSteps: [
+          {
+            offset: -12, // en mois, ex. 12 mois avant l'élection
+            title: 'Préparation',
+            description: 'Organisation initiale et définition des fondamentaux.',
+            active: false,
+            computedDate: '' // on stockera la date calculée ici
+          },
+          {
+            offset: -11,
+            title: 'Analyse du Scrutin',
+            description: 'Étude globale et par collège du précédent scrutin.',
+            active: false,
+            computedDate: ''
+          },
+          {
+            offset: -10,
+            title: 'Évaluation de l’Organisation',
+            description: 'Analyse de l’organisation cogitielle, KBIS, etc.',
+            active: false,
+            computedDate: ''
+          },
+          {
+            offset: -9,
+            title: 'Planification Ciblée',
+            description: 'Définition du plan de travail "cousu main".',
+            active: false,
+            computedDate: ''
+          },
+          {
+            offset: -8,
+            title: 'Mobilisation Préliminaire',
+            description: 'Visites syndicales, mobilisation départements spécifiques (ICT, etc.).',
+            active: false,
+            computedDate: ''
+          },
+          {
+            offset: -6, // ex. on saute un mois, ou on fait -7 ?
+            title: 'Formation-action',
+            description: 'Formation du syndicat, rétroplanning en 3 temps.',
+            active: false,
+            computedDate: ''
+          },
+          {
+            offset: -4,
+            title: 'Déploiement sur le Terrain',
+            description: 'Mise en œuvre des visites, communication offensive.',
+            active: false,
+            computedDate: ''
+          },
+          {
+            offset: -3,
+            title: 'Suivi et Réunion d’Étape',
+            description: 'Rencontre d’étape pour ajuster la campagne.',
+            active: false,
+            computedDate: ''
+          },
+          {
+            offset: -2,
+            title: 'Validation Démocratique',
+            description: 'AG des syndiqués pour valider le plan d’action.',
+            active: false,
+            computedDate: ''
+          },
+          {
+            offset: -1,
+            title: 'Pérennisation & Déploiement',
+            description: 'Plan de syndicalisation durable, déploiement interpro.',
+            active: false,
+            computedDate: ''
+          }
+        ]
+      },
+      methods: {
+        showMethod(method) {
+          this.currentMethod = method;
+          // On masque les deux contenus
+          document.getElementById('renforcementContent').classList.remove('active');
+          document.getElementById('implantationContent').classList.remove('active');
+          // On affiche celui sélectionné
+          if (method === 'renforcement') {
+            document.getElementById('renforcementContent').classList.add('active');
+          } else if (method === 'implantation') {
+            document.getElementById('implantationContent').classList.add('active');
+          }
+        },
+        toggleStep(index) {
+          // Bascule l'état "active" de l'étape
+          this.timelineSteps[index].active = !this.timelineSteps[index].active;
+        },
+        computeDates() {
+          if (!this.startDate) {
+            alert("Veuillez choisir une date de départ (élection) !");
+            return;
+          }
+          // On parse la date de départ
+          const start = new Date(this.startDate);
+          // Pour chaque étape, on calcule la date en fonction de l'offset (en mois)
+          this.timelineSteps.forEach(step => {
+            // On clone la date
+            let d = new Date(start.getTime());
+            // On modifie le mois (offset négatif => date antérieure)
+            d.setMonth(d.getMonth() + step.offset);
+            // On formate la date
+            step.computedDate = this.formatDate(d);
+          });
+        },
+        formatDate(dateObj) {
+          // Simple format dd/mm/yyyy
+          let dd = dateObj.getDate();
+          let mm = dateObj.getMonth() + 1; // Jan = 0
+          let yyyy = dateObj.getFullYear();
+          // On ajoute un 0 si besoin
+          if (dd < 10) dd = '0' + dd;
+          if (mm < 10) mm = '0' + mm;
+          return dd + '/' + mm + '/' + yyyy;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
