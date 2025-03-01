@@ -1,7 +1,8 @@
 [build]
-  publish = "."
-  command = "echo 'Site statique'"
+  command = "npm run build"  # ou "yarn build" si vous utilisez Yarn
+  publish = "build"  # ou "dist" selon votre configuration
 
+# Configuration importante pour les SPA React avec routage
 [[redirects]]
   from = "/*"
   to = "/index.html"
