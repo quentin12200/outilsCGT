@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rétro-planning Électoral - CGT</title>
+    
+    <!-- Chargez React et ReactDOM via CDN -->
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel pour le JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  </head>
+  <body>
+    <!-- Menu de navigation -->
+    <nav class="bg-red-700 text-white p-4">
+      <ul class="flex justify-center space-x-4">
+        <li><a href="index.html" class="hover:text-red-200">Accueil</a></li>
+        <li><a href="carto.html" class="hover:text-red-200">Cartographie</a></li>
+        <li><a href="retroplanning.html" class="hover:text-red-200">Rétro-planning</a></li>
+        <li><a href="methode.html" class="hover:text-red-200">Méthode</a></li>
+        <li><a href="assemblee.html" class="hover:text-red-200">Assemblées</a></li>
+        <li><a href="syndicalisation.html" class="hover:text-red-200">Syndicalisation</a></li>
+        <li><a href="resultats.html" class="hover:text-red-200">Résultats</a></li>
+        <li><a href="demarcherevendicative.html" class="hover:text-red-200">Démarche</a></li>
+      </ul>
+    </nav>
+
+    <!-- Conteneur principal pour le composant React -->
+    <main id="app-container" class="container mx-auto p-6">
+      <!-- Votre composant React sera monté ici -->
+    </main>
+
+    <!-- Pied de page -->
+    <footer class="bg-gray-800 text-white text-center p-4">
+      <p>&copy; 2025 CGT - Outil de point d'étape sur la syndicalisation</p>
+    </footer>
+
+    <!-- Chargement du script React spécifique à la page -->
+    <script type="text/babel" src="js/retroplanning.js"></script>
+  </body>
+</html>

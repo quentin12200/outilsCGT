@@ -12,192 +12,150 @@
   <link rel="stylesheet" href="css/styles.css">
   <!-- Vue.js pour d'autres pages si besoin -->
   <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <!-- Dans index.html -->
+<!-- React et ReactDOM -->
+<script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+<!-- Babel pour JSX -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<!-- Script de la page avec type="text/babel" -->
+<script src="js/index.js" type="text/babel"></script>
 </head>
 <body>
     <!-- Menu de navigation -->
     <nav class="menu">
       <ul>
-          <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
-          <li><a href="carto.html"><i class="fas fa-map-marked-alt"></i> Cartographie</a></li>
-          <li><a href="methode.html"><i class="fas fa-tasks"></i> Méthode</a></li>
-          <li><a href="demarcherevendicative.html" class="active"><i class="fas fa-bullhorn"></i> Démarche Revendicative</a></li>
+        <li><a href="index.html" class="active"><i class="fas fa-home"></i> Accueil</a></li>
+        <li><a href="carto.html"><i class="fas fa-map-marked-alt"></i> Cartographie</a></li>
+        <li><a href="retroplanning.html"><i class="fas fa-calendar-alt"></i> Rétro-planning</a></li>
+        <li><a href="methode.html"><i class="fas fa-tasks"></i> Méthode</a></li>
+        <li><a href="assemblee.html"><i class="fas fa-users"></i> Assemblées</a></li>
+        <li><a href="syndicalisation.html"><i class="fas fa-user-plus"></i> Syndicalisation</a></li>
+        <li><a href="resultats.html"><i class="fas fa-chart-bar"></i> Résultats</a></li>
+        <li><a href="demarcherevendicative.html"><i class="fas fa-bullhorn"></i> Démarche</a></li>
       </ul>
-  </nav>
+    </nav>
 
   <!-- En-tête -->
   <header class="animate__animated animate__fadeInDown">
-    <h1><i class="fas fa-chart-line"></i> Outil de point d'étape sur la syndicalisation</h1>
+    <h1><i class="fas fa-chart-line"></i> Campagne Confédérale de Conquête Électorale</h1>
   </header>
 
   <main id="app">
-    <!-- 1) Constat initial -->
     <section class="container animate__animated animate__fadeInUp">
-      <h2><i class="fas fa-clipboard-list"></i> Données de base</h2>
-      <form id="initialForm">
-        <div class="form-group">
-          <label for="total_salaries">Combien y a-t-il de salariés au total ?</label>
-          <input type="number" id="total_salaries" required min="1" placeholder="Nombre total de salariés">
+      <h2 class="text-center">L'informatique au service du militantisme CGT</h2>
+      <p class="text-center">
+        Ces outils sont conçus pour soutenir la démarche CGT et renforcer la démocratie syndicale
+        en impliquant l'ensemble des syndiqués dans la bataille électorale et revendicative.
+      </p>
+    </section>
+
+    <section class="container animate__animated animate__fadeInUp">
+      <h2><i class="fas fa-info-circle"></i> Une démarche globale : Élections, Syndicalisation, Mobilisation</h2>
+      
+      <div class="grid-3-columns">
+        <div class="card">
+          <div class="card-icon">🗳️</div>
+          <h3 class="card-title">Élections</h3>
+          <p class="card-content">
+            Les élections professionnelles sont un moment crucial pour mesurer la représentativité 
+            et renforcer le rapport de force. La campagne électorale doit s'appuyer sur les besoins 
+            réels des salariés.
+          </p>
         </div>
         
-        <div class="form-group">
-          <label for="total_syndiques">Combien y a-t-il de syndiqués actuellement ?</label>
-          <input type="number" id="total_syndiques" required min="0" placeholder="Nombre de syndiqués">
+        <div class="card">
+          <div class="card-icon">📝</div>
+          <h3 class="card-title">Syndicalisation</h3>
+          <p class="card-content">
+            Renforcer la CGT en augmentant le nombre de syndiqués est essentiel. Chaque syndiqué 
+            doit devenir acteur du développement en convainquant ses collègues dans sa proximité 
+            immédiate.
+          </p>
         </div>
         
-        <div class="form-group">
-          <label for="total_militants">Combien de militants parmi ces syndiqués ? (optionnel)</label>
-          <input type="number" id="total_militants" min="0" placeholder="Nombre de militants actifs">
-        </div>
-        
-        <button type="submit" class="button animate__animated animate__pulse">
-          <i class="fas fa-calculator"></i> Calculer le constat initial
-        </button>
-      </form>
-    </section>
-
-    <!-- Bloc de résultats initiaux (diagramme 1) -->
-    <section id="diagramInitial" class="container diagram-section animate__animated animate__fadeIn" style="display:none;">
-      <div class="diagram-title">Constat initial (Recrutement actuel)</div>
-      
-      <!-- Barre de progression -->
-      <div class="progress-container">
-        <div class="progress-bar">
-          <div id="initialProgressBar" class="progress-fill"></div>
-        </div>
-        <div class="progress-labels">
-          <span id="initialProgressLabel">0%</span>
-        </div>
-      </div>
-      
-      <!-- Diagramme avec boîtes et flèche -->
-      <div class="diagram-container">
-        <div class="box">
-          <h3>Syndiqués initiaux</h3>
-          <p id="initialSyndiquesValue">-</p>
-        </div>
-        <div class="diagram-arrow">
-          <svg width="200" height="50">
-            <path id="arrowInitial" class="arrow-path" d="M 0 25 L 200 25" stroke="#b71c1c" stroke-width="5" fill="none"/>
-          </svg>
-        </div>
-        <div class="box">
-          <h3>Salariés</h3>
-          <p id="initialSalairesValue">-</p>
-        </div>
-      </div>
-      
-      <!-- Triangle avec les valeurs (nouveau élément) -->
-      <div class="triangle-container">
-        <div class="triangle">
-          <div class="triangle-left">
-            <span id="triangleLeftValue">-</span>
-          </div>
-          <div class="triangle-shape"></div>
-          <div class="triangle-right">
-            <span id="triangleRightValue">-</span>
-          </div>
-        </div>
-      </div>
-      
-      <p class="diagram-label" id="initialRatioLabel"></p>
-      <div class="results" id="initialResultText"></div>
-    </section>
-
-    <!-- 2) Démarche « Renforcer la CGT des principes et des actes » -->
-    <section id="formationSection" class="container animate__animated animate__fadeInUp" style="display:none;">
-      <h2><i class="fas fa-graduation-cap"></i> Démarche « Renforcer la CGT des principes et des actes »</h2>
-      <p>Après avoir formé les syndiqué·e·s, indiquez le nombre de nouveaux syndiqués réalisés :</p>
-      <form id="formationForm">
-        <div class="form-group">
-          <label for="nouveaux_syndiques">Nouveaux syndiqués réalisés :</label>
-          <input type="number" id="nouveaux_syndiques" required min="0" placeholder="Nombre de nouveaux syndiqués">
-        </div>
-
-        <button type="submit" class="button animate__animated animate__pulse">
-          <i class="fas fa-sync-alt"></i> Mettre à jour les résultats
-        </button>
-      </form>
-    </section>
-
-    <!-- Bloc de résultats après formation (diagramme 2) -->
-    <section id="diagramUpdated" class="container diagram-section animate__animated animate__fadeIn" style="display:none;">
-      <div class="diagram-title">Après formation et suivi annuel</div>
-      
-      <!-- Barre de progression -->
-      <div class="progress-container">
-        <div class="progress-bar">
-          <div id="updatedProgressBar" class="progress-fill"></div>
-        </div>
-        <div class="progress-labels">
-          <span id="updatedProgressLabel">0%</span>
-        </div>
-      </div>
-      
-      <!-- Diagramme avec boîtes et flèche -->
-      <div class="diagram-container">
-        <div class="box">
-          <h3>Syndiqués après formation</h3>
-          <p id="updatedSyndiquesValue">-</p>
-        </div>
-        <div class="diagram-arrow">
-          <svg width="200" height="50">
-            <path id="arrowUpdated" class="arrow-path" d="M 0 25 L 200 25" stroke="#388e3c" stroke-width="5" fill="none"/>
-          </svg>
-        </div>
-        <div class="box">
-          <h3>Salariés</h3>
-          <p id="updatedSalairesValue">-</p>
-        </div>
-      </div>
-      
-      <!-- Triangle avec les valeurs (nouveau élément) -->
-      <div class="triangle-container">
-        <div class="triangle">
-          <div class="triangle-left">
-            <span id="updatedTriangleLeftValue">-</span>
-          </div>
-          <div class="triangle-shape green"></div>
-          <div class="triangle-right">
-            <span id="updatedTriangleRightValue">-</span>
-          </div>
-        </div>
-      </div>
-      
-      <p class="diagram-label" id="updatedRatioLabel"></p>
-      <div class="results" id="formationResultText"></div>
-      
-      <!-- Comparaison avant/après -->
-      <div class="comparison-box">
-        <div class="comparison-title">Progression</div>
-        <div id="comparisonResult" class="comparison-content">
-          <!-- Contenu dynamique -->
+        <div class="card">
+          <div class="card-icon">✊</div>
+          <h3 class="card-title">Mobilisation</h3>
+          <p class="card-content">
+            La mobilisation des salariés repose sur la construction d'un cahier revendicatif 
+            répondant à leurs besoins et sur la bataille d'idées pour convaincre le plus grand 
+            nombre à s'engager dans l'action.
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- Conclusion -->
-    <section id="conclusionSection" class="container conclusion animate__animated animate__fadeInUp" style="display:none;">
-      <h3><i class="fas fa-flag-checkered"></i> Conclusion</h3>
-      <div class="conclusion-content">
-        <p>
-          La direction syndicale doit mettre en mouvement <strong>l'ensemble</strong> des syndiqué·e·s,
-          pas seulement les militant·e·s, pour convaincre le plus grand nombre de salarié·e·s.
-          Plus on est nombreux à s'impliquer, moins chacun·e a d'effort à fournir, et plus on syndique vite et largement.
-        </p>
-        <p>
-          Grâce à la formation <em>"Renforcer la CGT des principes et des actes"</em>, 
-          vous pouvez mesurer concrètement l'effet d'une mobilisation accrue. 
-          Au final, c'est l'engagement collectif qui fait la force de la CGT !
-        </p>
-      </div>
+    <section class="container animate__animated animate__fadeInUp">
+      <h2><i class="fas fa-tools"></i> Outils à votre disposition</h2>
       
-      <div class="action-buttons">
-        <a href="carto.html" class="button">
-          <i class="fas fa-map-marked-alt"></i> Réaliser une cartographie
+      <div class="grid-3-columns">
+        <a href="retroplanning.html" class="tool-card">
+          <div class="tool-icon bg-primary">📅</div>
+          <h3>Rétro-planning Électoral</h3>
+          <p>Planifier les étapes de la campagne électorale de manière structurée</p>
         </a>
-        <a href="methode.html" class="button">
-          <i class="fas fa-tasks"></i> Consulter la méthode
+        
+        <a href="carto.html" class="tool-card">
+          <div class="tool-icon bg-success">🗺️</div>
+          <h3>Cartographie Stratégique</h3>
+          <p>Analyser et visualiser la répartition des syndiqués par service</p>
         </a>
+        
+        <a href="demarcherevendicative.html" class="tool-card">
+          <div class="tool-icon bg-warning">📋</div>
+          <h3>Démarche Revendicative</h3>
+          <p>Mener la bataille revendicative en 3 temps: Besoins, Revendications, Mobilisation</p>
+        </a>
+        
+        <a href="assemblee.html" class="tool-card">
+          <div class="tool-icon bg-danger">👥</div>
+          <h3>Assemblées Générales</h3>
+          <p>Organiser des AG efficaces pour faire vivre la démocratie syndicale</p>
+        </a>
+        
+        <a href="syndicalisation.html" class="tool-card">
+          <div class="tool-icon bg-info">📈</div>
+          <h3>Plan de Syndicalisation</h3>
+          <p>Développer la syndicalisation en ciblant prioritairement les votants CGT</p>
+        </a>
+        
+        <a href="resultats.html" class="tool-card">
+          <div class="tool-icon bg-secondary">📊</div>
+          <h3>Analyse des Élections</h3>
+          <p>Suivre et analyser les résultats électoraux comme indicateur du rapport de force</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="container highlight-box animate__animated animate__fadeInUp">
+      <h2><i class="fas fa-quote-left"></i> 52ème congrès CGT</h2>
+      <blockquote>
+        "C'est un outil à démocratiser pour être opérationnel dans les territoires et professions 
+        et mis en œuvre par les syndicats."
+      </blockquote>
+      <p>
+        Notre objectif commun est la reconquête de la 1ère place au niveau confédéral, en renforçant 
+        nos syndicats pour qu'ils soient en capacité d'agir sur l'ensemble des appareils pour GAGNER 
+        sur tous les enjeux.
+      </p>
+    </section>
+
+    <section class="container animate__animated animate__fadeInUp">
+      <h2><i class="fas fa-directions"></i> Méthode en deux axes</h2>
+      
+      <div class="grid-2-columns">
+        <div class="info-box">
+          <h3>1. Là où nous sommes présents</h3>
+          <p>Construction et mise en œuvre de campagnes s'appuyant sur la réappropriation de la démarche revendicative CGT et des dimensions d'organisation et de vie syndicale pour la faire vivre.</p>
+        </div>
+        
+        <div class="info-box">
+          <h3>2. Là où nous sommes absents</h3>
+          <p>Approche organisée de la CGT à tous ses niveaux et pratique du parrainage, y compris en intégrant la dimension du siège de l'entreprise dans la stratégie syndicale.</p>
+        </div>
       </div>
     </section>
   </main>
@@ -208,7 +166,7 @@
         <img src="img/logo-cgt.png" alt="Logo CGT" width="40">
       </div>
       <div class="footer-text">
-        <p>&copy; 2025 CGT - Outil de point d'étape sur la syndicalisation</p>
+        <p>&copy; 2025 CGT - Campagne Confédérale de Conquête Électorale</p>
         <p>L'informatique au service du militantisme CGT</p>
       </div>
     </div>
@@ -216,5 +174,146 @@
 
   <!-- Script de la page d'accueil -->
   <script src="js/script.js"></script>
+
+  <!-- Ajout de classes CSS supplémentaires pour le nouveau design -->
+  <style>
+    .text-center {
+      text-align: center;
+    }
+    
+    .grid-3-columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+    
+    .grid-2-columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+    
+    .card {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    .card-icon {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    
+    .card-title {
+      text-align: center;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+    
+    .card-content {
+      color: var(--text-color);
+    }
+    
+    .tool-card {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: var(--text-color);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .tool-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    .tool-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: white;
+    }
+    
+    .bg-primary {
+      background-color: var(--primary-color);
+    }
+    
+    .bg-success {
+      background-color: #388e3c;
+    }
+    
+    .bg-warning {
+      background-color: #f57c00;
+    }
+    
+    .bg-danger {
+      background-color: #d32f2f;
+    }
+    
+    .bg-info {
+      background-color: #0288d1;
+    }
+    
+    .bg-secondary {
+      background-color: #424242;
+    }
+    
+    .highlight-box {
+      background-color: var(--primary-light);
+      color: white;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+    }
+    
+    .highlight-box h2 {
+      color: white;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+    }
+    
+    .highlight-box blockquote {
+      font-style: italic;
+      margin: 15px 0;
+      padding-left: 15px;
+      border-left: 3px solid white;
+    }
+    
+    .info-box {
+      background-color: #f5f5f5;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .info-box h3 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+    
+    @media (max-width: 768px) {
+      .grid-3-columns, .grid-2-columns {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </body>
 </html>

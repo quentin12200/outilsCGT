@@ -1,173 +1,318 @@
-new Vue({
-  el: '#app',
-  data: {
-    // Liste dynamique des services
-    services: [
-      { name: '', salaries: 0, syndiques: 0 }
-    ],
-    submitted: false
-  },
-  methods: {
-    addService() {
-      this.services.push({ name: '', salaries: 0, syndiques: 0 });
-    },
-    removeService(index) {
-      if (this.services.length > 1) {
-        this.services.splice(index, 1);
-      } else {
-        alert("Il doit y avoir au moins un service dans la liste.");
-      }
-    },
-    submitServices() {
-      // Vérification que tous les services ont un nom
-      const emptyServices = this.services.filter(s => !s.name.trim());
-      if (emptyServices.length > 0) {
-        alert("Tous les services doivent avoir un nom.");
-        return;
-      }
-      
-      // Vérifier que les nombres sont cohérents
-      for (const service of this.services) {
-        if (service.syndiques > service.salaries) {
-          alert(`Le service "${service.name}" a plus de syndiqués que de salariés.`);
-          return;
-        }
-      }
-      
-      this.submitted = true;
-      // Afficher la synthèse globale
-      this.renderGlobal();
-      
-      // Scroll vers la section des résultats
-      setTimeout(() => {
-        document.querySelector('.diagram-section').scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'start' 
-        });
-      }, 100);
-    },
-    // Fonction qui calcule le style des carrés pour chaque service
-    squareStyle(n, service) {
-      if (service.salaries <= 0) {
-        return { backgroundColor: '#ccc' };
-      }
-      // Calcul du nombre de carrés rouges sur un total de 50
-      const redSquares = Math.round((service.syndiques / service.salaries) * 50);
-      return {
-        backgroundColor: n <= redSquares ? '#b71c1c' : '#ccc'
-      };
-    },
-    // Calculer la classe CSS en fonction du taux
-    getServiceClass(service) {
-      if (service.salaries <= 0) return '';
-      
-      const rate = service.syndiques / service.salaries;
-      if (rate >= 0.5) return 'service-high';
-      if (rate >= 0.25) return 'service-medium';
-      return 'service-low';
-    },
-    // Fonction qui calcule la synthèse globale et affiche les carrés
-    renderGlobal() {
-      let globalSalaries = 0;
-      let globalSyndiques = 0;
-      let above50 = [];
-      let below25 = [];
-      
-      this.services.forEach(service => {
-        globalSalaries += service.salaries;
-        globalSyndiques += service.syndiques;
-        
-        if (service.salaries > 0) {
-          const rate = service.syndiques / service.salaries;
-          if (rate >= 0.5) {
-            above50.push(service.name);
-          }
-          if (rate < 0.25 && service.salaries > 5) { // Ignorer les très petits services
-            below25.push(service.name);
-          }
-        }
-      });
-      
-      let globalRatio = globalSalaries > 0 ? ((globalSyndiques / globalSalaries) * 100).toFixed(1) : 0;
-      document.getElementById("globalSalaries").textContent = "Salariés totaux : " + globalSalaries;
-      document.getElementById("globalSyndiques").textContent = "Syndiqués totaux : " + globalSyndiques;
-      document.getElementById("globalRatio").textContent = "Taux global : " + globalRatio + "%";
+import React, { useState, useEffect } from 'react';
 
-      // Mise à jour des carrés globaux (50 au total)
-      const globalSquaresContainer = document.getElementById("globalSquares");
-      globalSquaresContainer.innerHTML = "";
-      const redSquares = Math.round((globalSyndiques / globalSalaries) * 50) || 0;
-      
-      for (let i = 1; i <= 50; i++) {
-        const square = document.createElement("div");
-        square.classList.add("square");
-        square.style.backgroundColor = i <= redSquares ? "#b71c1c" : "#ccc";
-        globalSquaresContainer.appendChild(square);
-      }
-
-      let message = "";
-      if (above50.length > 0) {
-        message = `<i class="fas fa-star"></i> Les services suivants, ayant plus de 50% de syndicalisation, peuvent servir de modèle et soutenir les autres : <strong>${above50.join(", ")}</strong>.`;
-      } else {
-        message = "<i class='fas fa-exclamation-triangle'></i> Aucun service n'a encore atteint un taux de syndicalisation supérieur à 50%. Une mobilisation accrue est nécessaire.";
-      }
-      
-      // Ajouter les services à faible taux
-      if (below25.length > 0) {
-        message += `<br><br><i class="fas fa-exclamation-circle"></i> Attention : les services suivants ont moins de 25% de syndicalisation et nécessitent une attention particulière : <strong>${below25.join(", ")}</strong>.`;
-      }
-      
-      document.getElementById("globalMessage").innerHTML = message;
-      document.getElementById("globalSection").style.display = "block";
-      
-      // Générer les conseils stratégiques
-      this.generateStrategicAdvice(globalSyndiques, globalSalaries, above50, below25);
-    },
-    // Générer des conseils stratégiques basés sur les résultats
-    generateStrategicAdvice(totalSyndiques, totalSalaries, above50, below25) {
-      const globalRate = totalSalaries > 0 ? (totalSyndiques / totalSalaries) : 0;
-      
-      let advice = "<h3>Conseils stratégiques</h3>";
-      
-      // Conseil basé sur le taux global
-      if (globalRate < 0.1) {
-        advice += "<p>Le taux global de syndicalisation est très faible. Concentrez vos efforts sur une campagne de sensibilisation générale et choisissez un service pilote pour créer un premier succès.</p>";
-      } else if (globalRate < 0.3) {
-        advice += "<p>Le taux global est modeste. Utilisez les services déjà bien syndiqués comme ambassadeurs et organisez des rencontres inter-services.</p>";
-      } else if (globalRate < 0.5) {
-        advice += "<p>Le taux global est encourageant. Organisez des formations pour transformer les syndiqués en recruteurs actifs.</p>";
-      } else {
-        advice += "<p>Excellent taux global ! Concentrez-vous maintenant sur les services en retard et sur la qualité de l'engagement.</p>";
-      }
-      
-      // Conseils spécifiques
-      if (above50.length > 0) {
-        advice += `<p>Organisez des échanges d'expérience entre les services bien syndiqués (${above50.join(", ")}) et les autres.</p>`;
-      }
-      
-      if (below25.length > 0) {
-        advice += `<p>Pour les services à faible taux (${below25.join(", ")}), identifiez des personnes influentes qui pourraient servir de relais.</p>`;
-      }
-      
-      // Ajouter les conseils au conteneur
-      const adviceElement = document.getElementById("strategicAdvice");
-      if (adviceElement) {
-        adviceElement.innerHTML = advice;
-        adviceElement.style.display = "block";
-      }
-    },
-    goBack() {
-      // Retour à la page principale
-      window.location.href = "index.html";
-    },
-    // Imprimer la cartographie
-    printCartography() {
-      if (!this.submitted) {
-        alert("Veuillez d'abord générer la cartographie");
-        return;
-      }
-      
-      window.print();
+const CartoModule = () => {
+  const [services, setServices] = useState([
+    { name: '', salaries: 0, syndiques: 0 }
+  ]);
+  const [submitted, setSubmitted] = useState(false);
+  const [stats, setStats] = useState({
+    totalSalaries: 0,
+    totalSyndiques: 0,
+    globalRatio: 0,
+    above50: [],
+    below25: []
+  });
+  
+  const addService = () => {
+    setServices([...services, { name: '', salaries: 0, syndiques: 0 }]);
+  };
+  
+  const removeService = (index) => {
+    if (services.length > 1) {
+      const updatedServices = [...services];
+      updatedServices.splice(index, 1);
+      setServices(updatedServices);
     }
-  }
-});
+  };
+  
+  const updateService = (index, field, value) => {
+    const updatedServices = [...services];
+    
+    // Convertir en nombre pour les champs numériques
+    if (field === 'salaries' || field === 'syndiques') {
+      value = parseInt(value) || 0;
+    }
+    
+    // S'assurer que syndiques ne dépasse pas salaries
+    if (field === 'syndiques' && value > updatedServices[index].salaries) {
+      value = updatedServices[index].salaries;
+    }
+    
+    updatedServices[index][field] = value;
+    setServices(updatedServices);
+  };
+  
+  const submitServices = () => {
+    // Vérifier que tous les services ont un nom
+    const emptyServices = services.filter(s => !s.name.trim());
+    if (emptyServices.length > 0) {
+      alert("Tous les services doivent avoir un nom.");
+      return;
+    }
+    
+    // Vérifier la cohérence des données
+    for (const service of services) {
+      if (service.syndiques > service.salaries) {
+        alert(`Le service "${service.name}" a plus de syndiqués que de salariés.`);
+        return;
+      }
+    }
+    
+    // Calculer les statistiques globales
+    let totalSalaries = 0;
+    let totalSyndiques = 0;
+    let above50 = [];
+    let below25 = [];
+    
+    services.forEach(service => {
+      totalSalaries += service.salaries;
+      totalSyndiques += service.syndiques;
+      
+      if (service.salaries > 0) {
+        const rate = service.syndiques / service.salaries;
+        if (rate >= 0.5) {
+          above50.push(service.name);
+        }
+        if (rate < 0.25 && service.salaries > 5) {
+          below25.push(service.name);
+        }
+      }
+    });
+    
+    const globalRatio = totalSalaries > 0 ? (totalSyndiques / totalSalaries) * 100 : 0;
+    
+    setStats({
+      totalSalaries,
+      totalSyndiques,
+      globalRatio,
+      above50,
+      below25
+    });
+    
+    setSubmitted(true);
+  };
+  
+  const getServiceClass = (service) => {
+    if (service.salaries <= 0) return '';
+    
+    const rate = service.syndiques / service.salaries;
+    if (rate >= 0.5) return 'bg-green-100 border-green-500';
+    if (rate >= 0.25) return 'bg-yellow-100 border-yellow-500';
+    return 'bg-red-100 border-red-500';
+  };
+  
+  const renderActionPlan = () => {
+    if (!submitted) return null;
+    
+    const priorityServices = [...stats.below25];
+    const potentialGrowth = services
+      .filter(s => s.salaries > 0)
+      .map(s => ({
+        name: s.name,
+        current: s.syndiques,
+        potential: s.salaries - s.syndiques,
+        ratio: s.syndiques / s.salaries
+      }))
+      .sort((a, b) => b.potential - a.potential)
+      .slice(0, 3);
+    
+    return (
+      <div className="mt-8 p-4 bg-white rounded shadow">
+        <h3 className="text-lg font-bold text-red-600 mb-4">Plan d'action stratégique</h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div className="bg-red-50 p-4 rounded border-l-4 border-red-600">
+            <h4 className="font-bold mb-2">Priorités d'intervention</h4>
+            {priorityServices.length > 0 ? (
+              <>
+                <p className="mb-2">Services à faible taux de syndicalisation (moins de 25%) :</p>
+                <ul className="list-disc pl-5">
+                  {priorityServices.map((service, idx) => (
+                    <li key={idx}>{service}</li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <p>Aucun service n'est en dessous de 25% de syndicalisation. Continuez vos efforts pour augmenter le taux global.</p>
+            )}
+          </div>
+          
+          <div className="bg-blue-50 p-4 rounded border-l-4 border-blue-600">
+            <h4 className="font-bold mb-2">Potentiel de croissance</h4>
+            <p className="mb-2">Services présentant le plus fort potentiel de progression :</p>
+            <ul className="list-disc pl-5">
+              {potentialGrowth.map((service, idx) => (
+                <li key={idx}>
+                  {service.name} : {service.potential} salariés non-syndiqués 
+                  ({(service.ratio * 100).toFixed(1)}% actuellement)
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        
+        {stats.above50.length > 0 && (
+          <div className="bg-green-50 p-4 rounded mb-6 border-l-4 border-green-600">
+            <h4 className="font-bold mb-2">Modèles de réussite</h4>
+            <p className="mb-2">Services à fort taux de syndicalisation (plus de 50%) pouvant servir d'exemple :</p>
+            <ul className="list-disc pl-5">
+              {stats.above50.map((service, idx) => (
+                <li key={idx}>{service}</li>
+              ))}
+            </ul>
+            <p className="mt-2 text-sm italic">Ces services peuvent être mobilisés pour aider à syndiquer les autres secteurs.</p>
+          </div>
+        )}
+        
+        <div className="bg-gray-50 p-4 rounded">
+          <h4 className="font-bold mb-2">Axes de travail prioritaires</h4>
+          <ol className="list-decimal pl-5">
+            <li className="mb-2">Organiser des AG de syndiqués dans les {stats.below25.length > 0 ? 'services prioritaires' : 'services à fort potentiel'}</li>
+            <li className="mb-2">Développer un cahier revendicatif par service en partant des besoins exprimés</li>
+            <li className="mb-2">Mettre en place un plan de visites de services et tournées systématiques</li>
+            <li className="mb-2">Déployer les syndiqués dans leur proximité immédiate avec des outils de pointage nominatifs</li>
+          </ol>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="p-4">
+      <h2 className="text-xl font-bold text-red-600 mb-4">Cartographie stratégique des établissements</h2>
+      
+      <div className="bg-white p-4 rounded shadow mb-6">
+        <h3 className="font-semibold mb-4">Ajouter des services</h3>
+        
+        {/* En-tête des colonnes */}
+        <div className="flex mb-2 font-bold">
+          <div className="flex-1">Service</div>
+          <div className="w-24 text-right">Salariés</div>
+          <div className="w-24 text-right">Syndiqués</div>
+          <div className="w-24"></div>
+        </div>
+        
+        {/* Liste des services */}
+        {services.map((service, index) => (
+          <div key={index} className="flex mb-2">
+            <input
+              type="text"
+              className="flex-1 border p-2 rounded mr-2"
+              value={service.name}
+              onChange={(e) => updateService(index, 'name', e.target.value)}
+              placeholder="Nom du service"
+            />
+            <input
+              type="number"
+              className="w-24 border p-2 rounded mr-2"
+              value={service.salaries}
+              onChange={(e) => updateService(index, 'salaries', e.target.value)}
+              min="1"
+              placeholder="Salariés"
+            />
+            <input
+              type="number"
+              className="w-24 border p-2 rounded mr-2"
+              value={service.syndiques}
+              onChange={(e) => updateService(index, 'syndiques', e.target.value)}
+              min="0"
+              max={service.salaries}
+              placeholder="Syndiqués"
+            />
+            <button
+              className="w-24 bg-red-100 text-red-600 p-2 rounded hover:bg-red-200"
+              onClick={() => removeService(index)}
+            >
+              Supprimer
+            </button>
+          </div>
+        ))}
+        
+        {/* Boutons d'action */}
+        <div className="flex mt-4">
+          <button
+            className="bg-gray-200 text-gray-800 px-4 py-2 rounded mr-2 hover:bg-gray-300"
+            onClick={addService}
+          >
+            Ajouter un service
+          </button>
+          <button
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+            onClick={submitServices}
+          >
+            Générer la cartographie
+          </button>
+        </div>
+      </div>
+      
+      {submitted && (
+        <>
+          {/* Résumé global */}
+          <div className="bg-white p-4 rounded shadow mb-6">
+            <h3 className="text-lg font-bold text-red-600 mb-4">Synthèse globale</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+              <div className="bg-gray-50 p-4 rounded shadow text-center">
+                <div className="text-gray-600">Salariés totaux</div>
+                <div className="text-2xl font-bold">{stats.totalSalaries}</div>
+              </div>
+              <div className="bg-gray-50 p-4 rounded shadow text-center">
+                <div className="text-gray-600">Syndiqués totaux</div>
+                <div className="text-2xl font-bold">{stats.totalSyndiques}</div>
+              </div>
+              <div className="bg-gray-50 p-4 rounded shadow text-center">
+                <div className="text-gray-600">Taux global</div>
+                <div className="text-2xl font-bold">{stats.globalRatio.toFixed(1)}%</div>
+              </div>
+            </div>
+            
+            <div className="w-full bg-gray-200 rounded-full h-4 mb-4">
+              <div
+                className="bg-red-600 h-4 rounded-full"
+                style={{ width: `${Math.min(stats.globalRatio, 100)}%` }}
+              ></div>
+            </div>
+          </div>
+          
+          {/* Cartographie détaillée */}
+          <div className="bg-white p-4 rounded shadow mb-6">
+            <h3 className="text-lg font-bold text-red-600 mb-4">Cartographie des services</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {services.map((service, index) => {
+                const ratio = service.salaries > 0 ? (service.syndiques / service.salaries) * 100 : 0;
+                
+                return (
+                  <div 
+                    key={index}
+                    className={`border p-4 rounded shadow ${getServiceClass(service)}`}
+                  >
+                    <h4 className="font-bold mb-2">{service.name}</h4>
+                    <div className="flex justify-between mb-2">
+                      <span>Salariés: {service.salaries}</span>
+                      <span>Syndiqués: {service.syndiques}</span>
+                    </div>
+                    <div className="text-right font-bold mb-2">
+                      Taux: {ratio.toFixed(1)}%
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div
+                        className="bg-red-600 h-2 rounded-full"
+                        style={{ width: `${ratio}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          
+          {/* Plan d'action */}
+          {renderActionPlan()}
+        </>
+      )}
+    </div>
+  );
+};
+
+export default CartoModule;
