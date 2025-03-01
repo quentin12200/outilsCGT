@@ -1,10 +1,14 @@
-// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import './index.css';  // Tailwind CSS
+import './styles/styles.css';  // Votre CSS personnalisé
 import App from './App';
-document.getElementById('root').innerHTML = '<h1>Mon application</h1>';
 
-const rootElement = document.getElementById('root'); // même ID que dans index.html
+const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
 
-root.render(<App />);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
