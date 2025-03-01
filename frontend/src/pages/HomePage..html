@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outil de point d'étape sur la syndicalisation - CGT</title>
+  
+  <!-- Animate.css pour les animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  
+  <!-- Fontawesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <!-- Feuille de style commune -->
+  <link rel="stylesheet" href="css/styles.css">
+  
+  <!-- React et ReactDOM -->
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+  
+  <!-- Babel pour JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <!-- Menu de navigation -->
+  <nav class="menu bg-red-700 text-white p-4">
+    <ul class="flex justify-center space-x-4">
+      <li><a href="index.html" class="active hover:text-red-200"><i class="fas fa-home"></i> Accueil</a></li>
+      <li><a href="carto.html" class="hover:text-red-200"><i class="fas fa-map-marked-alt"></i> Cartographie</a></li>
+      <li><a href="retroplanning.html" class="hover:text-red-200"><i class="fas fa-calendar-alt"></i> Rétro-planning</a></li>
+      <li><a href="methode.html" class="hover:text-red-200"><i class="fas fa-tasks"></i> Méthode</a></li>
+      <li><a href="assemblee.html" class="hover:text-red-200"><i class="fas fa-users"></i> Assemblées</a></li>
+      <li><a href="syndicalisation.html" class="hover:text-red-200"><i class="fas fa-user-plus"></i> Syndicalisation</a></li>
+      <li><a href="resultats.html" class="hover:text-red-200"><i class="fas fa-chart-bar"></i> Résultats</a></li>
+      <li><a href="demarcherevendicative.html" class="hover:text-red-200"><i class="fas fa-bullhorn"></i> Démarche</a></li>
+    </ul>
+  </nav>
+
+  <!-- En-tête -->
+  <header class="animate__animated animate__fadeInDown bg-red-600 text-white text-center p-6">
+    <h1 class="text-2xl font-bold"><i class="fas fa-chart-line"></i> Campagne Confédérale de Conquête Électorale</h1>
+  </header>
+
+  <!-- Conteneur principal pour le composant React -->
+  <main id="app-container">
+    <!-- Le contenu existant sera rendu ici par React -->
+  </main>
+
+  <!-- Pied de page -->
+  <footer class="bg-gray-800 text-white text-center p-4">
+    <div class="container mx-auto flex justify-center items-center">
+      <div class="footer-logo mr-4">
+        <img src="img/logo-cgt.png" alt="Logo CGT" width="40">
+      </div>
+      <div class="footer-text">
+        <p>&copy; 2025 CGT - Campagne Confédérale de Conquête Électorale</p>
+        <p>L'informatique au service du militantisme CGT</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Chargement du composant React directement dans le HTML -->
+  <script type="text/babel">
+    const { useState } = React;
+
+    const IndexPage = () => {
+      return (
+        <div className="container mx-auto px-4">
+          <section className="text-center my-8">
+            <h2 className="text-xl font-bold text-red-600 mb-4">L'informatique au service du militantisme CGT</h2>
+            <p className="text-gray-700">
+              Ces outils sont conçus pour soutenir la démarche CGT et renforcer la démocratie syndicale
+              en impliquant l'ensemble des syndiqués dans la bataille électorale et revendicative.
+            </p>
+          </section>
+
+          <section className="my-8">
+            <h2 className="text-lg font-semibold text-red-600 mb-4">
+              <i className="fas fa-info-circle"></i> Une démarche globale : Élections, Syndicalisation, Mobilisation
+            </h2>
+            
+            <div className="grid md:grid-cols-3 gap-4">
+              {[
+                {
+                  icon: '🗳️',
+                  title: 'Élections',
+                  content: 'Les élections professionnelles sont un moment crucial pour mesurer la représentativité et renforcer le rapport de force.'
+                },
+                {
+                  icon: '📝',
+                  title: 'Syndicalisation',
+                  content: 'Renforcer la CGT en augmentant le nombre de syndiqués est essentiel pour notre action.'
+                },
+                {
+                  icon: '✊',
+                  title: 'Mobilisation',
+                  content: 'La mobilisation des salariés repose sur la construction d\'un cahier revendicatif répondant à leurs besoins.'
+                }
+              ].map((card, index) => (
+                <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                  <div className="text-4xl text-center mb-4">{card.icon}</div>
+                  <h3 className="text-red-600 font-bold text-center mb-2">{card.title}</h3>
+                  <p className="text-gray-700 text-center">{card.content}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="my-8">
+            <h2 className="text-lg font-semibold text-red-600 mb-4">
+              <i className="fas fa-tools"></i> Outils à votre disposition
+            </h2>
+            
+            <div className="grid md:grid-cols-3 gap-4">
+              {[
+                { href: 'retroplanning.html', icon: '📅', title: 'Rétro-planning Électoral', description: 'Planifier les étapes de la campagne électorale' },
+                { href: 'carto.html', icon: '🗺️', title: 'Cartographie Stratégique', description: 'Analyser la répartition des syndiqués' },
+                { href: 'demarcherevendicative.html', icon: '📋', title: 'Démarche Revendicative', description: 'Construire les revendications' },
+                { href: 'assemblee.html', icon: '👥', title: 'Assemblées Générales', description: 'Organiser des AG efficaces' },
+                { href: 'syndicalisation.html', icon: '📈', title: 'Plan de Syndicalisation', description: 'Développer la syndicalisation' },
+                { href: 'resultats.html', icon: '📊', title: 'Analyse des Élections', description: 'Suivre les résultats électoraux' }
+              ].map((tool, index) => (
+                <a 
+                  key={index} 
+                  href={tool.href} 
+                  className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow text-center block"
+                >
+                  <div className="text-4xl mb-4">{tool.icon}</div>
+                  <h3 className="text-red-600 font-bold mb-2">{tool.title}</h3>
+                  <p className="text-gray-700">{tool.description}</p>
+                </a>
+              ))}
+            </div>
+          </section>
+        </div>
+      );
+    };
+
+    // Rendu du composant React
+    ReactDOM.render(
+      <IndexPage />,
+      document.getElementById('app-container')
+    );
+  </script>
+</body>
+</html>
