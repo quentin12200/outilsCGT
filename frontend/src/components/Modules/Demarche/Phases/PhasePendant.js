@@ -1,28 +1,54 @@
-// frontend/src/components/DemarcheModule/Phases/PhasePendant.js
-
+// PhasePendant.js
 import React from 'react';
+import styles from './PhasePendant.module.css';
 
-// Version simplifiée du composant PhasePendant
-function PhasePendant({ activeEtape, onSelectEtape }) {
+const PhasePendant = () => {
   return (
-    <div>
-      <h3 className="text-xl font-bold mb-6">Phase d'exécution : Pendant...</h3>
-      
-      <div className="bg-gray-100 p-4 rounded-lg mb-6">
-        <h4 className="font-semibold mb-2">À propos de cette phase</h4>
-        <p>
-          La phase "Pendant" est le moment où l'on traduit les besoins recueillis en revendications concrètes,
-          puis où l'on mobilise les salariés autour de ces revendications. C'est le cœur de l'action syndicale.
-        </p>
-      </div>
-      
-      <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4">
-        <p className="italic">
-          Ce contenu sera développé dans une prochaine version de l'application.
-        </p>
+    <div className={styles.phaseContainer}>
+      <h2 className={styles.phaseTitle}>Phase Pendant</h2>
+      <div className={styles.phaseContent}>
+        <div className={styles.etapeCard}>
+          <h3>1. Information des salariés</h3>
+          <ul>
+            <li>Distribution des tracts et documents</li>
+            <li>Organisation d'assemblées générales</li>
+            <li>Permanences d'information</li>
+            <li>Communication numérique (mails, réseaux sociaux)</li>
+          </ul>
+        </div>
+
+        <div className={styles.etapeCard}>
+          <h3>2. Actions collectives</h3>
+          <ul>
+            <li>Rassemblements et manifestations</li>
+            <li>Débrayages et grèves</li>
+            <li>Actions symboliques</li>
+            <li>Rencontres avec les médias</li>
+          </ul>
+        </div>
+
+        <div className={styles.etapeCard}>
+          <h3>3. Négociations</h3>
+          <ul>
+            <li>Préparation des réunions de négociation</li>
+            <li>Participation aux instances représentatives</li>
+            <li>Compte-rendus aux syndiqués</li>
+            <li>Ajustement de la stratégie selon l'avancement</li>
+          </ul>
+        </div>
+
+        <div className={styles.etapeCard}>
+          <h3>4. Mobilisation continue</h3>
+          <ul>
+            <li>Maintien de la dynamique collective</li>
+            <li>Rotation des équipes militantes</li>
+            <li>Élargissement du mouvement</li>
+            <li>Adaptation aux réactions de la direction</li>
+          </ul>
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default PhasePendant;

@@ -1,88 +1,91 @@
-// src/components/pages/EcoleDemocratiePage.js
+// EcoleDemocratiePage.js
 import React, { useState } from 'react';
-import styles from './EcoleDemocratiePage.module.css';  // Import avec le nom "styles"
-import TabNav from '../Modules/Demarche/TabNav';
-import SchemaGlobal from '../Modules/Demarche/SchemaGlobal';
+import { Container, Row, Col, Nav, Tab } from 'react-bootstrap';
 import PhaseAvant from '../Modules/Demarche/Phases/PhaseAvant';
 import PhasePendant from '../Modules/Demarche/Phases/PhasePendant';
 import PhaseApres from '../Modules/Demarche/Phases/PhaseApres';
+import SchemaGlobal from '../Modules/Demarche/SchemaGlobal';
+import styles from './EcoleDemocratiePage.module.css';
 
-function EcoleDemocratiePage() {
-  const [activePhase, setActivePhase] = useState('schema');
-  const [activeEtape, setActiveEtape] = useState(null);
-
-  const phases = [
-    { id: 'schema', label: 'Vue d\'ensemble', color: 'bg-red-700' },
-    { id: 'avant', label: 'Avant...', color: 'bg-yellow-600' },
-    { id: 'pendant', label: 'Pendant...', color: 'bg-green-600' },
-    { id: 'apres', label: 'Après...', color: 'bg-blue-600' }
-  ];
-
-  const handlePhaseChange = (phaseId) => {
-    setActivePhase(phaseId);
-    setActiveEtape(null);
-  };
-
-  const handleEtapeChange = (etapeId) => {
-    setActiveEtape(etapeId);
-    
-    if (etapeId === 'besoins') {
-      setActivePhase('avant');
-    } else if (['revendications', 'mobilisation'].includes(etapeId)) {
-      setActivePhase('pendant');
-    }
-  };
-
+const EcoleDemocratiePage = () => {
+  const [activeTab, setActiveTab] = useState('schema');
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <h1 className={styles.pageTitle}>École de la Démocratie</h1>
-        <p className={styles.pageSubtitle}>
-          La démarche démocratique CGT pour une action syndicale efficace
-        </p>
-      </header>
-
-      <div className={styles.mainContent}>
-        <div>
-          <blockquote className={styles.quote}>
-            "La démarche, c'est mener la bataille revendicative, c'est la construction de la mobilisation pour gagner!"
-          </blockquote>
-          <p className={styles.description}>
-            C'est la capacité de chaque syndicat CGT à déployer à partir de sa force organisée sa DÉMARCHE 
-            DÉMOCRATIQUE pour bâtir un CAHIER REVENDICATIF répondant aux besoins exprimés au plus près des postes 
-            de travail et convaincre par la bataille d'idée le plus grand nombre de salariés à décider de se mobiliser au 
-            Vote CGT, à la syndicalisation CGT, entrer dans l'action CGT pour GAGNER !
+    <Container className={styles.pageContainer}>
+      <Row className="mb-4">
+        <Col>
+          <h1 className={styles.pageTitle}>École de la Démocratie CGT</h1>
+          <p className={styles.pageDescription}>
+            L'École de la Démocratie est un pilier fondamental de l'approche syndicale CGT.
+            Elle structure notre démarche en trois phases essentielles - Avant, Pendant et Après -
+            garantissant une pratique syndicale démocratique où chaque syndiqué est acteur
+            des décisions et actions collectives.
           </p>
-        </div>
+        </Col>
+      </Row>
 
-        <div className={styles.tabContainer}>
-          <TabNav 
-            tabs={phases} 
-            activeTab={activePhase} 
-            onTabChange={handlePhaseChange}
-          />
-        </div>
+      <Tab.Container id="ecole-democratie-tabs" activeKey={activeTab} onSelect={(k) => setActiveTab(k)}>
+        <Row className="mb-4">
+          <Col>
+            <Nav variant="tabs" className={styles.navTabs}>
+              <Nav.Item>
+                <Nav.Link eventKey="schema" className={styles.navLink}>
+                  Schéma Global
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="avant" className={styles.navLink}>
+                  Phase Avant
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="pendant" className={styles.navLink}>
+                  Phase Pendant
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="apres" className={styles.navLink}>
+                  Phase Après
+                </Nav.Link>
+              </Nav.Item>
+            </Nav>
+          </Col>
+        </Row>
 
-        <div className={styles.contentSection}>
-          {activePhase === 'schema' && (
-            <SchemaGlobal onSelectEtape={handleEtapeChange} />
-          )}
-          
-          {activePhase === 'avant' && (
-            <PhaseAvant activeEtape={activeEtape} onSelectEtape={handleEtapeChange} />
-          )}
-          
-          {activePhase === 'pendant' && (
-            <PhasePendant activeEtape={activeEtape} onSelectEtape={handleEtapeChange} />
-          )}
-          
-          {activePhase === 'apres' && (
-            <PhaseApres />
-          )}
-        </div>
-      </div>
-    </div>
+        <Row>
+          <Col>
+            <Tab.Content>
+              <Tab.Pane eventKey="schema">
+                <SchemaGlobal />
+              </Tab.Pane>
+              <Tab.Pane eventKey="avant">
+                <PhaseAvant />
+              </Tab.Pane>
+              <Tab.Pane eventKey="pendant">
+                <PhasePendant />
+              </Tab.Pane>
+              <Tab.Pane eventKey="apres">
+                <PhaseApres />
+              </Tab.Pane>
+            </Tab.Content>
+          </Col>
+        </Row>
+      </Tab.Container>
+
+      <Row className="mt-5">
+        <Col>
+          <div className={styles.ressourcesBox}>
+            <h3>Ressources complémentaires</h3>
+            <ul>
+              <li>Guide pratique de la démarche démocratique CGT</li>
+              <li>Formation "Acteur dans la CGT"</li>
+              <li>Fiches pratiques d'animation de réunions</li>
+              <li>Modèles de documents pour la consultation des syndiqués</li>
+            </ul>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
-}
+};
 
 export default EcoleDemocratiePage;

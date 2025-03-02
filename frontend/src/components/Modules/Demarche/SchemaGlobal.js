@@ -2,110 +2,80 @@
 import React from 'react';
 import styles from './SchemaGlobal.module.css';
 
-function SchemaGlobal({ onSelectEtape }) {
+const SchemaGlobal = () => {
   return (
     <div className={styles.schemaContainer}>
-      <div className={styles.phasesTitles}>
-        <div className={styles.phaseTitle}>Avant...</div>
-        <div className={styles.phaseTitle}>Pendant...</div>
-        <div className={styles.phaseTitle}>Après...</div>
-      </div>
+      <h2 className={styles.schemaTitle}>Schéma Global de la Démarche Démocratique CGT</h2>
       
       <div className={styles.schemaContent}>
-        <div className={styles.sideColumn}>
-          <div className={styles.sideTitle}>VIE SYNDICALE</div>
+        <div className={styles.phasesFlow}>
+          <div className={`${styles.phaseBox} ${styles.phaseAvant}`}>
+            <h3>Phase AVANT</h3>
+            <div className={styles.phaseDescription}>
+              <p>Préparation et consultation</p>
+              <ul>
+                <li>Analyse de la situation</li>
+                <li>Consultation des syndiqués</li>
+                <li>Élaboration du cahier revendicatif</li>
+                <li>Plan de communication</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className={styles.arrow}>→</div>
+          
+          <div className={`${styles.phaseBox} ${styles.phasePendant}`}>
+            <h3>Phase PENDANT</h3>
+            <div className={styles.phaseDescription}>
+              <p>Action et mobilisation</p>
+              <ul>
+                <li>Information des salariés</li>
+                <li>Actions collectives</li>
+                <li>Négociations</li>
+                <li>Mobilisation continue</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className={styles.arrow}>→</div>
+          
+          <div className={`${styles.phaseBox} ${styles.phaseApres}`}>
+            <h3>Phase APRÈS</h3>
+            <div className={styles.phaseDescription}>
+              <p>Bilan et renforcement</p>
+              <ul>
+                <li>Analyse des résultats</li>
+                <li>Communication</li>
+                <li>Suivi des engagements</li>
+                <li>Renforcement de l'organisation</li>
+              </ul>
+            </div>
+          </div>
         </div>
         
-        <div className={styles.mainContent}>
-          <div className={styles.organisationSection}>
-            <h3 className={styles.sectionTitle}>ORGANISATION</h3>
-            <ul className={styles.list}>
-              <li className={styles.listItem}>Critères représentativité</li>
-              <li className={styles.listItem}>Connaissance fine salariat</li>
-              <li className={styles.listItem}>Bilan Pratiques démocratiques</li>
-              <li className={styles.listItem}>Bilan informations formation</li>
-              <li className={styles.listItem}>Bilan activité IRP élus</li>
-              <li className={styles.listItem}>Bilan Droits planning militant</li>
-              <li className={styles.listItem}>Bilan financiers</li>
-              <li className={styles.listItem}>Analyse dernier scrutin</li>
-              <li className={styles.listItem}>Analyse dernière campagne</li>
-              <li className={styles.listItem}>Bilan communication</li>
-              <li className={styles.listItem}>Liens UL UD FD</li>
-            </ul>
-          </div>
-          
-          <div className={styles.stepsContainer}>
-            <div 
-              className={`${styles.step} ${styles.stepBesoins}`}
-              onClick={() => onSelectEtape('besoins')}
-            >
-              <h4 className={styles.stepTitle}>1ère Étape BESOINS</h4>
-              <div className={styles.stepContent}>
-                <p>AG Syndiqués auteurs acteurs décideurs</p>
-                <ul className={styles.list}>
-                  <li className={styles.listItem}>Présentation des enjeux, du contexte...</li>
-                  <li className={styles.listItem}>Déploiement avec outils...</li>
-                </ul>
-              </div>
-            </div>
-            
-            <div 
-              className={`${styles.step} ${styles.stepRevendications}`}
-              onClick={() => onSelectEtape('revendications')}
-            >
-              <h4 className={styles.stepTitle}>2ème Étape REVENDICATIONS</h4>
-              <div className={styles.stepContent}>
-                <p>AG Syndiqués auteurs acteurs décideurs</p>
-                <ul className={styles.list}>
-                  <li className={styles.listItem}>Bilan besoins</li>
-                  <li className={styles.listItem}>Élaboration démocratique du cahier revendicatif</li>
-                </ul>
-              </div>
-            </div>
-            
-            <div 
-              className={`${styles.step} ${styles.stepMobilisation}`}
-              onClick={() => onSelectEtape('mobilisation')}
-            >
-              <h4 className={styles.stepTitle}>3ème étape MOBILISATION</h4>
-              <div className={styles.stepContent}>
-                <p>AG salariés</p>
-                <ul className={styles.list}>
-                  <li className={styles.listItem}>Pointage des syndiqués</li>
-                  <li className={styles.listItem}>Rappel des salariés soutenus</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          
-          <div className={`${styles.crossSection} ${styles.communicationSection}`}>
-            <h3 className={styles.sectionTitle}>COMMUNICATION</h3>
-            <p>actions et outils pour soutenir et faire vivre la bataille des idées pour convaincre</p>
-          </div>
-          
-          <div className={`${styles.crossSection} ${styles.irpSection}`}>
-            <h3 className={styles.sectionTitle}>IRP PREROGATIVES</h3>
-            <p>pour renforcer notre argumentation et la bataille des idées dans nos AG nos tracts</p>
-          </div>
-          
-          <div className={`${styles.crossSection} ${styles.droitsSection}`}>
-            <h3 className={styles.sectionTitle}>DROITS ET MOYENS</h3>
-            <p>Pour faire vivre la démarche</p>
-          </div>
-          
-          <div className={`${styles.crossSection} ${styles.federationSection}`}>
-            <h3 className={styles.sectionTitle}>UL UD FD UGICT</h3>
-            <p>pour soutenir l'action et renforcer les Contenus REVENDICATIFS sur les enjeux Locaux Interpro Pro Spécifiques</p>
+        <div className={styles.cycleDiagram}>
+          <div className={styles.cycleTitle}>Cycle démocratique continu</div>
+          <div className={styles.cycleGraphic}>
+            <div className={styles.cycleElement}>Décider ensemble</div>
+            <div className={styles.cycleElement}>Agir collectivement</div>
+            <div className={styles.cycleElement}>Évaluer et apprendre</div>
+            <div className={styles.cycleConnector}></div>
           </div>
         </div>
-      </div>
-      
-      <div className={styles.jourJ}>
-        <div className={styles.jourJTitle}>JOUR J</div>
-        <div>DE LUTTE</div>
+        
+        <div className={styles.principesBox}>
+          <h3>Principes fondamentaux</h3>
+          <ul>
+            <li><span className={styles.principeTitre}>Démocratie syndicale</span>: Les syndiqués sont au cœur des décisions à chaque étape</li>
+            <li><span className={styles.principeTitre}>Transparence</span>: Information complète et accessible à tous moments</li>
+            <li><span className={styles.principeTitre}>Solidarité</span>: Actions collectives basées sur l'intérêt général</li>
+            <li><span className={styles.principeTitre}>Formation</span>: Développement des compétences des militants</li>
+            <li><span className={styles.principeTitre}>Évaluation continue</span>: Analyse et adaptation de nos pratiques</li>
+          </ul>
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default SchemaGlobal;

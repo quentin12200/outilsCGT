@@ -7,6 +7,7 @@ import HomePage from './components/pages/HomePage';
 import CartoPage from './components/pages/CartoPage';
 import RetroplanningPage from './components/pages/RetroplanningPage';
 import EcoleDemocratiePage from './components/pages/EcoleDemocratiePage';
+import AssembleeGeneralePage from './components/pages/AssembleeGeneralePage'; // Changez le chemin d'importation
 
 function App() {
   return (
@@ -17,8 +18,8 @@ function App() {
         <Route path="/cartographie" element={<CartoPage />} />
         <Route path="/retro-planning" element={<RetroplanningPage />} />
         <Route path="/ecole-de-la-democratie" element={<EcoleDemocratiePage />} />
+        <Route path="/assemblee" element={<AssembleeGeneralePage />} />
         {/* Routes temporaires avec composants simples pour les autres pages */}
-        <Route path="/assemblees" element={<div className="container mx-auto px-4 py-8"><h1 className="text-3xl font-bold text-red-700 mb-2">Page Assemblées</h1><p>Cette fonctionnalité est en cours de développement.</p></div>} />
         <Route path="/syndicalisation" element={<div className="container mx-auto px-4 py-8"><h1 className="text-3xl font-bold text-red-700 mb-2">Page Syndicalisation</h1><p>Cette fonctionnalité est en cours de développement.</p></div>} />
         <Route path="/resultats" element={<div className="container mx-auto px-4 py-8"><h1 className="text-3xl font-bold text-red-700 mb-2">Page Résultats</h1><p>Cette fonctionnalité est en cours de développement.</p></div>} />
         <Route path="/demarche" element={<div className="container mx-auto px-4 py-8"><h1 className="text-3xl font-bold text-red-700 mb-2">Page Démarche</h1><p>Cette fonctionnalité est en cours de développement.</p></div>} />

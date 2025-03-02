@@ -1,50 +1,56 @@
-/* src/components/pages/EcoleDemocratiePage.module.css */
+.pageContainer {
+  padding: 2rem 0;
+}
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem;
-  }
-  
-  .header {
-    margin-bottom: 2rem;
-  }
-  
-  .pageTitle {
-    font-size: 1.875rem;
-    font-weight: 700;
-    color: #b91c1c;
-    margin-bottom: 0.5rem;
-  }
-  
-  .pageSubtitle {
-    font-size: 1.125rem;
-    color: #4b5563;
-  }
-  
-  .mainContent {
-    background-color: white;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 1.5rem;
-  }
-  
-  .quote {
-    border-left: 4px solid #b91c1c;
-    padding-left: 1rem;
-    font-style: italic;
-    margin-bottom: 2rem;
-  }
-  
-  .description {
-    margin-top: 0.5rem;
-    margin-bottom: 2rem;
-  }
-  
-  .tabContainer {
-    margin-bottom: 1.5rem;
-  }
-  
-  .contentSection {
-    margin-top: 1.5rem;
-  }
+.pageTitle {
+  color: #e63946;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  border-bottom: 3px solid #e63946;
+  padding-bottom: 0.5rem;
+}
+
+.pageDescription {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.navTabs {
+  border-bottom: 2px solid #e63946;
+}
+
+.navLink {
+  font-weight: 600;
+  color: #555;
+}
+
+.navLink.active {
+  background-color: #e63946 !important;
+  color: white !important;
+  border-color: #e63946 !important;
+}
+
+.ressourcesBox {
+  background-color: #f1faee;
+  border-radius: 8px;
+  padding: 1.5rem;
+  border-left: 5px solid #e63946;
+  margin-top: 2rem;
+}
+
+.ressourcesBox h3 {
+  color: #333;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.ressourcesBox ul {
+  padding-left: 1.2rem;
+}
+
+.ressourcesBox li {
+  margin-bottom: 0.5rem;
+}

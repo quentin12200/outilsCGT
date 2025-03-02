@@ -1,109 +1,44 @@
-/* src/components/Modules/Demarche/Phases/PhasePendant.module.css */
-
-.container {
+.phaseContainer {
+    padding: 1.5rem;
     margin-bottom: 2rem;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    border-left: 5px solid #457b9d; /* Bleu CGT */
   }
   
-  .title {
-    font-size: 1.25rem;
+  .phaseTitle {
+    color: #457b9d;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
   }
   
-  .infoBox {
-    background-color: #f3f4f6; /* gray-100 */
-    border-radius: 0.5rem;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
+  .phaseContent {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
   }
   
-  .infoTitle {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+  .etapeCard {
+    background-color: white;
+    border-radius: 6px;
+    padding: 1.2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
-  .infoText {
-    color: #4b5563; /* gray-600 */
-  }
-  
-  .etapesNav {
-    display: flex;
-    border-bottom: 1px solid #e5e7eb;
+  .etapeCard h3 {
+    color: #333;
+    font-size: 1.2rem;
     margin-bottom: 1rem;
-    overflow-x: auto;
-    scrollbar-width: none;
+    border-bottom: 2px solid #457b9d;
+    padding-bottom: 0.5rem;
   }
   
-  .etapesNav::-webkit-scrollbar {
-    display: none;
+  .etapeCard ul {
+    padding-left: 1.2rem;
   }
   
-  .etapeButton {
-    padding: 0.5rem 1rem;
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
-    font-weight: 500;
-    margin-right: 0.5rem;
-    transition: background-color 0.2s ease;
-    white-space: nowrap;
-  }
-  
-  .etapeButtonDefault {
-    background-color: #e5e7eb; /* gray-200 */
-  }
-  
-  .etapeButtonDefault:hover {
-    background-color: #d1d5db; /* gray-300 */
-  }
-  
-  .etapeButtonGreen {
-    background-color: #10b981; /* green-500 */
-    color: white;
-  }
-  
-  .etapeButtonRed {
-    background-color: #ef4444; /* red-500 */
-    color: white;
-  }
-  
-  .etapeContent {
-    margin-top: 1.5rem;
-  }
-  
-  .alertBox {
-    background-color: #fef3c7; /* yellow-50 */
-    border-left: 4px solid #f59e0b; /* yellow-500 */
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .alertText {
-    font-style: italic;
-  }
-  
-  .comingSoon {
-    text-align: center;
-    padding: 2rem;
-    background-color: #f9fafb; /* gray-50 */
-    border-radius: 0.5rem;
-    margin: 2rem 0;
-  }
-  
-  .comingSoonIcon {
-    font-size: 3rem;
-    color: #d1d5db; /* gray-300 */
-    margin-bottom: 1rem;
-  }
-  
-  .comingSoonTitle {
-    font-size: 1.5rem;
-    font-weight: 700;
+  .etapeCard li {
     margin-bottom: 0.5rem;
-    color: #4b5563; /* gray-600 */
-  }
-  
-  .comingSoonText {
-    color: #6b7280; /* gray-500 */
-    max-width: 24rem;
-    margin: 0 auto;
+    line-height: 1.5;
   }

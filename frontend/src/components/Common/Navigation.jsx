@@ -52,7 +52,7 @@ function Navigation() {
             </Link>
           </li>
           <li>
-            <Link to="/assemblees" className={styles.navItem}>
+            <Link to="/assemblee" className={styles.navItem}>
               <i className={`${styles.icon} ${styles.usersIcon}`}></i>
               Assemblées
             </Link>

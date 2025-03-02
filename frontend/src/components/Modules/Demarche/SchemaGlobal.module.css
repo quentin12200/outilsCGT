@@ -1,186 +1,174 @@
-/* src/components/Modules/Demarche/SchemaGlobal.module.css */
-
 .schemaContainer {
-    position: relative;
-    margin: 2rem 0;
-    width: 100%;
-    overflow: hidden;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
   }
   
-  .phasesTitles {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 2rem;
-  }
-  
-  .phaseTitle {
-    width: 33.333%;
+  .schemaTitle {
     text-align: center;
-    font-size: 1.25rem;
+    color: #333;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
   }
   
   .schemaContent {
     display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
   }
   
-  .sideColumn {
-    width: 16.666%;
-    background-color: #7e22ce; /* purple-700 */
-    color: white;
-    padding: 1rem;
-    border-top-left-radius: 0.5rem;
-    border-bottom-left-radius: 0.5rem;
+  .phasesFlow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
   
-  .sideTitle {
-    transform: rotate(-90deg);
-    transform-origin: center;
-    font-size: 1.5rem;
-    font-weight: 700;
-    height: 16rem; /* 64 (de la classe h-64) */
+  .phaseBox {
+    flex: 1;
+    min-width: 250px;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .phaseAvant {
+    background-color: #f7d5d8;
+    border-left: 5px solid #e63946;
+  }
+  
+  .phasePendant {
+    background-color: #d5e3f7;
+    border-left: 5px solid #457b9d;
+  }
+  
+  .phaseApres {
+    background-color: #d5f7eb;
+    border-left: 5px solid #2a9d8f;
+  }
+  
+  .phaseBox h3 {
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+  
+  .phaseDescription p {
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+  }
+  
+  .phaseDescription ul {
+    padding-left: 1.2rem;
+  }
+  
+  .phaseDescription li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .arrow {
+    font-size: 2rem;
+    color: #888;
     display: flex;
     align-items: center;
     justify-content: center;
-    white-space: nowrap;
   }
   
-  .mainContent {
-    width: 83.333%;
+  .cycleDiagram {
+    margin: 2rem 0;
+    text-align: center;
   }
   
-  .organisationSection {
-    background-color: #bbf7d0; /* green-200 */
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-top-right-radius: 0.5rem;
+  .cycleTitle {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #333;
   }
   
-  .sectionTitle {
-    font-weight: 700;
-    font-size: 1.125rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .list {
-    list-style-type: disc;
-    padding-left: 1.25rem;
-  }
-  
-  .listItem {
-    margin-bottom: 0.25rem;
-  }
-  
-  .stepsContainer {
+  .cycleGraphic {
+    position: relative;
     display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
+    justify-content: space-around;
+    padding: 2rem 0;
   }
   
-  .step {
-    width: 33.333%;
+  .cycleElement {
+    background-color: #f8f9fa;
+    border: 2px solid #e63946;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     padding: 1rem;
-    border-radius: 0.5rem;
-    color: white;
-    cursor: pointer;
-    transition: all 0.2s ease;
+    font-weight: 600;
+    color: #333;
+    position: relative;
+    z-index: 2;
   }
   
-  .step:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .stepBesoins {
-    background-color: #eab308; /* yellow-500 */
-  }
-  
-  .stepBesoins:hover {
-    background-color: #ca8a04; /* yellow-600 */
-  }
-  
-  .stepRevendications {
-    background-color: #22c55e; /* green-500 */
-  }
-  
-  .stepRevendications:hover {
-    background-color: #16a34a; /* green-600 */
-  }
-  
-  .stepMobilisation {
-    background-color: #3b82f6; /* blue-500 */
-  }
-  
-  .stepMobilisation:hover {
-    background-color: #2563eb; /* blue-600 */
-  }
-  
-  .stepTitle {
-    font-weight: 700;
-    font-size: 1.125rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .stepContent {
-    text-align: left;
-  }
-  
-  .crossSection {
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 0.5rem;
-  }
-  
-  .communicationSection {
-    background-color: #fef3c7; /* yellow-100 */
-  }
-  
-  .irpSection {
-    background-color: #ffedd5; /* orange-100 */
-  }
-  
-  .droitsSection {
-    background-color: #fee2e2; /* red-100 */
-  }
-  
-  .federationSection {
-    background-color: #dbeafe; /* blue-100 */
-  }
-  
-  .jourJ {
+  .cycleConnector {
     position: absolute;
-    right: 0;
     top: 50%;
-    transform: translateY(-50%);
-    background-color: #b91c1c; /* red-700 */
-    color: white;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 70%;
+    border: 3px dashed #888;
+    border-radius: 50%;
+    z-index: 1;
+  }
+  
+  .principesBox {
+    background-color: #f1faee;
     padding: 1.5rem;
-    border-top-left-radius: 9999px;
-    border-bottom-left-radius: 9999px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 10;
+    border-radius: 8px;
+    border-left: 5px solid #e63946;
   }
   
-  .jourJTitle {
+  .principesBox h3 {
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    color: #333;
+  }
+  
+  .principesBox ul {
+    padding-left: 1.2rem;
+    list-style-type: none;
+  }
+  
+  .principesBox li {
+    margin-bottom: 0.8rem;
+    line-height: 1.6;
+  }
+  
+  .principeTitre {
     font-weight: 700;
-    font-size: 1.5rem;
+    color: #e63946;
   }
   
-  /* Responsive */
   @media (max-width: 768px) {
-    .stepsContainer {
+    .phasesFlow {
       flex-direction: column;
     }
     
-    .step {
-      width: 100%;
+    .arrow {
+      transform: rotate(90deg);
+      margin: 1rem 0;
     }
     
-    .jourJ {
-      position: relative;
-      transform: none;
-      border-radius: 0.5rem;
-      margin-top: 1rem;
-      text-align: center;
+    .cycleGraphic {
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+    
+    .cycleConnector {
+      display: none;
     }
   }
