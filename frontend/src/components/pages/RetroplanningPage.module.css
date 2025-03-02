@@ -1,0 +1,148 @@
+/* src/components/pages/RetroplanningPage.module.css */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  
+  .pageHeader {
+    margin-bottom: 2rem;
+  }
+  
+  .pageTitle {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #b91c1c;
+    margin-bottom: 0.5rem;
+  }
+  
+  .pageSubtitle {
+    font-size: 1.125rem;
+    color: #4b5563;
+  }
+  
+  .introSection {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .introAlert {
+    background-color: #fef2f2;
+    border-left: 4px solid #b91c1c;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .introTitle {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #b91c1c;
+    margin-bottom: 0.5rem;
+  }
+  
+  .introText {
+    color: #4b5563;
+  }
+  
+  .statsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  @media (min-width: 768px) {
+    .statsContainer {
+      flex-direction: row;
+    }
+  }
+  
+  .statCard {
+    flex: 1;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+  }
+  
+  .statNumber {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #b91c1c;
+    margin-bottom: 0.5rem;
+  }
+  
+  .statLabel {
+    font-weight: 600;
+  }
+  
+  .statDescription {
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+  
+  .resourcesSection {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .resourcesTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #b91c1c;
+    margin-bottom: 1rem;
+  }
+  
+  .resourcesGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .resourcesGrid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .resourcesGrid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+  
+  .resourceCard {
+    display: block;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+  }
+  
+  .resourceCard:hover {
+    background-color: #f9fafb;
+  }
+  
+  .resourceCardTitle {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .resourceCardText {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+  }
+  
+  .resourceCardButton {
+    color: #b91c1c;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
