@@ -1,0 +1,149 @@
+.actionPlanContainer {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .actionPlanTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #b71c1c;
+    margin-bottom: 1.5rem;
+  }
+  
+  .sectionGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .section {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 1.5rem;
+    min-height: 220px;
+  }
+  
+  .sectionTitle {
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .sectionIcon {
+    width: 24px;
+    height: 24px;
+    margin-right: 0.75rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  
+  .sectionIcon[data-type="growth"]::before {
+    content: "📈";
+  }
+  
+  .sectionIcon[data-type="strength"]::before {
+    content: "💪";
+  }
+  
+  .sectionDescription {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    color: #555;
+  }
+  
+  .sectionList {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sectionItem {
+    margin-bottom: 0.75rem;
+    padding: 0.5rem;
+    background-color: white;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .itemDetail {
+    font-size: 0.85rem;
+    color: #666;
+    margin-left: 0.5rem;
+  }
+  
+  .sectionEmpty {
+    font-style: italic;
+    color: #777;
+    font-size: 0.95rem;
+  }
+  
+  .actionSteps {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .actionStepsTitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #333;
+    text-align: center;
+  }
+  
+  .actionStepsList {
+    padding-left: 2rem;
+  }
+  
+  .actionStep {
+    margin-bottom: 1rem;
+  }
+  
+  .actionStepTitle {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  
+  .actionStepDescription {
+    font-size: 0.95rem;
+    color: #555;
+  }
+  
+  .exportSection {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .exportButton {
+    padding: 0.75rem 1.5rem;
+    background-color: #b71c1c;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+  
+  .exportButton:hover {
+    background-color: #8f0000;
+  }
+  
+  @media (max-width: 768px) {
+    .sectionGrid {
+      grid-template-columns: 1fr;
+    }
+    
+    .exportSection {
+      flex-direction: column;
+    }
+  }

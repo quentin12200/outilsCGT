@@ -1,0 +1,177 @@
+.visualizationContainer {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .visualizationTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #b71c1c;
+    margin-bottom: 1.5rem;
+  }
+  
+  .chartContainer {
+    margin-bottom: 2.5rem;
+  }
+  
+  .chartHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .chartLegend {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .legendItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  .legendColor {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+  }
+  
+  .barChartContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .barChartItem {
+    display: flex;
+    align-items: center;
+  }
+  
+  .barLabel {
+    width: 120px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-right: 1rem;
+    text-align: right;
+  }
+  
+  .barContainer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .barTotal {
+    height: 24px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    min-width: 30px;
+  }
+  
+  .barUnionized {
+    height: 100%;
+    background-color: #b71c1c;
+    transition: width 0.5s ease-out;
+  }
+  
+  .barValues {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .pieChartsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .pieChartCard {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .pieChartTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .pieChartContainer {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.5rem;
+  }
+  
+  .pieChart {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: background 0.5s ease-out;
+  }
+  
+  .pieChartLabel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+  }
+  
+  .pieChartInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .infoItem {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+  }
+  
+  .infoLabel {
+    color: #666;
+  }
+  
+  .infoValue {
+    font-weight: 500;
+  }
+  
+  @media (max-width: 768px) {
+    .barLabel {
+      width: 80px;
+      font-size: 0.75rem;
+    }
+    
+    .pieChartsContainer {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+    
+    .pieChartContainer {
+      width: 100px;
+      height: 100px;
+    }
+  }

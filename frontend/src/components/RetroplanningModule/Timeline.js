@@ -1,37 +1,89 @@
 // src/components/RetroplanningModule/Timeline.js
 import React from 'react';
+import styles from './Timeline.module.css';
 
 function Timeline({ phases, selectedPhase, onSelectPhase }) {
   return (
-    <div className="relative py-12">
-      {/* Ligne horizontale */}
-      <div className="hidden md:block absolute h-1 bg-gray-200 top-1/2 left-0 right-0 transform -translate-y-1/2"></div>
+    <div className={styles.timelineContainer}>
+      {/* Ligne de temps horizontale - visible uniquement sur les écrans moyens et grands */}
+      <div className={styles.timelineLine}></div>
       
       {/* Phases */}
-      <div className="flex flex-col md:flex-row justify-between relative">
-        {phases.map((phase, index) => (
-          <div 
-            key={phase.id}
-            className={`flex flex-col items-center mb-8 md:mb-0 cursor-pointer ${
-              index === phases.length - 1 ? '' : 'md:flex-1'
-            }`}
-            onClick={() => onSelectPhase(phase.id)}
-          >
-            {/* Cercle de la phase */}
+      <div className={styles.timelineSteps}>
+        {phases.map((phase, index) => {
+          // Détermine si cette phase est active, passée ou future
+          const isActive = selectedPhase === phase.id;
+          const isPast = phases.findIndex(p => p.id === selectedPhase) > index;
+          
+          // Style pour le cercle de la phase
+          const circleStyle = {};
+          if (phase.color) {
+            // Extrait la couleur du format "bg-color-600" pour l'appliquer directement
+            const colorMatch = phase.color.match(/bg-([a-z]+)-([0-9]+)/);
+            if (colorMatch) {
+              const colorName = colorMatch[1];
+              const colorIntensity = colorMatch[2];
+              // Cela suppose que les variables CSS sont définies dans votre thème 
+              // (par exemple avec Tailwind CSS)
+              circleStyle.backgroundColor = `var(--${colorName}-${colorIntensity}, ${phase.color.replace('bg-', '')})`;
+            } else {
+              circleStyle.backgroundColor = phase.color.replace('bg-', '');
+            }
+          }
+          
+          // Ajouter une classe d'opacité pour les phases passées
+          const pastClass = isPast ? styles.timelineStepPast : '';
+          
+          return (
             <div 
-              className={`w-10 h-10 rounded-full z-10 flex items-center justify-center text-white font-bold ${
-                selectedPhase === phase.id ? phase.color : 'bg-gray-400'
-              }`}
+              key={phase.id}
+              className={`${styles.timelineStep} ${pastClass}`}
             >
-              {index + 1}
+              {/* Si ce n'est pas la première phase, afficher une ligne de connexion (version mobile) */}
+              {index > 0 && (
+                <div className={styles.timelineConnector}></div>
+              )}
+              
+              {/* Cercle de la phase */}
+              <button 
+                className={`${styles.timelineCircle} ${isActive ? styles.timelineCircleActive : ''}`}
+                style={circleStyle}
+                onClick={() => onSelectPhase(phase.id)}
+                aria-label={`Sélectionner la phase ${phase.title}`}
+              >
+                {index + 1}
+              </button>
+              
+              {/* Titre, description et période */}
+              <div className={styles.timelineInfo}>
+                <div className={`${styles.timelineTitle} ${isActive ? styles.timelineTitleActive : ''}`}>
+                  {phase.title}
+                </div>
+                <div className={styles.timelineDescription}>
+                  {phase.description.length > 50 
+                    ? phase.description.substring(0, 50) + '...' 
+                    : phase.description}
+                </div>
+                {phase.periodText && (
+                  <div className={styles.timelinePeriod}>
+                    {phase.periodText}
+                  </div>
+                )}
+              </div>
             </div>
-            
-            {/* Titre et description */}
-            <div className={`mt-2 text-center ${selectedPhase === phase.id ? 'font-bold' : ''}`}>
-              <div className="text-sm">{phase.title}</div>
-              <div className="text-xs text-gray-500 mt-1">{phase.description}</div>
-            </div>
-          </div>
+          );
+        })}
+      </div>
+      
+      {/* Navigation complémentaire */}
+      <div className={styles.timelineNav}>
+        {phases.map((phase) => (
+          <button
+            key={phase.id}
+            className={`${styles.timelineDot} ${selectedPhase === phase.id ? styles.timelineDotActive : ''}`}
+            onClick={() => onSelectPhase(phase.id)}
+            aria-label={`Aller à la phase ${phase.title}`}
+          />
         ))}
       </div>
     </div>

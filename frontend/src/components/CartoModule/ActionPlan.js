@@ -1,81 +1,141 @@
-// frontend/src/components/CartoModule/ActionPlan.js
 import React from 'react';
+import styles from './ActionPlan.module.css';
 
-const ActionPlan = ({ stats, services }) => {
-  // Calculate priority services
-  const priorityServices = [...stats.below25];
-  
-  // Find services with most potential for growth
-  const potentialGrowth = services
-    .filter(s => s.salaries > 0)
-    .map(s => ({
-      name: s.name,
-      current: s.syndiques,
-      potential: s.salaries - s.syndiques,
-      ratio: s.syndiques / s.salaries
-    }))
-    .sort((a, b) => b.potential - a.potential)
+function ActionPlan({ stats, services }) {
+  // Find services with potential for growth (many employees, low unionization)
+  const growthPotential = services
+    .filter(s => s.name && s.employees > 10 && s.unionized / s.employees < 0.25)
+    .sort((a, b) => (b.employees - b.unionized) - (a.employees - a.unionized))
     .slice(0, 3);
   
+  // Find strong services that can help with organizing
+  const strongServices = services
+    .filter(s => s.name && s.employees > 5 && s.unionized / s.employees >= 0.5)
+    .sort((a, b) => (b.unionized / b.employees) - (a.unionized / a.employees))
+    .slice(0, 3);
+
   return (
-    <div className="mt-8 p-4 bg-white rounded shadow">
-      <h3 className="text-lg font-bold text-red-600 mb-4">Plan d'action stratégique</h3>
+    <div className={styles.actionPlanContainer}>
+      <h2 className={styles.actionPlanTitle}>Plan d'action stratégique</h2>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        <div className="bg-red-50 p-4 rounded border-l-4 border-red-600">
-          <h4 className="font-bold mb-2">Priorités d'intervention</h4>
-          {priorityServices.length > 0 ? (
+      <div className={styles.sectionGrid}>
+        <div className={styles.section}>
+          <h3 className={styles.sectionTitle}>
+            <i className={styles.sectionIcon} data-type="growth"></i>
+            Potentiel de croissance
+          </h3>
+          {growthPotential.length > 0 ? (
             <>
-              <p className="mb-2">Services à faible taux de syndicalisation (moins de 25%) :</p>
-              <ul className="list-disc pl-5">
-                {priorityServices.map((service, idx) => (
-                  <li key={idx}>{service}</li>
-                ))}
+              <p className={styles.sectionDescription}>
+                Ces services présentent le plus fort potentiel de développement syndical:
+              </p>
+              <ul className={styles.sectionList}>
+                {growthPotential.map((service, index) => {
+                  const potential = service.employees - service.unionized;
+                  const ratio = (service.unionized / service.employees * 100).toFixed(1);
+                  
+                  return (
+                    <li key={index} className={styles.sectionItem}>
+                      <strong>{service.name}</strong>: {potential} salariés non-syndiqués 
+                      <span className={styles.itemDetail}>({ratio}% actuellement)</span>
+                    </li>
+                  );
+                })}
               </ul>
             </>
           ) : (
-            <p>Aucun service n'est en dessous de 25% de syndicalisation. Continuez vos efforts pour augmenter le taux global.</p>
+            <p className={styles.sectionEmpty}>
+              Aucun service ne présente de fort potentiel de développement particulier.
+            </p>
           )}
         </div>
         
-        <div className="bg-blue-50 p-4 rounded border-l-4 border-blue-600">
-          <h4 className="font-bold mb-2">Potentiel de croissance</h4>
-          <p className="mb-2">Services présentant le plus fort potentiel de progression :</p>
-          <ul className="list-disc pl-5">
-            {potentialGrowth.map((service, idx) => (
-              <li key={idx}>
-                {service.name} : {service.potential} salariés non-syndiqués 
-                ({(service.ratio * 100).toFixed(1)}% actuellement)
-              </li>
-            ))}
-          </ul>
+        <div className={styles.section}>
+          <h3 className={styles.sectionTitle}>
+            <i className={styles.sectionIcon} data-type="strength"></i>
+            Forces organisatrices
+          </h3>
+          {strongServices.length > 0 ? (
+            <>
+              <p className={styles.sectionDescription}>
+                Ces services à fort taux de syndicalisation peuvent être mobilisés pour aider les autres:
+              </p>
+              <ul className={styles.sectionList}>
+                {strongServices.map((service, index) => {
+                  const ratio = (service.unionized / service.employees * 100).toFixed(1);
+                  
+                  return (
+                    <li key={index} className={styles.sectionItem}>
+                      <strong>{service.name}</strong>: {service.unionized} syndiqués 
+                      <span className={styles.itemDetail}>({ratio}%)</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </>
+          ) : (
+            <p className={styles.sectionEmpty}>
+              Aucun service ne dispose actuellement d'un taux de syndicalisation supérieur à 50%.
+            </p>
+          )}
         </div>
       </div>
       
-      {stats.above50.length > 0 && (
-        <div className="bg-green-50 p-4 rounded mb-6 border-l-4 border-green-600">
-          <h4 className="font-bold mb-2">Modèles de réussite</h4>
-          <p className="mb-2">Services à fort taux de syndicalisation (plus de 50%) pouvant servir d'exemple :</p>
-          <ul className="list-disc pl-5">
-            {stats.above50.map((service, idx) => (
-              <li key={idx}>{service}</li>
-            ))}
-          </ul>
-          <p className="mt-2 text-sm italic">Ces services peuvent être mobilisés pour aider à syndiquer les autres secteurs.</p>
-        </div>
-      )}
-      
-      <div className="bg-gray-50 p-4 rounded">
-        <h4 className="font-bold mb-2">Axes de travail prioritaires</h4>
-        <ol className="list-decimal pl-5">
-          <li className="mb-2">Organiser des AG de syndiqués dans les {stats.below25.length > 0 ? 'services prioritaires' : 'services à fort potentiel'}</li>
-          <li className="mb-2">Développer un cahier revendicatif par service en partant des besoins exprimés</li>
-          <li className="mb-2">Mettre en place un plan de visites de services et tournées systématiques</li>
-          <li className="mb-2">Déployer les syndiqués dans leur proximité immédiate avec des outils de pointage nominatifs</li>
+      <div className={styles.actionSteps}>
+        <h3 className={styles.actionStepsTitle}>Axes de travail prioritaires</h3>
+        <ol className={styles.actionStepsList}>
+          <li className={styles.actionStep}>
+            <h4 className={styles.actionStepTitle}>Cibler les services prioritaires</h4>
+            <p className={styles.actionStepDescription}>
+              Concentrer les efforts sur les services à fort potentiel identifiés ci-dessus. 
+              Mettre en place une équipe dédiée pour chacun de ces services.
+            </p>
+          </li>
+          
+          <li className={styles.actionStep}>
+            <h4 className={styles.actionStepTitle}>Mobiliser les syndiqués actifs</h4>
+            <p className={styles.actionStepDescription}>
+              S'appuyer sur les syndiqués des services à fort taux pour partager leurs expériences 
+              et aider à la syndicalisation des autres services.
+            </p>
+          </li>
+          
+          <li className={styles.actionStep}>
+            <h4 className={styles.actionStepTitle}>Élaborer des cahiers revendicatifs spécifiques</h4>
+            <p className={styles.actionStepDescription}>
+              Construire des revendications adaptées aux réalités de chaque service, en partant 
+              des besoins exprimés par les salariés eux-mêmes.
+            </p>
+          </li>
+          
+          <li className={styles.actionStep}>
+            <h4 className={styles.actionStepTitle}>Organiser des visites régulières</h4>
+            <p className={styles.actionStepDescription}>
+              Mettre en place un planning de présence syndicale dans les services ciblés avec 
+              distribution de matériel d'information.
+            </p>
+          </li>
+          
+          <li className={styles.actionStep}>
+            <h4 className={styles.actionStepTitle}>Suivre et évaluer les progrès</h4>
+            <p className={styles.actionStepDescription}>
+              Mettre à jour régulièrement cette cartographie pour mesurer l'évolution de la 
+              syndicalisation et ajuster la stratégie si nécessaire.
+            </p>
+          </li>
         </ol>
+      </div>
+      
+      <div className={styles.exportSection}>
+        <button className={styles.exportButton}>
+          Exporter en PDF
+        </button>
+        <button className={styles.exportButton}>
+          Imprimer le plan d'action
+        </button>
       </div>
     </div>
   );
-};
+}
 
 export default ActionPlan;

@@ -1,0 +1,142 @@
+/* DemarchePage.module.css */
+.demarchePage {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    width: 100%;
+    flex: 1;
+  }
+  
+  .header {
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #b71c1c;
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    font-size: 1.125rem;
+    color: #555;
+  }
+  
+  .quote {
+    background-color: #f8f9fa;
+    border-left: 4px solid #b71c1c;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    color: #555;
+  }
+  
+  .quote blockquote {
+    margin: 0;
+    font-size: 1.125rem;
+  }
+  
+  .description {
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  
+  .content {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .phaseContent {
+    padding: 1rem 0;
+  }
+  
+  .infoSection {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .infoTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #b71c1c;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .infoGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .infoCard {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .infoCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .infoIcon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .infoCardTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #333;
+  }
+  
+  .infoCardDescription {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+  }
+  
+  .infoButton {
+    padding: 0.75rem 1.25rem;
+    background-color: #b71c1c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: fit-content;
+    margin: 0 auto;
+  }
+  
+  .infoButton:hover {
+    background-color: #961717;
+  }
+  
+  @media (max-width: 768px) {
+    .infoGrid {
+      grid-template-columns: 1fr;
+    }
+  }

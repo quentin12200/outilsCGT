@@ -1,0 +1,186 @@
+/* src/components/Modules/Demarche/SchemaGlobal.module.css */
+
+.schemaContainer {
+    position: relative;
+    margin: 2rem 0;
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .phasesTitles {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+  
+  .phaseTitle {
+    width: 33.333%;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  
+  .schemaContent {
+    display: flex;
+  }
+  
+  .sideColumn {
+    width: 16.666%;
+    background-color: #7e22ce; /* purple-700 */
+    color: white;
+    padding: 1rem;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+  }
+  
+  .sideTitle {
+    transform: rotate(-90deg);
+    transform-origin: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    height: 16rem; /* 64 (de la classe h-64) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
+  
+  .mainContent {
+    width: 83.333%;
+  }
+  
+  .organisationSection {
+    background-color: #bbf7d0; /* green-200 */
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-top-right-radius: 0.5rem;
+  }
+  
+  .sectionTitle {
+    font-weight: 700;
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .list {
+    list-style-type: disc;
+    padding-left: 1.25rem;
+  }
+  
+  .listItem {
+    margin-bottom: 0.25rem;
+  }
+  
+  .stepsContainer {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .step {
+    width: 33.333%;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .step:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .stepBesoins {
+    background-color: #eab308; /* yellow-500 */
+  }
+  
+  .stepBesoins:hover {
+    background-color: #ca8a04; /* yellow-600 */
+  }
+  
+  .stepRevendications {
+    background-color: #22c55e; /* green-500 */
+  }
+  
+  .stepRevendications:hover {
+    background-color: #16a34a; /* green-600 */
+  }
+  
+  .stepMobilisation {
+    background-color: #3b82f6; /* blue-500 */
+  }
+  
+  .stepMobilisation:hover {
+    background-color: #2563eb; /* blue-600 */
+  }
+  
+  .stepTitle {
+    font-weight: 700;
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .stepContent {
+    text-align: left;
+  }
+  
+  .crossSection {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+  }
+  
+  .communicationSection {
+    background-color: #fef3c7; /* yellow-100 */
+  }
+  
+  .irpSection {
+    background-color: #ffedd5; /* orange-100 */
+  }
+  
+  .droitsSection {
+    background-color: #fee2e2; /* red-100 */
+  }
+  
+  .federationSection {
+    background-color: #dbeafe; /* blue-100 */
+  }
+  
+  .jourJ {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #b91c1c; /* red-700 */
+    color: white;
+    padding: 1.5rem;
+    border-top-left-radius: 9999px;
+    border-bottom-left-radius: 9999px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+  
+  .jourJTitle {
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .stepsContainer {
+      flex-direction: column;
+    }
+    
+    .step {
+      width: 100%;
+    }
+    
+    .jourJ {
+      position: relative;
+      transform: none;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+      text-align: center;
+    }
+  }

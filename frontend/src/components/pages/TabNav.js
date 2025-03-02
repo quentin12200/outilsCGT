@@ -1,17 +1,17 @@
 // frontend/src/components/DemarcheModule/TabNav.js
 import React from 'react';
-import styles from './TabNav.module.css';
+import styles from './TabNav.module.css';  // Import du module CSS
 
 function TabNav({ tabs, activeTab, onTabChange }) {
   // Fonction pour déterminer quelle classe de couleur appliquer
   const getTabColorClass = (tab) => {
     if (activeTab !== tab.id) return '';
     
-    // Vérifier la classe exacte au lieu de chercher une sous-chaîne
-    if (tab.color === 'bg-red-700') return styles.tabRed;
-    if (tab.color === 'bg-yellow-600') return styles.tabYellow;
-    if (tab.color === 'bg-green-600') return styles.tabGreen;
-    if (tab.color === 'bg-blue-600') return styles.tabBlue;
+    // Selon la couleur définie dans la prop du tab
+    if (tab.color.includes('red')) return styles.tabRed;
+    if (tab.color.includes('yellow')) return styles.tabYellow;
+    if (tab.color.includes('green')) return styles.tabGreen;
+    if (tab.color.includes('blue')) return styles.tabBlue;
     
     return '';
   };

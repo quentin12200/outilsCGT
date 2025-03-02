@@ -1,0 +1,194 @@
+/* src/components/Modules/Demarche/Phases/PhaseAvant.module.css */
+
+.container {
+    margin-bottom: 2rem;
+  }
+  
+  .title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+  
+  .infoBox {
+    background-color: #f3f4f6; /* gray-100 */
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .infoTitle {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .infoText {
+    color: #4b5563; /* gray-600 */
+  }
+  
+  .etapesNav {
+    display: flex;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 1rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  
+  .etapesNav::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .etapeButton {
+    padding: 0.5rem 1rem;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    font-weight: 500;
+    margin-right: 0.5rem;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+  }
+  
+  .etapeButtonDefault {
+    background-color: #e5e7eb; /* gray-200 */
+  }
+  
+  .etapeButtonDefault:hover {
+    background-color: #d1d5db; /* gray-300 */
+  }
+  
+  .etapeButtonYellow {
+    background-color: #f59e0b; /* yellow-500 */
+    color: white;
+  }
+  
+  .etapeButtonOrange {
+    background-color: #f97316; /* orange-500 */
+    color: white;
+  }
+  
+  .etapeContent {
+    margin-top: 1.5rem;
+  }
+  
+  /* Contenu des étapes */
+  .etapeTitre {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .alertBox {
+    background-color: #fef3c7; /* yellow-50 */
+    border-left: 4px solid #f59e0b; /* yellow-500 */
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .alertText {
+    font-weight: 500;
+  }
+  
+  .cardsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .card {
+    background-color: white;
+    border: 1px solid #e5e7eb; /* gray-200 */
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cardTitle {
+    font-weight: 700;
+    color: #b91c1c; /* red-700 */
+    margin-bottom: 0.75rem;
+  }
+  
+  .cardText {
+    margin-bottom: 0.75rem;
+  }
+  
+  .cardList {
+    list-style-type: disc;
+    padding-left: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .cardButton {
+    background-color: #b91c1c; /* red-700 */
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+  }
+  
+  .cardButton:hover {
+    background-color: #991b1b; /* red-800 */
+  }
+  
+  .outilsSection {
+    background-color: white;
+    border: 1px solid #e5e7eb; /* gray-200 */
+    border-radius: 0.5rem;
+    padding: 1rem;
+  }
+  
+  .outilsTitle {
+    font-weight: 700;
+    color: #b91c1c; /* red-700 */
+    margin-bottom: 0.75rem;
+  }
+  
+  .outilsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .outil {
+    border: 1px solid #e5e7eb; /* gray-200 */
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+  }
+  
+  .outilTitle {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .outilDescription {
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    color: #4b5563; /* gray-600 */
+  }
+  
+  .outilButton {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    background-color: #e5e7eb; /* gray-200 */
+    color: #4b5563; /* gray-600 */
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  .outilButton:hover {
+    background-color: #d1d5db; /* gray-300 */
+  }
+  
+  /* Responsive */
+  @media (min-width: 768px) {
+    .cardsGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .outilsGrid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }

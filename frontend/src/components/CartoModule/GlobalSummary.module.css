@@ -1,0 +1,117 @@
+.summaryContainer {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .summaryTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #b71c1c;
+    margin-bottom: 1.5rem;
+  }
+  
+  .statsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .statCard {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  
+  .statLabel {
+    font-size: 0.875rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+  }
+  
+  .statValue {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+  }
+  
+  .progressContainer {
+    margin-bottom: 2rem;
+  }
+  
+  .progressLabel {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: #666;
+  }
+  
+  .progressBar {
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .progressFill {
+    height: 100%;
+    background-color: #b71c1c;
+    border-radius: 5px;
+    transition: width 0.5s ease-out;
+  }
+  
+  .thresholdsContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .threshold {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+  
+  .thresholdTitle {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .thresholdDot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+  }
+  
+  .thresholdList {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+  }
+  
+  .thresholdItem {
+    margin-bottom: 0.25rem;
+  }
+  
+  .thresholdEmpty {
+    font-size: 0.875rem;
+    font-style: italic;
+    color: #777;
+  }
+  
+  @media (max-width: 768px) {
+    .statsGrid {
+      grid-template-columns: 1fr;
+    }
+    
+    .thresholdsContainer {
+      grid-template-columns: 1fr;
+    }
+  }
