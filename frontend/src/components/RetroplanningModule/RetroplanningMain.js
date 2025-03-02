@@ -62,6 +62,34 @@ function RetroplanningMain() {
     }
   ];
 
+  // Générer les dates pour chaque phase en fonction de la date de l'événement
+  const genererDatesPhases = () => {
+    if (!dateEvenement) return {};
+    
+    const dateJ = new Date(dateEvenement);
+    const datesPhases = {};
+    
+    phases.forEach(phase => {
+      if (phase.id === 'jourj') {
+        datesPhases[phase.id] = dateJ.toLocaleDateString('fr-FR');
+      } else if (phase.id === 'bilan') {
+        const dateDebut = new Date(dateJ);
+        dateDebut.setDate(dateJ.getDate() + 1);
+        const dateFin = new Date(dateJ);
+        dateFin.setDate(dateJ.getDate() + 30);
+        datesPhases[phase.id] = `${dateDebut.toLocaleDateString('fr-FR')} - ${dateFin.toLocaleDateString('fr-FR')}`;
+      } else {
+        const dateDebut = new Date(dateJ);
+        dateDebut.setDate(dateJ.getDate() - phase.joursAvant);
+        const dateFin = new Date(dateJ);
+        dateFin.setDate(dateJ.getDate() - phase.joursApres);
+        datesPhases[phase.id] = `${dateDebut.toLocaleDateString('fr-FR')} - ${dateFin.toLocaleDateString('fr-FR')}`;
+      }
+    });
+    
+    return datesPhases;
+  };
+
   // Fonction pour calculer les jours restants et déterminer la phase actuelle
   useEffect(() => {
     if (dateEvenement) {
@@ -94,34 +122,6 @@ function RetroplanningMain() {
       }
     }
   }, [dateEvenement, selectedPhase, phaseActuelle]);
-
-  // Générer les dates pour chaque phase en fonction de la date de l'événement
-  const genererDatesPhases = () => {
-    if (!dateEvenement) return {};
-    
-    const dateJ = new Date(dateEvenement);
-    const datesPhases = {};
-    
-    phases.forEach(phase => {
-      if (phase.id === 'jourj') {
-        datesPhases[phase.id] = dateJ.toLocaleDateString('fr-FR');
-      } else if (phase.id === 'bilan') {
-        const dateDebut = new Date(dateJ);
-        dateDebut.setDate(dateJ.getDate() + 1);
-        const dateFin = new Date(dateJ);
-        dateFin.setDate(dateJ.getDate() + 30);
-        datesPhases[phase.id] = `${dateDebut.toLocaleDateString('fr-FR')} - ${dateFin.toLocaleDateString('fr-FR')}`;
-      } else {
-        const dateDebut = new Date(dateJ);
-        dateDebut.setDate(dateJ.getDate() - phase.joursAvant);
-        const dateFin = new Date(dateJ);
-        dateFin.setDate(dateJ.getDate() - phase.joursApres);
-        datesPhases[phase.id] = `${dateDebut.toLocaleDateString('fr-FR')} - ${dateFin.toLocaleDateString('fr-FR')}`;
-      }
-    });
-    
-    return datesPhases;
-  };
 
   // Générer les phases avec leurs dates pour la timeline
   const getPhasesWithDates = () => {
@@ -157,244 +157,88 @@ function RetroplanningMain() {
   // Obtenir les phases avec leurs dates
   const phasesWithDates = getPhasesWithDates();
 
+  // NOUVELLE LIGNE IMPORTANTE : Calculer les dates des phases
+  const datesPhases = genererDatesPhases();
+
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Rétro-planning de la démarche syndicale</h2>
       
-      {/* Formulaire de date */}
-      <div className={styles.dateForm}>
-        <h3 className={styles.formTitle}>Définir la date de votre événement</h3>
-        <p className={styles.formDescription}>
-          Tout le rétro-planning s'organisera à partir de cette date clé (scrutin, action revendicative, etc.).
-        </p>
-        
-        <div className={styles.formRow}>
-          <div className={styles.formGroup}>
-            <label htmlFor="date-evenement" className={styles.formLabel}>
-              Date de l'événement (Jour J)
-            </label>
-            <input
-              type="date"
-              id="date-evenement"
-              className={styles.formInput}
-              value={dateEvenement}
-              onChange={(e) => setDateEvenement(e.target.value)}
-            />
-          </div>
-          
-          {joursRestants !== null && (
-            <div className={styles.dayCounter}>
-              {joursRestants > 0 ? (
-                <span className="font-semibold">J-{joursRestants} avant l'événement</span>
-              ) : joursRestants === 0 ? (
-                <span className="font-semibold text-red-600">C'est aujourd'hui !</span>
-              ) : (
-                <span className="font-semibold">J+{Math.abs(joursRestants)} après l'événement</span>
-              )}
-            </div>
-          )}
-        </div>
-        
-        {phaseActuelle && (
-          <div className={styles.currentPhaseAlert}>
-            <p className={styles.currentPhaseText}>
-              <span className="font-semibold">Phase actuelle : </span>
-              {phases.find(p => p.id === phaseActuelle)?.title} - Vous êtes dans la bonne période pour cette phase de la démarche.
-            </p>
-          </div>
-        )}
-      </div>
-      
-      {/* Phase actuelle et prochaines étapes */}
-      {phaseActuelle && (
-        <div className={styles.calendarSection}>
-          <h3 className={styles.formTitle}>Calendrier des phases</h3>
-          
-          <div className={styles.tableContainer}>
-            <table className={styles.phasesTable}>
-              <thead className={styles.tableHeader}>
-                <tr>
-                  <th scope="col" className={styles.tableHeaderCell}>Phase</th>
-                  <th scope="col" className={styles.tableHeaderCell}>Période</th>
-                  <th scope="col" className={styles.tableHeaderCell}>Statut</th>
+      {/* Le reste du code reste identique */}
+      <div className={styles.tableContainer}>
+        <table className={styles.phasesTable}>
+          <thead className={styles.tableHeader}>
+            <tr>
+              <th scope="col" className={styles.tableHeaderCell}>Phase</th>
+              <th scope="col" className={styles.tableHeaderCell}>Période</th>
+              <th scope="col" className={styles.tableHeaderCell}>Statut</th>
+            </tr>
+          </thead>
+          <tbody>
+            {phases.map(phase => {
+              // Déterminer le statut de la phase
+              let phaseStatus = "";
+              let phaseStatusClass = "";
+              
+              if (phase.id === phaseActuelle) {
+                phaseStatus = "En cours";
+                phaseStatusClass = styles.statusActive;
+              } else if ((phases.findIndex(p => p.id === phase.id) < phases.findIndex(p => p.id === phaseActuelle))) {
+                phaseStatus = "Terminée";
+                phaseStatusClass = styles.statusCompleted;
+              } else {
+                phaseStatus = "À venir";
+                phaseStatusClass = styles.statusUpcoming;
+              }
+              
+              // Style pour le cercle de la phase
+              const circleStyle = {};
+              if (phase.color) {
+                // Extrait la couleur du format "bg-color-600" 
+                const colorMatch = phase.color.match(/bg-([a-z]+)-([0-9]+)/);
+                if (colorMatch) {
+                  const colorName = colorMatch[1];
+                  const colorIntensity = colorMatch[2];
+                  circleStyle.backgroundColor = `var(--${colorName}-${colorIntensity}, ${phase.color.replace('bg-', '')})`;
+                } else {
+                  circleStyle.backgroundColor = phase.color.replace('bg-', '');
+                }
+              }
+              
+              return (
+                <tr 
+                  key={phase.id}
+                  className={`${styles.tableRow} ${phase.id === selectedPhase ? styles.tableRowActive : ''}`}
+                  onClick={() => setSelectedPhase(phase.id)}
+                  style={{cursor: "pointer"}}
+                >
+                  <td className={styles.tableCell}>
+                    <div className={styles.phaseBadge}>
+                      <div className={styles.phaseCircle} style={circleStyle}>
+                        {phases.findIndex(p => p.id === phase.id) + 1}
+                      </div>
+                      <div className={styles.phaseInfo}>
+                        <div className={styles.phaseName}>{phase.title}</div>
+                        <div className={styles.phaseDesc}>{phase.description}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td className={styles.tableCell}>
+                    <div className={styles.phasePeriod}>{datesPhases[phase.id]}</div>
+                  </td>
+                  <td className={styles.tableCell}>
+                    <span className={`${styles.statusBadge} ${phaseStatusClass}`}>
+                      {phaseStatus}
+                    </span>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {phasesWithDates.map(phase => {
-                  // Déterminer le statut de la phase
-                  let phaseStatus = "";
-                  let phaseStatusClass = "";
-                  
-                  if (phase.id === phaseActuelle) {
-                    phaseStatus = "En cours";
-                    phaseStatusClass = styles.statusActive;
-                  } else if ((phases.findIndex(p => p.id === phase.id) < phases.findIndex(p => p.id === phaseActuelle))) {
-                    phaseStatus = "Terminée";
-                    phaseStatusClass = styles.statusCompleted;
-                  } else {
-                    phaseStatus = "À venir";
-                    phaseStatusClass = styles.statusUpcoming;
-                  }
-                  
-                  // Style pour le cercle de la phase
-                  const circleStyle = {};
-                  if (phase.color) {
-                    // Extrait la couleur du format "bg-color-600" 
-                    const colorMatch = phase.color.match(/bg-([a-z]+)-([0-9]+)/);
-                    if (colorMatch) {
-                      const colorName = colorMatch[1];
-                      const colorIntensity = colorMatch[2];
-                      circleStyle.backgroundColor = `var(--${colorName}-${colorIntensity}, ${phase.color.replace('bg-', '')})`;
-                    } else {
-                      circleStyle.backgroundColor = phase.color.replace('bg-', '');
-                    }
-                  }
-                  
-                  return (
-                    <tr 
-                      key={phase.id}
-                      className={`${styles.tableRow} ${phase.id === selectedPhase ? styles.tableRowActive : ''}`}
-                      onClick={() => setSelectedPhase(phase.id)}
-                      style={{cursor: "pointer"}}
-                    >
-                      <td className={styles.tableCell}>
-                        <div className={styles.phaseBadge}>
-                          <div className={styles.phaseCircle} style={circleStyle}>
-                            {phases.findIndex(p => p.id === phase.id) + 1}
-                          </div>
-                          <div className={styles.phaseInfo}>
-                            <div className={styles.phaseName}>{phase.title}</div>
-                            <div className={styles.phaseDesc}>{phase.description}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className={styles.tableCell}>
-                        <div className={styles.phasePeriod}>{phase.periodText}</div>
-                      </td>
-                      <td className={styles.tableCell}>
-                        <span className={`${styles.statusBadge} ${phaseStatusClass}`}>
-                          {phaseStatus}
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-      
-      {/* Formulaire de date */}
-      <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-        <h3 className="text-lg font-semibold mb-4">Définir la date de votre événement</h3>
-        <p className="mb-4 text-gray-600">
-          Tout le rétro-planning s'organisera à partir de cette date clé (scrutin, action revendicative, etc.).
-        </p>
-        
-        <div className="flex flex-col md:flex-row items-start md:items-end gap-4">
-          <div className="w-full md:w-auto">
-            <label htmlFor="date-evenement" className="block text-sm font-medium text-gray-700 mb-1">
-              Date de l'événement (Jour J)
-            </label>
-            <input
-              type="date"
-              id="date-evenement"
-              className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
-              value={dateEvenement}
-              onChange={(e) => setDateEvenement(e.target.value)}
-            />
-          </div>
-          
-          {joursRestants !== null && (
-            <div className="bg-gray-100 px-4 py-2 rounded-md ml-0 md:ml-4">
-              {joursRestants > 0 ? (
-                <span className="font-semibold">J-{joursRestants} avant l'événement</span>
-              ) : joursRestants === 0 ? (
-                <span className="font-semibold text-red-600">C'est aujourd'hui !</span>
-              ) : (
-                <span className="font-semibold">J+{Math.abs(joursRestants)} après l'événement</span>
-              )}
-            </div>
-          )}
-        </div>
-        
-        {phaseActuelle && (
-          <div className="mt-4 p-3 bg-yellow-50 border-l-4 border-yellow-500 rounded">
-            <p className="text-yellow-800">
-              <span className="font-semibold">Phase actuelle : </span>
-              {phases.find(p => p.id === phaseActuelle)?.title} - Vous êtes dans la bonne période pour cette phase de la démarche.
-            </p>
-          </div>
-        )}
+              );
+            })}
+          </tbody>
+        </table>
       </div>
-      
-      {/* Phase actuelle et prochaines étapes */}
-      {phaseActuelle && (
-        <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-          <h3 className="text-lg font-semibold mb-4">Calendrier des phases</h3>
-          
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phase</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Période</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {phases.map(phase => {
-                  // Déterminer le statut de la phase
-                  let statut = "";
-                  let statusClass = "";
-                  
-                  if (phase.id === phaseActuelle) {
-                    statut = "En cours";
-                    statusClass = "bg-green-100 text-green-800";
-                  } else if ((phases.findIndex(p => p.id === phase.id) < phases.findIndex(p => p.id === phaseActuelle))) {
-                    statut = "Terminée";
-                    statusClass = "bg-gray-100 text-gray-800";
-                  } else {
-                    statut = "À venir";
-                    statusClass = "bg-yellow-100 text-yellow-800";
-                  }
-                  
-                  return (
-                    <tr 
-                      key={phase.id}
-                      className={phase.id === selectedPhase ? "bg-red-50" : ""}
-                      onClick={() => setSelectedPhase(phase.id)}
-                      style={{cursor: "pointer"}}
-                    >
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className={`flex-shrink-0 h-10 w-10 rounded-full ${phase.color} flex items-center justify-center text-white font-bold`}>
-                            {phases.findIndex(p => p.id === phase.id) + 1}
-                          </div>
-                          <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">{phase.title}</div>
-                            <div className="text-sm text-gray-500">{phase.description}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{datesPhases[phase.id]}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusClass}`}>
-                          {statut}
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-      
+
+      {/* Reste de votre code */}
       <div className="mb-8">
         <p className={styles.description}>
           Le rétro-planning vous permet d'organiser votre action syndicale dans le temps, 
