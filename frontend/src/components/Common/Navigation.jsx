@@ -1,23 +1,81 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import styles from './Navigation.module.css';
+import cgtLogo from '../../assets/logo-cgt.png'; // Ensure this path is correct
 
 function Navigation() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <nav className="bg-red-700 text-white shadow-md">
-      <div className="container mx-auto px-4 py-3">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="font-bold text-xl mb-4 md:mb-0">Outils CGT</div>
-          
-          <ul className="flex flex-wrap justify-center gap-4">
-            <li><a href="/" className="hover:bg-red-600 px-3 py-2 rounded transition">Accueil</a></li>
-            <li><a href="/cartographie" className="hover:bg-red-600 px-3 py-2 rounded transition">Cartographie</a></li>
-            <li><a href="/retro-planning" className="hover:bg-red-600 px-3 py-2 rounded transition">Rétro-planning</a></li>
-            <li><a href="/ecole-de-la-democratie" className="hover:bg-red-600 px-3 py-2 rounded transition">École de la Démocratie</a></li>
-            <li><a href="/assemblees" className="hover:bg-red-600 px-3 py-2 rounded transition">Assemblées</a></li>
-            <li><a href="/syndicalisation" className="hover:bg-red-600 px-3 py-2 rounded transition">Syndicalisation</a></li>
-            <li><a href="/resultats" className="hover:bg-red-600 px-3 py-2 rounded transition">Résultats</a></li>
-            <li><a href="/demarche" className="hover:bg-red-600 px-3 py-2 rounded transition">Démarche</a></li>
-          </ul>
+    <nav className={styles.navbar}>
+      <div className={styles.container}>
+        <div className={styles.logoContainer}>
+          <img src={cgtLogo} alt="Logo CGT" className={styles.logo} />
+          <h1 className={styles.title}>Outils CGT</h1>
         </div>
+
+        <button 
+          className={styles.mobileMenuButton} 
+          onClick={toggleMenu}
+          aria-label="Menu principal"
+        >
+          <span className={styles.hamburgerIcon}></span>
+        </button>
+
+        <ul className={`${styles.navList} ${isMenuOpen ? styles.menuOpen : ''}`}>
+          <li>
+            <Link to="/" className={styles.navItem}>
+              <i className={`${styles.icon} ${styles.homeIcon}`}></i>
+              Accueil
+            </Link>
+          </li>
+          <li>
+            <Link to="/cartographie" className={styles.navItem}>
+              <i className={`${styles.icon} ${styles.mapIcon}`}></i>
+              Cartographie
+            </Link>
+          </li>
+          <li>
+            <Link to="/retro-planning" className={styles.navItem}>
+              <i className={`${styles.icon} ${styles.calendarIcon}`}></i>
+              Rétro-planning
+            </Link>
+          </li>
+          <li>
+            <Link to="/ecole-de-la-democratie" className={styles.navItem}>
+              <i className={`${styles.icon} ${styles.schoolIcon}`}></i>
+              École Démocratie
+            </Link>
+          </li>
+          <li>
+            <Link to="/assemblees" className={styles.navItem}>
+              <i className={`${styles.icon} ${styles.usersIcon}`}></i>
+              Assemblées
+            </Link>
+          </li>
+          <li>
+            <Link to="/syndicalisation" className={styles.navItem}>
+              <i className={`${styles.icon} ${styles.userplusIcon}`}></i>
+              Syndicalisation
+            </Link>
+          </li>
+          <li>
+            <Link to="/resultats" className={styles.navItem}>
+              <i className={`${styles.icon} ${styles.chartIcon}`}></i>
+              Résultats
+            </Link>
+          </li>
+          <li>
+            <Link to="/demarche" className={styles.navItem}>
+              <i className={`${styles.icon} ${styles.flagIcon}`}></i>
+              Démarche
+            </Link>
+          </li>
+        </ul>
       </div>
     </nav>
   );

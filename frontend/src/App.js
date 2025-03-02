@@ -4,19 +4,17 @@ import Navigation from './components/Common/Navigation';
 import FooterFooter from './components/Layout/FooterFooter';
 import HomePage from './components/pages/HomePage';
 import CartoPage from './components/pages/CartoPage';
-// Autres importations de pages
+// Importez vos autres pages ici
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div>
       <Navigation />
-      <main className="flex-grow">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/cartographie" element={<CartoPage />} />
-          {/* Autres routes */}
-        </Routes>
-      </main>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/cartographie" element={<CartoPage />} />
+        {/* Ajoutez vos autres routes ici */}
+      </Routes>
       <FooterFooter />
     </div>
   );
