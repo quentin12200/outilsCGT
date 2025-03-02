@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';  // Tailwind CSS
-import './styles/styles.css';  // Votre CSS personnalisé
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import './index.css';
+import './styles/styles.css';
 
-const rootElement = document.getElementById('root');
-const root = ReactDOM.createRoot(rootElement);
-
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
