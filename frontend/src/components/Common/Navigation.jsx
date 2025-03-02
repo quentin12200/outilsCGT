@@ -1,82 +1,102 @@
-// src/components/Common/Navigation.jsx
+// src/components/Common/Navigation.js
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './Navigation.module.css';
-import cgtLogo from '../../assets/logo-cgt.png'; // Ensure this path is correct
 
 function Navigation() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setMenuOpen(!menuOpen);
   };
 
   return (
     <nav className={styles.navbar}>
-      <div className={styles.container}>
-        <div className={styles.logoContainer}>
-          <img src={cgtLogo} alt="Logo CGT" className={styles.logo} />
-          <h1 className={styles.title}>Outils CGT</h1>
-        </div>
+      <div className={styles.navContainer}>
+        <Link to="/" className={styles.navLogo}>
+          <img src="/logo-cgt.png" alt="CGT Logo" className={styles.logo} />
+          <span className={styles.appTitle}>Outils CGT</span>
+        </Link>
 
-        <button 
-          className={styles.mobileMenuButton} 
-          onClick={toggleMenu}
-          aria-label="Menu principal"
-        >
-          <span className={styles.hamburgerIcon}></span>
+        <button className={styles.menuButton} onClick={toggleMenu}>
+          <span className={styles.menuIcon}></span>
         </button>
 
-        <ul className={`${styles.navList} ${isMenuOpen ? styles.menuOpen : ''}`}>
-          <li>
-            <Link to="/" className={styles.navItem}>
-              <i className={`${styles.icon} ${styles.homeIcon}`}></i>
-              Accueil
-            </Link>
-          </li>
-          <li>
-            <Link to="/cartographie" className={styles.navItem}>
-              <i className={`${styles.icon} ${styles.mapIcon}`}></i>
-              Cartographie
-            </Link>
-          </li>
-          <li>
-            <Link to="/retro-planning" className={styles.navItem}>
-              <i className={`${styles.icon} ${styles.calendarIcon}`}></i>
-              Rétro-planning
-            </Link>
-          </li>
-          <li>
-            <Link to="/ecole-de-la-democratie" className={styles.navItem}>
-              <i className={`${styles.icon} ${styles.schoolIcon}`}></i>
-              École Démocratie
-            </Link>
-          </li>
-          <li>
-            <Link to="/assemblee" className={styles.navItem}>
-              <i className={`${styles.icon} ${styles.usersIcon}`}></i>
-              Assemblées
-            </Link>
-          </li>
-          <li>
-            <Link to="/syndicalisation" className={styles.navItem}>
-              <i className={`${styles.icon} ${styles.userplusIcon}`}></i>
-              Syndicalisation
-            </Link>
-          </li>
-          <li>
-            <Link to="/resultats" className={styles.navItem}>
-              <i className={`${styles.icon} ${styles.chartIcon}`}></i>
-              Résultats
-            </Link>
-          </li>
-          <li>
-            <Link to="/demarche" className={styles.navItem}>
-              <i className={`${styles.icon} ${styles.flagIcon}`}></i>
-              Démarche
-            </Link>
-          </li>
-        </ul>
+        <div className={`${styles.navMenu} ${menuOpen ? styles.active : ''}`}>
+          <ul className={styles.navList}>
+            <li className={styles.navItem}>
+              <Link 
+                to="/syndicalisation" 
+                className={`${styles.navLink} ${location.pathname === '/syndicalisation' ? styles.active : ''}`}
+                onClick={() => setMenuOpen(false)}
+              >
+                <i className="fas fa-users"></i>
+                <span>Syndicalisation</span>
+              </Link>
+            </li>
+            <li className={styles.navItem}>
+              <Link 
+                to="/resultats" 
+                className={`${styles.navLink} ${location.pathname === '/resultats' ? styles.active : ''}`}
+                onClick={() => setMenuOpen(false)}
+              >
+                <i className="fas fa-chart-bar"></i>
+                <span>Résultats Électoraux</span>
+              </Link>
+            </li>
+            <li className={styles.navItem}>
+              <Link 
+                to="/cartographie" 
+                className={`${styles.navLink} ${location.pathname === '/cartographie' ? styles.active : ''}`}
+                onClick={() => setMenuOpen(false)}
+              >
+                <i className="fas fa-map"></i>
+                <span>Cartographie</span>
+              </Link>
+            </li>
+            <li className={styles.navItem}>
+              <Link 
+                to="/demarche" 
+                className={`${styles.navLink} ${location.pathname === '/demarche' ? styles.active : ''}`}
+                onClick={() => setMenuOpen(false)}
+              >
+                <i className="fas fa-tasks"></i>
+                <span>Démarche</span>
+              </Link>
+            </li>
+            <li className={styles.navItem}>
+              <Link 
+                to="/demarche-revendicative" 
+                className={`${styles.navLink} ${location.pathname === '/demarche-revendicative' ? styles.active : ''}`}
+                onClick={() => setMenuOpen(false)}
+              >
+                <i className="fas fa-bullhorn"></i>
+                <span>Démarche Revendicative</span>
+              </Link>
+            </li>
+            <li className={styles.navItem}>
+              <Link 
+                to="/retroplanning" 
+                className={`${styles.navLink} ${location.pathname === '/retroplanning' ? styles.active : ''}`}
+                onClick={() => setMenuOpen(false)}
+              >
+                <i className="fas fa-calendar-alt"></i>
+                <span>Retroplanning</span>
+              </Link>
+            </li>
+            <li className={styles.navItem}>
+              <Link 
+                to="/tableau-nav" 
+                className={`${styles.navLink} ${location.pathname === '/tableau-nav' ? styles.active : ''}`}
+                onClick={() => setMenuOpen(false)}
+              >
+                <i className="fas fa-clipboard-list"></i>
+                <span>Tableau de Bord</span>
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
   );

@@ -2,3 +2,7 @@ venv/
 *.pyc
 __pycache__/
 frontend/node_modules/
+*.js
+frontend/src/components/Modules/ResultatsModule/ElectionForm.module.css
+frontend/src/components/Common/Navigation.jsx
+frontend/src/components/Common/Navigation.jsx

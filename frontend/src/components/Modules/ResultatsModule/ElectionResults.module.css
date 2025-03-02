@@ -1,0 +1,149 @@
+/* src/components/Modules/ResultatsModule/ElectionResults.module.css */
+
+.resultsContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .resultsHeader {
+    margin-bottom: 1.5rem;
+  }
+  
+  .resultsTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #b91c1c;
+    margin-bottom: 0.5rem;
+  }
+  
+  .resultsDate {
+    color: #6b7280;
+    font-size: 0.875rem;
+  }
+  
+  .resultsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  @media (min-width: 640px) {
+    .resultsGrid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  .resultCard {
+    background-color: #f9fafb;
+    border-radius: 0.375rem;
+    padding: 1.25rem;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .resultTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #374151;
+  }
+  
+  .resultValue {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #b91c1c;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .resultLabel {
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.875rem;
+  }
+  
+  .statsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .statCard {
+    text-align: center;
+    background-color: white;
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .statValue {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #374151;
+  }
+  
+  .statLabel {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin-top: 0.25rem;
+  }
+  
+  .evolutionIndicator {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+  
+  .evolutionPositive {
+    color: #16a34a;
+  }
+  
+  .evolutionNegative {
+    color: #dc2626;
+  }
+  
+  .evolutionNeutral {
+    color: #6b7280;
+  }
+  
+  .departmentSection {
+    margin-top: 2rem;
+  }
+  
+  .departmentTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #374151;
+  }
+  
+  .departmentList {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  @media (min-width: 640px) {
+    .departmentList {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  .departmentCard {
+    background-color: #f3f4f6;
+    border-radius: 0.375rem;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .departmentCard:hover {
+    transform: scale(1.02);
+  }
+  
