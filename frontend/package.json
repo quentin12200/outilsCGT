@@ -45,7 +45,6 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.26.3",
-    "@tailwindcss/postcss": "^4.0.9",
     "react-scripts": "^5.0.1"
   }
 }
