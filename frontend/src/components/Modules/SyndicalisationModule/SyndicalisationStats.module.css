@@ -1,0 +1,219 @@
+/* src/components/Modules/SyndicalisationModule/SyndicalisationStats.module.css */
+
+.statsContainer {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .statsTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #b91c1c; /* Rouge CGT */
+    margin-bottom: 1.5rem;
+  }
+  
+  .statsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  @media (min-width: 768px) {
+    .statsGrid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  .sectionTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .departmentList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .departmentItem {
+    background-color: #f9fafb;
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .departmentHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+  }
+  
+  .departmentName {
+    font-weight: 500;
+  }
+  
+  .departmentRatio {
+    font-weight: 700;
+  }
+  
+  .progressBar {
+    width: 100%;
+    height: 0.5rem;
+    background-color: #e5e7eb;
+    border-radius: 9999px;
+    overflow: hidden;
+  }
+  
+  .veryHighRatio {
+    height: 100%;
+    background-color: #22c55e;
+  }
+  
+  .highRatio {
+    height: 100%;
+    background-color: #3b82f6;
+  }
+  
+  .mediumRatio {
+    height: 100%;
+    background-color: #f59e0b;
+  }
+  
+  .lowRatio {
+    height: 100%;
+    background-color: #ef4444;
+  }
+  
+  .textVeryHigh {
+    color: #15803d;
+  }
+  
+  .textHigh {
+    color: #1d4ed8;
+  }
+  
+  .textMedium {
+    color: #b45309;
+  }
+  
+  .textLow {
+    color: #b91c1c;
+  }
+  
+  .departmentStats {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #4b5563;
+  }
+  
+  .keyStats {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .keyStatCard {
+    background-color: #f9fafb;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .keyStatTitle {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #374151;
+  }
+  
+  .actionSection {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1.5rem;
+  }
+  
+  .actionGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .actionGrid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  .actionCard {
+    padding: 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid;
+  }
+  
+  .priorityCard {
+    background-color: #fef3c7;
+    border-color: #fde68a;
+  }
+  
+  .priorityTitle {
+    font-weight: 600;
+    color: #92400e;
+    margin-bottom: 0.5rem;
+  }
+  
+  .strategyCard {
+    background-color: #dbeafe;
+    border-color: #bfdbfe;
+  }
+  
+  .strategyTitle {
+    font-weight: 600;
+    color: #1e40af;
+    margin-bottom: 0.5rem;
+  }
+  
+  .actionText {
+    font-size: 0.875rem;
+    color: #374151;
+  }
+  
+  .targetSelector {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .targetButton {
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background-color: #e5e7eb;
+    color: #4b5563;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .targetButtonActive {
+    background-color: #b91c1c;
+    color: white;
+  }
+  
+  .globalRateValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  
+  .globalRateCount {
+    margin-left: 0.5rem;
+    color: #4b5563;
+  }
+  
+  .sectorAverage {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #4b5563;
+  }
