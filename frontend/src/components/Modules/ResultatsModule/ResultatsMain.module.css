@@ -1,0 +1,258 @@
+/* src/components/Modules/ResultatsModule/ResultatsMain.module.css */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  
+  @media (min-width: 640px) {
+    .container {
+      padding: 2rem;
+    }
+  }
+  
+  .card {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #b91c1c; /* Rouge CGT */
+    margin-bottom: 1.5rem;
+  }
+  
+  .statsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  @media (min-width: 768px) {
+    .statsGrid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  .scoreCard {
+    background-color: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .sectionTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .centerContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .scoreValue {
+    text-align: center;
+  }
+  
+  .scorePercentage {
+    display: block;
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #b91c1c;
+  }
+  
+  .scoreLabel {
+    display: block;
+    color: #4b5563;
+  }
+  
+  .evolution {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+  
+  .evolutionPositive {
+    color: #16a34a;
+  }
+  
+  .evolutionNegative {
+    color: #dc2626;
+  }
+  
+  .evolutionNote {
+    margin-left: 0.25rem;
+    font-size: 0.75rem;
+    color: #6b7280;
+  }
+  
+  .statsCards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  
+  .statsCard {
+    text-align: center;
+    padding: 0.75rem;
+    background-color: white;
+    border-radius: 0.25rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .statsValue {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  .statsLabel {
+    display: block;
+    font-size: 0.875rem;
+    color: #4b5563;
+  }
+  
+  .statsSubLabel {
+    display: block;
+    font-size: 0.75rem;
+    color: #6b7280;
+  }
+  
+  .departmentList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .departmentItem {
+    background-color: white;
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .departmentHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+  }
+  
+  .departmentName {
+    font-weight: 500;
+  }
+  
+  .departmentPercentage {
+    font-weight: 700;
+    color: #b91c1c;
+  }
+  
+  .progressBar {
+    width: 100%;
+    height: 0.5rem;
+    background-color: #e5e7eb;
+    border-radius: 9999px;
+    overflow: hidden;
+  }
+  
+  .progressFill {
+    height: 100%;
+    background-color: #dc2626;
+  }
+  
+  .departmentStats {
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+    color: #4b5563;
+  }
+  
+  .analysisSection {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1.5rem;
+  }
+  
+  .analysisGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .analysisGrid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  .strengthsCard {
+    background-color: #dcfce7;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid #86efac;
+  }
+  
+  .strengthsTitle {
+    font-weight: 500;
+    color: #166534;
+    margin-bottom: 0.5rem;
+  }
+  
+  .improvementsCard {
+    background-color: #fef3c7;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid #fde68a;
+  }
+  
+  .improvementsTitle {
+    font-weight: 500;
+    color: #92400e;
+    margin-bottom: 0.5rem;
+  }
+  
+  .analysisText {
+    font-size: 0.875rem;
+    color: #374151;
+  }
+  
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 2rem;
+  }
+  
+  .tabButton {
+    padding: 0.75rem 1.5rem;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6b7280;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    display: flex;
+    align-items: center;
+  }
+  
+  .tabButton i {
+    margin-right: 0.5rem;
+  }
+  
+  .tabButton:hover {
+    color: #374151;
+  }
+  
+  .activeTab {
+    color: #b91c1c;
+    border-bottom-color: #b91c1c;
+  }
