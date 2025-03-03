@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Navigation.module.css';
-import cgtLogo from '../../assets/logo-cgt.png'; // Ensure this path is correct
+import cgtLogo from '../../assets/logo-cgt.png';
 
 function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
