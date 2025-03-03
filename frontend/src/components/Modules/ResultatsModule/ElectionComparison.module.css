@@ -1,0 +1,239 @@
+/* frontend/src/components/Modules/ResultatsModule/ElectionComparison.module.css */
+
+.comparisonContainer {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #b91c1c;
+    margin-bottom: 1rem;
+  }
+  
+  .infoBox {
+    background-color: #dbeafe;
+    padding: 1rem;
+    border-radius: 0.375rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .infoText {
+    color: #1e40af;
+  }
+  
+  .infoText strong {
+    font-weight: 600;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  @media (min-width: 768px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  .sectionTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #4b5563;
+  }
+  
+  .statsCard {
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .statRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .statLabel {
+    font-weight: 500;
+    color: #4b5563;
+  }
+  
+  .statValue {
+    display: flex;
+    align-items: center;
+  }
+  
+  .statCompare {
+    color: #6b7280;
+    margin-right: 0.75rem;
+  }
+  
+  .statDifference {
+    font-weight: 700;
+  }
+  
+  .positive {
+    color: #10b981;
+  }
+  
+  .negative {
+    color: #ef4444;
+  }
+  
+  .neutral {
+    color: #6b7280;
+  }
+  
+  .progressContainer {
+    width: 100%;
+    height: 0.5rem;
+    background-color: #e5e7eb;
+    border-radius: 9999px;
+    margin: 0.5rem 0 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .progressBackground {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    background-color: #9ca3af;
+    border-radius: 9999px;
+  }
+  
+  .progressFill {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    border-radius: 9999px;
+  }
+  
+  .progressFillPositive {
+    background-color: #10b981;
+  }
+  
+  .progressFillNegative {
+    background-color: #ef4444;
+  }
+  
+  .trendCard {
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    padding: 1rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .trendRow {
+    display: flex;
+    align-items: center;
+  }
+  
+  .trendIndicator {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+  
+  .trendIndicatorPositive {
+    background-color: #d1fae5;
+    color: #10b981;
+  }
+  
+  .trendIndicatorNegative {
+    background-color: #fee2e2;
+    color: #ef4444;
+  }
+  
+  .trendIndicatorNeutral {
+    background-color: #f3f4f6;
+    color: #6b7280;
+  }
+  
+  .trendText {
+    color: #4b5563;
+  }
+  
+  .trendTextPositive {
+    color: #10b981;
+  }
+  
+  .trendTextNegative {
+    color: #ef4444;
+  }
+  
+  .trendTextNeutral {
+    color: #6b7280;
+  }
+  
+  .evolutionAnalysis {
+    margin-top: 1rem;
+    color: #4b5563;
+  }
+  
+  .recommendationsSection {
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .recommendationsTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #4b5563;
+  }
+  
+  .recommendationsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  @media (min-width: 768px) {
+    .recommendationsGrid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  .recommendationsColumn {
+    width: 100%;
+  }
+  
+  .columnTitle {
+    font-weight: 600;
+    color: #b91c1c;
+    margin-bottom: 0.5rem;
+  }
+  
+  .recommendationsList {
+    list-style-type: disc;
+    padding-left: 1.25rem;
+  }
+  
+  .recommendationItem {
+    margin-bottom: 0.5rem;
+    color: #4b5563;
+  }

@@ -1,11 +1,12 @@
-// frontend/src/components/CartoModule/CartoMain.js
+// src/components/CartoModule/CartoMain.js
 import React, { useState } from 'react';
+import styles from './CartoMain.module.css';
 import ServiceForm from './ServiceForm';
 import ServiceCard from './ServiceCard';
 import GlobalSummary from './GlobalSummary';
 import ActionPlan from './ActionPlan';
 
-const CartoMain = () => {
+function CartoMain() {
   const [services, setServices] = useState([
     { name: '', salaries: 0, syndiques: 0 }
   ]);
@@ -17,11 +18,11 @@ const CartoMain = () => {
     above50: [],
     below25: []
   });
-  
+
   const addService = () => {
     setServices([...services, { name: '', salaries: 0, syndiques: 0 }]);
   };
-  
+
   const removeService = (index) => {
     if (services.length > 1) {
       const updatedServices = [...services];
@@ -29,50 +30,44 @@ const CartoMain = () => {
       setServices(updatedServices);
     }
   };
-  
+
   const updateService = (index, field, value) => {
     const updatedServices = [...services];
-    
-    // Convert to number for numeric fields
     if (field === 'salaries' || field === 'syndiques') {
       value = parseInt(value) || 0;
     }
-    
-    // Ensure syndiques doesn't exceed salaries
     if (field === 'syndiques' && value > updatedServices[index].salaries) {
       value = updatedServices[index].salaries;
     }
-    
     updatedServices[index][field] = value;
     setServices(updatedServices);
   };
-  
+
   const submitServices = () => {
-    // Check that all services have a name
+    // Vérifie que tous les services ont un nom
     const emptyServices = services.filter(s => !s.name.trim());
     if (emptyServices.length > 0) {
       alert("Tous les services doivent avoir un nom.");
       return;
     }
-    
-    // Check data consistency
+
+    // Vérifie la cohérence
     for (const service of services) {
       if (service.syndiques > service.salaries) {
         alert(`Le service "${service.name}" a plus de syndiqués que de salariés.`);
         return;
       }
     }
-    
-    // Calculate global statistics
+
+    // Calcule les stats globales
     let totalSalaries = 0;
     let totalSyndiques = 0;
     let above50 = [];
     let below25 = [];
-    
+
     services.forEach(service => {
       totalSalaries += service.salaries;
       totalSyndiques += service.syndiques;
-      
       if (service.salaries > 0) {
         const rate = service.syndiques / service.salaries;
         if (rate >= 0.5) {
@@ -83,64 +78,45 @@ const CartoMain = () => {
         }
       }
     });
-    
+
     const globalRatio = totalSalaries > 0 ? (totalSyndiques / totalSalaries) * 100 : 0;
-    
-    setStats({
-      totalSalaries,
-      totalSyndiques,
-      globalRatio,
-      above50,
-      below25
-    });
-    
+    setStats({ totalSalaries, totalSyndiques, globalRatio, above50, below25 });
     setSubmitted(true);
-  };
-  
-  const getServiceClass = (service) => {
-    if (service.salaries <= 0) return '';
-    
-    const rate = service.syndiques / service.salaries;
-    if (rate >= 0.5) return 'bg-green-100 border-green-500';
-    if (rate >= 0.25) return 'bg-yellow-100 border-yellow-500';
-    return 'bg-red-100 border-red-500';
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold text-red-600 mb-4">Cartographie stratégique des établissements</h2>
-      
-      <ServiceForm 
-        services={services} 
+    <div className={styles.mainContainer}>
+      <h2 className={styles.pageTitle}>Cartographie stratégique des établissements</h2>
+
+      <ServiceForm
+        services={services}
         onAddService={addService}
         onRemoveService={removeService}
         onUpdateService={updateService}
         onSubmit={submitServices}
       />
-      
+
       {submitted && (
         <>
           <GlobalSummary stats={stats} />
-          
-          <div className="bg-white p-4 rounded shadow mb-6">
-            <h3 className="text-lg font-bold text-red-600 mb-4">Cartographie des services</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+          <div className={styles.cardBlock}>
+            <h3 className={styles.cardTitle}>Cartographie des services</h3>
+            <div className={styles.serviceGrid}>
               {services.map((service, index) => (
-                <ServiceCard 
+                <ServiceCard
                   key={index}
                   service={service}
-                  className={getServiceClass(service)}
                 />
               ))}
             </div>
           </div>
-          
+
           <ActionPlan stats={stats} services={services} />
         </>
       )}
     </div>
   );
-};
+}
 
 export default CartoMain;

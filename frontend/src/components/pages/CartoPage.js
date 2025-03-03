@@ -1,19 +1,19 @@
-// src/components/pages/CartoPage.js
 import React from 'react';
 import CartoMain from '../CartoModule/CartoMain';
+import styles from './CartoPage.module.css';
 
 function CartoPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold text-red-700 mb-2">Cartographie Stratégique</h1>
-        <p className="text-lg text-gray-600">
+    <div className={styles.cartoContainer}>
+      <header className={styles.cartoHeader}>
+        <h1 className={styles.cartoTitle}>Cartographie Stratégique</h1>
+        <p className={styles.cartoSubtitle}>
           Visualisez le taux de syndicalisation par service et identifiez les zones prioritaires
         </p>
       </header>
 
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <p className="mb-6">
+      <div className={styles.cartoContent}>
+        <p className={styles.cartoParagraph}>
           Cet outil vous permet de réaliser une cartographie stratégique de votre établissement 
           en analysant la répartition des syndiqués par service. Vous obtiendrez un plan d'action 
           personnalisé pour renforcer la présence CGT dans les zones prioritaires.

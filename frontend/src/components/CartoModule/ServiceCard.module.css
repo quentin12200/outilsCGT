@@ -1,0 +1,101 @@
+/* ServiceCard.module.css */
+
+/* Conteneur de la carte */
+.card {
+    border: 1px solid #e5e7eb;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-top: 4px solid #9ca3af;
+  }
+  
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  }
+  
+  /* Variantes de couleur selon le taux */
+  .highRatio {
+    border-top-color: #10b981; /* vert */
+    background-color: #ecfdf5;
+  }
+  
+  .mediumRatio {
+    border-top-color: #f59e0b; /* jaune */
+    background-color: #fffbeb;
+  }
+  
+  .lowRatio {
+    border-top-color: #ef4444; /* rouge */
+    background-color: #fef2f2;
+  }
+  
+  /* Titre du service */
+  .cardTitle {
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    font-size: 1.125rem;
+    color: #1f2937;
+  }
+  
+  /* Ligne d'informations (salariés, syndiqués) */
+  .infoRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    color: #4b5563;
+  }
+  
+  /* Texte du taux */
+  .ratioText {
+    text-align: right;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    font-size: 1.125rem;
+  }
+  
+  /* Couleurs du taux selon la classe */
+  .highRatio .ratioText {
+    color: #10b981;
+  }
+  
+  .mediumRatio .ratioText {
+    color: #f59e0b;
+  }
+  
+  .lowRatio .ratioText {
+    color: #ef4444;
+  }
+  
+  /* Barre de progression */
+  .progressBar {
+    width: 100%;
+    background-color: #e5e7eb;
+    border-radius: 9999px;
+    height: 0.5rem;
+    overflow: hidden;
+  }
+  
+  .progressFill {
+    height: 100%;
+    border-radius: 9999px;
+  }
+  
+  /* Couleurs de la barre de progression selon la classe */
+  .highRatio .progressFill {
+    background-color: #10b981;
+  }
+  
+  .mediumRatio .progressFill {
+    background-color: #f59e0b;
+  }
+  
+  .lowRatio .progressFill {
+    background-color: #ef4444;
+  }
+  
+  /* Par défaut (si aucune classe de ratio n'est appliquée) */
+  .card:not(.highRatio):not(.mediumRatio):not(.lowRatio) .progressFill {
+    background-color: #b91c1c;
+  }
