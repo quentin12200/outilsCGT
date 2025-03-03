@@ -1,0 +1,68 @@
+/* ActionPlan.module.css */
+
+/* Conteneur principal de la carte d'action */
+.container {
+    margin-top: 2rem;            /* équivalent à mt-8 */
+    padding: 1rem;               /* équivalent à p-4 */
+    background-color: #ffffff;
+    border-radius: 0.25rem;      /* rounded */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* shadow */
+  }
+  
+  /* Titre de la carte */
+  .title {
+    font-size: 1.125rem;         /* text-lg */
+    font-weight: bold;
+    color: #b91c1c;              /* text-red-600 */
+    margin-bottom: 1rem;         /* mb-4 */
+  }
+  
+  /* Grille des deux panneaux (priorités et potentiel de croissance) */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;                 /* gap-4 */
+    margin-bottom: 1.5rem;      /* mb-6 */
+  }
+  
+  @media (min-width: 768px) {
+    .grid {
+      grid-template-columns: 1fr 1fr; /* md:grid-cols-2 */
+    }
+  }
+  
+  /* Panneau de gauche (priorités) */
+  .leftPanel {
+    background-color: #fef2f2;   /* bg-red-50 */
+    padding: 1rem;             /* p-4 */
+    border-radius: 0.25rem;     /* rounded */
+    border-left: 4px solid #b91c1c;  /* border-l-4 border-red-600 */
+  }
+  
+  /* Panneau de droite (potentiel de croissance) */
+  .rightPanel {
+    background-color: #eff6ff;   /* bg-blue-50 */
+    padding: 1rem;
+    border-radius: 0.25rem;
+    border-left: 4px solid #2563eb;  /* border-blue-600 */
+  }
+  
+  /* Panneau des modèles de réussite */
+  .successPanel {
+    background-color: #ecfdf5;   /* bg-green-50 */
+    padding: 1rem;
+    border-radius: 0.25rem;
+    border-left: 4px solid #16a34a;  /* border-green-600 */
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Liste numérotée pour les axes de travail */
+  .olList {
+    list-style-type: decimal;
+    padding-left: 1.25rem;      /* pl-5 */
+  }
+  
+  .listItem {
+    margin-bottom: 0.5rem;
+  }
+  
