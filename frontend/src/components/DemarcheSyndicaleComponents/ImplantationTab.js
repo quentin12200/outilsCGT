@@ -1,11 +1,10 @@
-// src/components/DemarcheSyndicaleComponents/ImplantationTab.js
 import React from 'react';
-import styles from '../../pages/DemarcheSyndicalePage.module.css';
+import styles from '../pages/DemarcheSyndicalePage.module.css';
 
 const ImplantationTab = ({ activeSubTab, setActiveSubTab }) => {
   const implantationSubTabs = [
     { id: 'analyse-cible', label: 'Analyse de cible' },
-    { id: 'plan-action', label: 'Plan d\'action' },
+    { id: 'plan-action', label: 'Plan daction' },
     { id: 'mobilisation', label: 'Mobilisation' },
     { id: 'synthese', label: 'Synthèse étapes' }
   ];

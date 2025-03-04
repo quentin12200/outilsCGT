@@ -1,0 +1,83 @@
+.pageContainer {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.subTabNav {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.subTabButton {
+  padding: 10px 20px;
+  border: none;
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.activeSubTab {
+  background-color: #bbb;
+}
+
+.subTabContent {
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.sectionTitle {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.downloadSection {
+  margin-top: 20px;
+}
+
+.downloadGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.downloadItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+}
+
+.downloadIcon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.downloadName {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.downloadButton {
+  padding: 5px 10px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.linkButtons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.linkButton {
+  padding: 10px 20px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}

@@ -1,6 +1,6 @@
 // src/components/DemarcheSyndicaleComponents/RenforcementTab.js
 import React from 'react';
-import styles from '../../pages/DemarcheSyndicalePage.module.css';
+import styles from '../pages/DemarcheSyndicalePage.module.css';
 
 const RenforcementTab = ({ activeSubTab, setActiveSubTab, setActiveTab }) => {
   const renforcementSubTabs = [
