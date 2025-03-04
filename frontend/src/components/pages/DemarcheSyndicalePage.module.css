@@ -1,83 +1,131 @@
-.pageContainer {
-  padding: 20px;
-  background-color: #f9f9f9;
+/* src/components/pages/DemarcheSyndicalePage.module.css */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.pageTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #b91c1c;
+  margin-bottom: 1.5rem;
+}
+
+.tabContent {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .subTabNav {
   display: flex;
-  justify-content: space-around;
-  margin-bottom: 20px;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
 }
 
 .subTabButton {
-  padding: 10px 20px;
+  padding: 0.75rem 1.5rem;
+  background: none;
   border: none;
-  background-color: #ddd;
+  border-bottom: 2px solid transparent;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #6b7280;
   cursor: pointer;
+  transition: color 0.2s, border-bottom 0.2s;
+  white-space: nowrap;
+}
+
+.subTabButton:hover {
+  color: #b91c1c;
 }
 
 .activeSubTab {
-  background-color: #bbb;
+  color: #b91c1c;
+  border-bottom-color: #b91c1c;
+  font-weight: 600;
 }
 
 .subTabContent {
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  padding: 1rem 0;
 }
 
 .sectionTitle {
-  font-size: 24px;
-  margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #b91c1c;
+  margin-bottom: 1.5rem;
 }
 
-.downloadSection {
-  margin-top: 20px;
+.infoBox {
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
-.downloadGrid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+.quote {
+  font-style: italic;
+  border-left: 4px solid #b91c1c;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  background-color: #fef2f2;
 }
 
-.downloadItem {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-  border: 1px solid #ddd;
-  background-color: #fff;
+.cardGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
-.downloadIcon {
-  font-size: 40px;
-  margin-bottom: 10px;
+@media (min-width: 768px) {
+  .cardGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.downloadName {
-  font-size: 16px;
-  margin-bottom: 10px;
+.card {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.downloadButton {
-  padding: 5px 10px;
-  border: none;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #b91c1c;
+}
+
+.list {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .linkButtons {
   display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  justify-content: center;
 }
 
 .linkButton {
-  padding: 10px 20px;
-  border: none;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
+  background-color: #b91c1c;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.linkButton:hover {
+  background-color: #991b1b;
 }

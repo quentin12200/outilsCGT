@@ -9,7 +9,7 @@ import RetroplanningPage from './components/pages/RetroplanningPage';
 import EcoleDemocratiePage from './components/pages/EcoleDemocratiePage';
 import ResultatsPage from './components/pages/ResultatsPage';
 import SyndicalisationPage from './components/pages/SyndicalisationPage';
-import DemarchePage from './components/pages/DemarchePage';
+import DemarcheSyndicalePage from './components/pages/DemarcheSyndicalePage';
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
           <Route path="/assemblees" element={<AssembleePage />} />
           <Route path="/syndicalisation" element={<SyndicalisationPage />} />
           <Route path="/resultats" element={<ResultatsPage />} />
-          <Route path="/demarche" element={<DemarchePage />} />
+          <Route path="/demarche" element={<DemarcheSyndicalePage />} />
           
           {/* Route 404 pour gérer les URL non définies */}
           <Route path="*" element={
