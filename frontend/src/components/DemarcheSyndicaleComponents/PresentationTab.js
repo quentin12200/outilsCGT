@@ -1,6 +1,6 @@
 // src/components/DemarcheSyndicaleComponents/PresentationTab.js
 import React from 'react';
-import styles from '../../pages/DemarcheSyndicalePage.module.css';
+import styles from '../pages/DemarcheSyndicalePage.module.css';
 
 const PresentationTab = ({ activeSubTab, setActiveSubTab, setActiveTab }) => {
   const presentationSubTabs = [

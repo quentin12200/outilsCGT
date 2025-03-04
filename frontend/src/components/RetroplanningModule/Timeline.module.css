@@ -1,141 +1,135 @@
 /* src/components/RetroplanningModule/Timeline.module.css */
-
 .timelineContainer {
-    position: relative;
-    padding: 3rem 0;
-  }
-  
+  position: relative;
+  padding: 3rem 0;
+}
+
+.timelineLine {
+  position: absolute;
+  height: 1px;
+  background-color: #e5e7eb;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 0;
+  display: none;
+}
+
+@media (min-width: 768px) {
   .timelineLine {
-    position: absolute;
-    height: 1px;
-    background-color: #e5e7eb;
-    top: 50%;
-    left: 0;
-    right: 0;
-    transform: translateY(-50%);
-    z-index: 0;
-    display: none;
-  }
-  
-  @media (min-width: 768px) {
-    .timelineLine {
-      display: block;
-    }
-  }
-  
-  .timelineSteps {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-  }
-  
-  @media (min-width: 768px) {
-    .timelineSteps {
-      flex-direction: row;
-    }
-  }
-  
-  .timelineConnector {
-    width: 1px;
-    height: 2.5rem;
-    background-color: #e5e7eb;
-    margin-bottom: 0.5rem;
     display: block;
   }
-  
-  @media (min-width: 768px) {
-    .timelineConnector {
-      display: none;
-    }
+}
+
+.timelineSteps {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .timelineSteps {
+    flex-direction: row;
   }
-  
+}
+
+.timelineConnector {
+  width: 1px;
+  height: 2.5rem;
+  background-color: #e5e7eb;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .timelineConnector {
+    display: none;
+  }
+}
+
+.timelineStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
   .timelineStep {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 2rem;
-    width: 100%;
+    margin-bottom: 0;
+    flex: 1;
   }
-  
-  @media (min-width: 768px) {
-    .timelineStep {
-      margin-bottom: 0;
-      max-width: none;
-      flex: 1;
-    }
-    
-    .timelineStep:last-child {
-      flex: 0 0 auto;
-    }
-  }
-  
-  .timelineCircle {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 9999px;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: 700;
-    transition: transform 0.2s ease-in-out;
-  }
-  
-  .timelineCircleActive {
-    transform: scale(1.1);
-    box-shadow: 0 0 0 4px #fee2e2;
-  }
-  
-  .timelineCircle:hover:not(.timelineCircleActive) {
-    transform: scale(1.05);
-  }
-  
-  .timelineInfo {
-    margin-top: 0.75rem;
-    text-align: center;
-  }
-  
+}
+
+.timelineCircle {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  transition: transform 0.2s ease-in-out;
+}
+
+.timelineCircleActive {
+  transform: scale(1.1);
+  box-shadow: 0 0 0 4px #fee2e2;
+}
+
+.timelineCircle:hover:not(.timelineCircleActive) {
+  transform: scale(1.05);
+}
+
+.timelineInfo {
+  margin-top: 0.75rem;
+  text-align: center;
+}
+
+.timelineTitle {
+  font-size: 0.875rem;
+  transition: color 0.2s ease;
+}
+
+@media (min-width: 768px) {
   .timelineTitle {
-    font-size: 0.875rem;
-    transition: color 0.2s ease;
+    font-size: 1rem;
   }
-  
-  @media (min-width: 768px) {
-    .timelineTitle {
-      font-size: 1rem;
-    }
-  }
-  
-  .timelineTitleActive {
-    font-weight: 700;
-    color: #b91c1c;
-  }
-  
-  .timelineDescription {
-    font-size: 0.75rem;
-    color: #6b7280;
-    margin-top: 0.25rem;
-    max-width: 9.375rem;
-  }
-  
-  .timelineNav {
-    display: flex;
-    justify-content: center;
-    margin-top: 2.5rem;
-  }
-  
-  .timelineDot {
-    width: 0.75rem;
-    height: 0.75rem;
-    border-radius: 9999px;
-    margin: 0 0.25rem;
-    background-color: #d1d5db;
-    transition: background-color 0.2s ease;
-  }
-  
-  .timelineDotActive {
-    background-color: #b91c1c;
-  }
+}
+
+.timelineTitleActive {
+  font-weight: 700;
+  color: #b91c1c;
+}
+
+.timelineDescription {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+  max-width: 9.375rem;
+}
+
+.timelineNav {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+
+.timelineDot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  margin: 0 0.25rem;
+  background-color: #d1d5db;
+  transition: background-color 0.2s ease;
+}
+
+.timelineDotActive {
+  background-color: #b91c1c;
+}

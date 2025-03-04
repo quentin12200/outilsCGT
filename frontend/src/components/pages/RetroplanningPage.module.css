@@ -146,3 +146,25 @@
     font-size: 0.875rem;
     font-weight: 500;
   }
+
+  .retroplanningTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+  }
+
+  .retroplanningTable th,
+  .retroplanningTable td {
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem;
+    text-align: left;
+  }
+
+  .retroplanningTable th {
+    background-color: #f3f4f6;
+    font-weight: 600;
+  }
+
+  .retroplanningTable tr:nth-child(even) {
+    background-color: #f9fafb;
+  }
