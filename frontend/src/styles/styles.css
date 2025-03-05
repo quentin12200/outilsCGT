@@ -1,7 +1,103 @@
+/* ---- Style "CGT Militant" ---- */
+
+/* Couleurs principales */
 :root {
-  --primary-color: #b91c1c;
-  --secondary-color: #6b7280;
-  --bg-color: #fff;
-  --font-base: 'Roboto', sans-serif;
-  /* Ajoute d'autres variables nécessaires */
+  --cgt-red: #cc0000;   /* Rouge CGT (peut varier : #cc0000, #d50000, etc.) */
+  --cgt-dark-red: #990000;
+  --text-color: #333;   /* Couleur du texte principal */
+  --bg-color: #f5f5f5;  /* Couleur d'arrière-plan */
+}
+
+/* Style global */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", "Open Sans", sans-serif; /* À personnaliser */
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* En-tête / Header */
+.header {
+  background-color: var(--cgt-red);
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Barre de navigation */
+.navbar {
+  display: flex;
+  justify-content: center;
+  background-color: var(--cgt-dark-red);
+  padding: 0.5rem;
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 1rem;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+/* Contenu principal */
+.main-content {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Titres de section avec une touche militante */
+.section-title {
+  color: var(--cgt-red);
+  border-bottom: 3px solid var(--cgt-red);
+  font-weight: 700;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Boutons militants */
+.btn-militant {
+  background-color: var(--cgt-red);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 3px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-militant:hover {
+  background-color: var(--cgt-dark-red);
+}
+
+/* Pied de page / Footer */
+.footer {
+  background-color: var(--cgt-red);
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+.footer a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.footer a:hover {
+  text-decoration: none;
 }
