@@ -1,0 +1,51 @@
+.toolContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    background-color: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .toolHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .toolIcon {
+    font-size: 2.5rem;
+    margin-right: 0.5rem;
+    color: #b71c1c;
+  }
+  
+  .toolTitle {
+    font-size: 1.8rem;
+    color: #b71c1c;
+    margin: 0;
+  }
+  
+  .toolDescription {
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  
+  .toolDetails h3 {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .toolDetails ul {
+    list-style: disc;
+    margin-left: 1.5rem;
+    color: #333;
+  }
+  
+  .toolDetails li {
+    margin-bottom: 0.5rem;
+  }
+  

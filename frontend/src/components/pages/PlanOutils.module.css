@@ -1,0 +1,73 @@
+.pageContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #fafafa;
+  }
+  
+  .pageTitle {
+    font-size: 2rem;
+    color: #b71c1c;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .introText {
+    font-size: 1.1rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .toolsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .toolCard {
+    background-color: #fff;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+  
+  .toolCard:hover {
+    border-color: #b71c1c;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .activeTool {
+    border-color: #b71c1c;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .toolIcon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #b71c1c;
+  }
+  
+  .toolTitle {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .toolDescription {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.4;
+  }
+  
+  .toolDetails {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  

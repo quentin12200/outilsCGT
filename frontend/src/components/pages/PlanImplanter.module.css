@@ -1,0 +1,56 @@
+.pageContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #fff;
+  }
+  
+  .pageTitle {
+    font-size: 2rem;
+    color: #b71c1c;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .introText {
+    font-size: 1.2rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  /* Style pour chaque section */
+  .section {
+    background-color: #f9f9f9;
+    border: 1px solid #e5e7eb;
+    border-left: 4px solid #b71c1c;
+    padding: 1.5rem;
+    border-radius: 6px;
+    margin-bottom: 2rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.4rem;
+    color: #b71c1c;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  
+  .sectionText {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  
+  /* Liste à puces */
+  .list {
+    list-style: disc;
+    margin-left: 1.5rem;
+    color: #333;
+  }
+  
+  .list li {
+    margin-bottom: 0.5rem;
+  }
+  
