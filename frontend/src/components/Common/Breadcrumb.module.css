@@ -1,0 +1,22 @@
+.breadcrumbContainer {
+    background-color: #f5f5f5;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .breadcrumbList {
+    list-style: none;
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .breadcrumbList li::after {
+    content: ">";
+    margin-left: 0.5rem;
+    color: #999;
+  }
+  
+  .breadcrumbList li:last-child::after {
+    content: ""; /* pas de ">" après le dernier */
+  }
+  

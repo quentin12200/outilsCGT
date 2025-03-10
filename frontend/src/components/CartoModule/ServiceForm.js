@@ -5,7 +5,7 @@ import styles from './ServiceForm.module.css';
 const ServiceForm = ({ services, onAddService, onRemoveService, onUpdateService, onSubmit }) => {
   return (
     <div className={styles.formContainer}>
-      <h3 className={styles.formTitle}>Cartographie stratégique des établissements</h3>
+      
       
       <p className={styles.description}>
         Analysez et visualisez la répartition des syndiqués par service. Cet outil vous permettra d'identifier les zones prioritaires d'intervention.
