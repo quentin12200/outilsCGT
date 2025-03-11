@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
 
 /* ---------------------------
    BARRE DE NAVIGATION GLOBALE
@@ -10,7 +10,15 @@
   top: 0;
   z-index: 1000;
   font-family: 'Roboto', sans-serif;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+  padding: 0.5rem 0;
+  background-color: rgba(183, 28, 28, 0.95);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }
 
 /* Conteneur principal */
@@ -27,11 +35,17 @@
 .logoContainer {
   display: flex;
   align-items: center;
+  transition: all 0.3s ease;
 }
 
 .logo {
-  height: 45px;
-  margin-right: 12px;
+  height: 48px;
+  margin-right: 15px;
+  transition: transform 0.3s ease;
+}
+
+.logoContainer:hover .logo {
+  transform: scale(1.05);
 }
 
 .title {
@@ -40,6 +54,16 @@
   color: #fff;
   margin: 0;
   letter-spacing: 0.5px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.navbar.scrolled .title {
+  font-size: 1.5rem;
+}
+
+.navbar.scrolled .logo {
+  height: 42px;
 }
 
 /* BOUTON HAMBURGER (MOBILE) */
@@ -49,17 +73,24 @@
   border: none;
   cursor: pointer;
   padding: 10px;
+  transition: transform 0.2s ease;
+  z-index: 1001;
+}
+
+.mobileMenuButton:hover {
+  transform: scale(1.05);
 }
 
 .hamburgerIcon,
 .hamburgerIcon::before,
 .hamburgerIcon::after {
   display: block;
-  width: 25px;
+  width: 30px;
   height: 3px;
   background-color: #fff;
   position: relative;
-  transition: all 0.3s;
+  transition: all 0.3s ease-in-out;
+  border-radius: 3px;
 }
 
 .hamburgerIcon::before,
@@ -69,11 +100,24 @@
 }
 
 .hamburgerIcon::before {
-  top: -8px;
+  top: -10px;
 }
 
 .hamburgerIcon::after {
-  bottom: -8px;
+  bottom: -10px;
+}
+
+/* Animation du hamburger en X lorsqu'ouvert */
+.menuOpen .hamburgerIcon {
+  background-color: transparent;
+}
+
+.menuOpen .hamburgerIcon::before {
+  transform: translateY(10px) rotate(45deg);
+}
+
+.menuOpen .hamburgerIcon::after {
+  transform: translateY(-10px) rotate(-45deg);
 }
 
 /* LISTE PRINCIPALE */
@@ -88,23 +132,45 @@
 .navItem {
   display: inline-flex;
   align-items: center;
-  color: #ff0000;
+  color: #fff;
   text-decoration: none;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 1.25rem;
   border-radius: 4px;
   font-weight: 500;
-  font-size: 0.95rem;
-  transition: background-color 0.2s, transform 0.1s;
+  font-size: 1rem;
+  transition: all 0.2s ease;
   position: relative; /* Nécessaire pour le sous-menu */
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 
 .navItem:hover {
   background-color: rgba(255,255,255,0.15);
-  text-decoration: none;
+  transform: translateY(-2px);
 }
 
 .navItem:active {
   transform: translateY(1px);
+}
+
+/* Effet de soulignement au survol */
+.navItem::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 8px;
+  left: 50%;
+  background-color: #fff;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+  opacity: 0;
+}
+
+.navItem:hover::after {
+  width: 60%;
+  opacity: 1;
 }
 
 /* DROPDOWN PARENT */
@@ -115,42 +181,73 @@
 /* SOUS-MENU EN MODE DESKTOP */
 .dropdownMenu {
   position: absolute;
-  top: calc(100% + 5px);
+  top: calc(100% + 8px);
   left: 0;
-  background-color: #ffffff; /* Fond blanc */
-  color: #b71c1c;         /* Texte rouge CGT */
-  min-width: 180px;
+  background-color: #ffffff; 
+  color: #b71c1c;
+  min-width: 200px;
   list-style: none;
   margin: 0;
-  padding: 0.5rem 0;
-  border-radius: 4px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  animation: fadeIn 0.15s ease-out;
+  padding: 0.75rem 0;
+  border-radius: 8px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+  animation: fadeIn 0.25s ease-out;
   z-index: 9999;
+  transform-origin: top center;
+}
+
+/* Ajout d'une petite flèche au-dessus du dropdown */
+.dropdownMenu::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid white;
 }
 
 /* ITEMS DU SOUS-MENU */
 .dropdownItem {
   display: block;
-  padding: 0.5rem 1rem;
-  color: #b71c1c; /* texte rouge */
+  padding: 0.75rem 1.5rem;
+  color: #b71c1c;
   text-decoration: none;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
+  position: relative;
+  font-weight: 500;
 }
 
 .dropdownItem:hover {
-  background-color: #f3f3f3;
+  background-color: #f5f5f5;
+  padding-left: 1.75rem;
+}
+
+/* Petit effet d'icône au survol */
+.dropdownItem::before {
+  content: '›';
+  position: absolute;
+  left: 15px;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.dropdownItem:hover::before {
+  opacity: 1;
+  left: 20px;
 }
 
 /* ANIMATION apparence */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-5px);
+    transform: translateY(-10px) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -160,12 +257,17 @@
 /* Container icône */
 .icon {
   display: inline-block;
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
+  width: 22px;
+  height: 22px;
+  margin-right: 10px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+  transition: transform 0.2s ease;
+}
+
+.navItem:hover .icon {
+  transform: scale(1.1);
 }
 
 /* Exemple : homeIcon */
@@ -173,27 +275,13 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 576 512'%3E%3Cpath d='M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1 0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z'/%3E%3C/svg%3E");
 }
 
-/* Autres icônes, à adapter à vos images */
+/* Ajoute des icônes manquantes */
 .mapIcon {
-  background-image: url("data:image/svg+xml,%3Csvg ... %3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 576 512'%3E%3Cpath d='M408 120c0 54.6-73.1 151.9-105.2 192c-7.7 9.6-22 9.6-29.6 0C241.1 271.9 168 174.6 168 120C168 53.7 221.7 0 288 0s120 53.7 120 120zm8 80.4c3.5-6.9 6.7-13.8 9.6-20.6c.5-1.2 1-2.5 1.5-3.7l116-46.4C558.9 123.4 576 135 576 152V422.8c0 9.8-6 18.6-15.1 22.3L416 503V200.4zM137.6 138.3c2.4 14.1 7.2 28.3 12.8 41.5c2.9 6.8 6.1 13.7 9.6 20.6V451.8L32.9 502.7C17.1 509 0 497.4 0 480.4V209.6c0-9.8 6-18.6 15.1-22.3l122.6-49zM327.8 332c13.9-17.4 35.7-45.7 56.2-77V504.3L192 449.4V255c20.5 31.3 42.3 59.6 56.2 77c20.5 25.6 59.1 25.6 79.6 0zM288 152a40 40 0 1 0 0-80 40 40 0 1 0 0 80z'/%3E%3C/svg%3E");
 }
-.calendarIcon {
-  background-image: url("data:image/svg+xml,%3Csvg ... %3E");
-}
-.schoolIcon {
-  background-image: url("data:image/svg+xml,%3Csvg ... %3E");
-}
-.usersIcon {
-  background-image: url("data:image/svg+xml,%3Csvg ... %3E");
-}
-.userplusIcon {
-  background-image: url("data:image/svg+xml,%3Csvg ... %3E");
-}
-.chartIcon {
-  background-image: url("data:image/svg+xml,%3Csvg ... %3E");
-}
+
 .flagIcon {
-  background-image: url("data:image/svg+xml,%3Csvg ... %3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 448 512'%3E%3Cpath d='M48 24C48 10.7 37.3 0 24 0S0 10.7 0 24V64 350.5 400v88c0 13.3 10.7 24 24 24s24-10.7 24-24V400 350.5 64c0 0 0 0 0 0V24zM128 64c0-11.8 9.2-21.3 20.9-21.8c23.6-1.1 47.4 .9 70.7 6.1c42.1 9.4 83.5 29.5 114.5 58.1c5.7 5.3 12 8.1 18.5 8.1c8.4 0 17.4-4.5 23.9-13.4c7.3-10 7.8-22.6 1.2-32.3s-19.1-15.5-31.6-11.5c-3.1 1-6.3 1.9-9.5 2.7C303.8 45.7 268 33.2 231 29.1c-37.3-4.1-74.9-.9-109.7 9.6c-20.1 6.1-32.9 13.9-45.4 22.5c-10.9 7.5-21.3 14.8-35.4 19.7c-19.8 6.8-39.6-4.8-42.8-24.9s10.6-38.5 30.5-45.3c11.5-3.9 23.7-10 36-16.5V24c0-13.3-10.7-24-24-24s-24 10.7-24 24c0 0 0 0 0 0L16 88c0 0 0 0 0 0l0 262.5C16 361.1 19.9 371 28 375.8c2.2 1.3 4.5 2.4 7 3.1c19.8 5.8 33.3 23.3 33.3 43.6c0 24.4-20.6 44.7-45 44.4c-16.6-.2-31.2-9.3-38.9-22.8c-1.1-2-2.7-3.7-4.8-5c-8.2-4.9-18.7-4.1-25.9 2.1s-9.1 16.1-5 24.8C-38.1 491.8-18.7 512 .4 512H360c13.3 0 24-10.7 24-24s-10.7-24-24-24H160 144 128 64V304v-16V168 162.2c-.1-45.8 33.6-85.3 79.3-91.8c22.7-3.2 45.9-.7 67.2 7.3c34.2 12.8 65.3 33.5 90.8 60.5c7.1 7.5 15.9 8.4 20.8 8.1c3.1-.2 7.6-1.2 11.6-5.5c9-9.7 8.4-25 .9-34.7c-31.7-41.5-73.5-72.5-121-90.1c-28.2-10.4-57.8-15.8-87.8-15.8c-67 0-125.7 41.7-146.9 101.5c-.8 2.3-1.2 4.8-1.2 7.3 0 0 0 .1 0 .1V144v23.3 .1V288V304v6.7 .1V488c0 13.3 10.7 24 24 24s24-10.7 24-24V350.5 64z'/%3E%3C/svg%3E");
 }
 
 /* ---------------------------
@@ -203,45 +291,98 @@
   /* Bouton hamburger visible */
   .mobileMenuButton {
     display: block;
+    outline: none;
   }
 
   /* Le menu principal est caché par défaut */
   .navList {
-    display: none;
+    display: flex;
     flex-direction: column;
-    width: 100%;
-    margin-top: 1rem;
+    width: 85%;
+    max-width: 300px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    background-color: #b71c1c;
+    padding: 80px 0 30px;
+    transition: all 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
   }
 
-  /* Quand on ajoute .menuOpen depuis React, on l’affiche */
+  /* Quand on ajoute .menuOpen depuis React, on l'affiche */
   .menuOpen {
-    display: flex;
+    right: 0;
   }
 
   /* Les items prennent toute la largeur */
   .navItem {
     width: 100%;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .navItem::after {
+    display: none;
   }
 
   /* Sous-menu en mode mobile */
   .dropdownMenu {
     position: static;
-    background-color: #b71c1c; /* Fond rouge en mobile */
+    background-color: rgba(0, 0, 0, 0.15);
     box-shadow: none;
-    animation: none;
+    animation: slideDown 0.3s ease-out;
     margin: 0;
-    padding-left: 1rem;
+    border-radius: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  .dropdownMenu::before {
+    display: none;
+  }
+
+  /* Animation pour l'apparition des sous-menus en mobile */
+  @keyframes slideDown {
+    from {
+      max-height: 0;
+      opacity: 0;
+    }
+    to {
+      max-height: 500px;
+      opacity: 1;
+    }
   }
 
   /* Les items du sous-menu en mobile ont le texte blanc */
   .dropdownItem {
     color: #fff;
     background-color: transparent;
-    padding: 0.5rem 0;
+    padding: 0.8rem 0 0.8rem 2.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
   }
 
   .dropdownItem:hover {
-    background-color: rgba(255,255,255,0.15);
+    background-color: rgba(255,255,255,0.1);
+  }
+
+  /* Overlay pour fermer le menu au clic à l'extérieur */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .overlayActive {
+    display: block;
+    opacity: 1;
   }
 }

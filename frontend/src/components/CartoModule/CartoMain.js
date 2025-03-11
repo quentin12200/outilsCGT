@@ -5,12 +5,14 @@ import ServiceForm from './ServiceForm';
 import ServiceCard from './ServiceCard';
 import GlobalSummary from './GlobalSummary';
 import ActionPlan from './ActionPlan';
+import CartographieAvancee from './CartographieAvancee';
 
 function CartoMain() {
   const [services, setServices] = useState([
     { name: '', salaries: 0, syndiques: 0 }
   ]);
   const [submitted, setSubmitted] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const [stats, setStats] = useState({
     totalSalaries: 0,
     totalSyndiques: 0,
@@ -84,6 +86,11 @@ function CartoMain() {
     setSubmitted(true);
   };
 
+  // Fonction pour basculer l'affichage de la cartographie avancée
+  const toggleAdvancedCartography = () => {
+    setShowAdvanced(!showAdvanced);
+  };
+
   return (
     <div className={styles.mainContainer}>
       <h2 className={styles.pageTitle}>Cartographie stratégique des établissements</h2>
@@ -115,6 +122,19 @@ function CartoMain() {
           <ActionPlan stats={stats} services={services} />
         </>
       )}
+
+      {/* Bouton pour afficher/masquer la cartographie avancée */}
+      <div className={styles.advancedButtonContainer}>
+        <button 
+          className={styles.advancedButton}
+          onClick={toggleAdvancedCartography}
+        >
+          {showAdvanced ? 'Masquer la cartographie avancée' : 'Afficher la cartographie avancée'}
+        </button>
+      </div>
+
+      {/* Composant CartographieAvancee qui ne s'affiche que si showAdvanced est vrai */}
+      <CartographieAvancee isVisible={showAdvanced} />
     </div>
   );
 }

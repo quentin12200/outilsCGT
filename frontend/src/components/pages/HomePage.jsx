@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styles from './HomePage.module.css';
@@ -57,7 +57,48 @@ const modules = [
   }
 ];
 
+// Citations sur le syndicalisme et la lutte des travailleurs
+const quotes = [
+  {
+    text: "La démarche, c'est mener la bataille revendicative, c'est la construction de la mobilisation pour gagner!",
+    author: "CGT"
+  },
+  {
+    text: "L'émancipation des travailleurs sera l'œuvre des travailleurs eux-mêmes.",
+    author: "Karl Marx"
+  },
+  {
+    text: "La solidarité n'est pas un sentiment, c'est une nécessité.",
+    author: "CGT"
+  }
+];
+
 function HomePage() {
+  const [activeQuote, setActiveQuote] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Effet pour changer la citation toutes les 10 secondes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveQuote((prevQuote) => (prevQuote + 1) % quotes.length);
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Effet pour animer les éléments lors du défilement
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      if (scrollPosition > 100) {
+        setIsVisible(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className={styles.homePage}>
       <section className={styles.hero}>
@@ -77,7 +118,10 @@ function HomePage() {
 
       <section className={styles.quoteSection}>
         <blockquote className={styles.quote}>
-          <p>"La démarche, c'est mener la bataille revendicative, c'est la construction de la mobilisation pour gagner!"</p>
+          <p>{quotes[activeQuote].text}</p>
+          {quotes[activeQuote].author && (
+            <footer className={styles.quoteAuthor}>— {quotes[activeQuote].author}</footer>
+          )}
         </blockquote>
       </section>
       
@@ -91,12 +135,22 @@ function HomePage() {
         </div>
       </section>
 
-      <section className={styles.modulesSection}>
+      <section className={`${styles.modulesSection} ${isVisible ? styles.visible : ''}`}>
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>Nos modules</h2>
           <div className={styles.modulesGrid}>
-            {modules.map(module => (
-              <ModuleCard key={module.id} module={module} />
+            {modules.map((module, index) => (
+              <div 
+                key={module.id} 
+                className={styles.moduleWrapper}
+                style={{ 
+                  animationDelay: `${index * 0.1}s`,
+                  opacity: isVisible ? 1 : 0,
+                  transform: isVisible ? 'translateY(0)' : 'translateY(20px)'
+                }}
+              >
+                <ModuleCard module={module} />
+              </div>
             ))}
           </div>
         </div>
@@ -107,6 +161,7 @@ function HomePage() {
           <h2 className={styles.ctaTitle}>Renforcez votre syndicat avec nos outils</h2>
           <p className={styles.ctaDescription}>
             Les outils numériques au service de la lutte syndicale et de la défense des travailleurs.
+            Ensemble, construisons un syndicat plus fort et plus efficace pour défendre les droits de tous.
           </p>
           <Link to="/cartographie" className={styles.ctaButton}>
             Commencer avec la cartographie
@@ -128,4 +183,3 @@ HomePage.propTypes = {
 };
 
 export default HomePage;
-
