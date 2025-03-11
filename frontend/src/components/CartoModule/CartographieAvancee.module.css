@@ -1,327 +1,531 @@
 /* src/components/CartoModule/CartographieAvancee.module.css */
 
 .container {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background-color: #ffffff;
-    border-radius: 0.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 1px solid #f0f0f0;
+}
+
+/* Style pour l'état vide */
+.emptyState {
+  padding: 3rem 2rem;
+  text-align: center;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+  color: #4b5563;
+  border: 2px dashed #e0e0e0;
+  font-size: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+}
+
+.emptyState::before {
+  content: "📊";
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 1rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #b91c1c;
+  position: relative;
+  padding-left: 0.5rem;
+}
+
+.title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  width: 4px;
+  background-color: #b91c1c;
+  border-radius: 2px;
+}
+
+.infoButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #3b82f6;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  background-color: #f0f7ff;
+  border: 1px solid #dbeafe;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.infoButton:hover {
+  color: #2563eb;
+  background-color: #e0f2fe;
+}
+
+.infoIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+.tooltip {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  width: 320px;
+  padding: 1rem;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+  font-size: 0.9rem;
+  animation: tooltipFadeIn 0.3s ease-out;
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
   }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #b91c1c;
-  }
-  
-  .infoButton {
-    display: flex;
-    align-items: center;
-    color: #3b82f6;
-    font-size: 0.875rem;
-    cursor: pointer;
-  }
-  
-  .infoButton:hover {
-    color: #2563eb;
-  }
-  
-  .infoIcon {
-    width: 1.25rem;
-    height: 1.25rem;
-    margin-right: 0.25rem;
-  }
-  
-  .tooltip {
-    position: absolute;
-    right: 0;
-    top: 100%;
-    width: 16rem;
-    padding: 0.75rem;
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.25rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 50;
-    font-size: 0.875rem;
-  }
-  
-  .tooltipTitle {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-  }
-  
-  .tooltipList {
-    list-style-type: decimal;
-    padding-left: 1rem;
-    color: #4b5563;
-  }
-  
-  .tooltipItem {
-    margin-bottom: 0.25rem;
-  }
-  
-  .tooltipWarning {
-    margin-top: 0.5rem;
-    color: #b91c1c;
-    font-weight: 600;
-  }
-  
-  .closeButton {
-    position: absolute;
-    top: 0.25rem;
-    right: 0.25rem;
-    color: #9ca3af;
-    cursor: pointer;
-  }
-  
-  .closeButton:hover {
-    color: #6b7280;
-  }
-  
+}
+
+.tooltipTitle {
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #111827;
+  border-bottom: 1px solid #f3f4f6;
+  padding-bottom: 0.5rem;
+}
+
+.tooltipList {
+  list-style-type: decimal;
+  padding-left: 1.25rem;
+  color: #4b5563;
+  margin-bottom: 1rem;
+}
+
+.tooltipItem {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.tooltipWarning {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background-color: #fee2e2;
+  color: #991b1b;
+  font-weight: 500;
+  border-radius: 0.375rem;
+  border-left: 3px solid #ef4444;
+}
+
+.closeButton {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  color: #9ca3af;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.closeButton:hover {
+  color: #4b5563;
+  background-color: #f3f4f6;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 768px) {
   .summary {
-    display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  
-  @media (min-width: 768px) {
-    .summary {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-  
-  .summaryCard {
-    padding: 0.75rem;
-    background-color: #f9fafb;
-    border-radius: 0.25rem;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  }
-  
-  .summaryTitle {
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-  }
-  
-  .summaryRow {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .genderGrid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.5rem;
-  }
-  
-  .genderTitle {
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
-  
-  .genderStat {
-    font-size: 0.875rem;
-  }
-  
-  .categoryRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.75rem;
-  }
-  
-  .serviceListHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-  }
-  
-  .serviceTitle {
-    font-weight: 600;
-  }
-  
-  .addButton {
-    padding: 0.25rem 0.5rem;
-    background-color: #3b82f6;
-    color: #ffffff;
-    border-radius: 0.25rem;
-    font-size: 0.75rem;
-    cursor: pointer;
-  }
-  
-  .addButton:hover {
-    background-color: #2563eb;
-  }
-  
-  .table {
-    width: 100%;
-    background-color: #ffffff;
-    border-collapse: separate;
-    border-spacing: 0;
-    overflow: hidden;
-    border-radius: 0.25rem;
-  }
-  
-  .tableHeader {
-    background-color: #f3f4f6;
-  }
-  
-  .tableHeaderCell {
-    padding: 0.5rem 0.75rem;
-    text-align: left;
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: #6b7280;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  
-  .tableRow {
-    border-bottom: 1px solid #e5e7eb;
-  }
-  
-  .tableCell {
-    padding: 0.5rem 0.75rem;
-    vertical-align: middle;
-  }
-  
-  .tableCellCenter {
-    text-align: center;
-  }
-  
-  .rateHigh {
-    color: #16a34a;
-  }
-  
-  .rateMedium {
-    color: #ca8a04;
-  }
-  
-  .rateLow {
-    color: #dc2626;
-  }
-  
-  .detailButton {
-    padding: 0.25rem 0.5rem;
-    background-color: #f3f4f6;
-    border-radius: 0.25rem;
-    font-size: 0.75rem;
-    cursor: pointer;
-  }
-  
-  .detailButton:hover {
-    background-color: #e5e7eb;
-  }
-  
-  .serviceForm {
-    margin-bottom: 1.5rem;
-    padding: 1rem;
-    background-color: #f9fafb;
-    border-radius: 0.25rem;
-  }
-  
-  .formHeader {
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-  }
-  
+}
+
+.summaryCard {
+  padding: 1.25rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border: 1px solid #f0f0f0;
+}
+
+.summaryCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.summaryTitle {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #4b5563;
+  font-size: 1.05rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.summaryRow:not(:last-child) {
+  border-bottom: 1px dashed #f0f0f0;
+}
+
+.genderGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.genderTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #4b5563;
+}
+
+.genderStat {
+  font-size: 0.9rem;
+  margin-bottom: 0.35rem;
+  color: #6b7280;
+}
+
+.genderStat:last-child {
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.categoryRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.35rem 0;
+  font-size: 0.9rem;
+}
+
+.categoryRow:not(:last-child) {
+  border-bottom: 1px dashed #f0f0f0;
+}
+
+.serviceListHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.serviceTitle {
+  font-weight: 600;
+  color: #4b5563;
+  font-size: 1.1rem;
+}
+
+.addButton {
+  padding: 0.5rem 1rem;
+  background-color: #3b82f6;
+  color: #ffffff;
+  border-radius: 0.375rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+}
+
+.addButton:hover {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.25);
+}
+
+.addButton:active {
+  transform: translateY(0);
+}
+
+.addButton::before {
+  content: '+';
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.table {
+  width: 100%;
+  background-color: #ffffff;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+.tableHeader {
+  background-color: #f3f4f6;
+}
+
+.tableHeaderCell {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #4b5563;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tableRow {
+  transition: background-color 0.15s ease;
+}
+
+.tableRow:hover {
+  background-color: #f9fafb;
+}
+
+.tableRow:not(:last-child) {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.tableCell {
+  padding: 0.85rem 1rem;
+  vertical-align: middle;
+  color: #374151;
+  font-size: 0.95rem;
+}
+
+.tableCellCenter {
+  text-align: center;
+}
+
+.rateHigh {
+  color: #059669;
+  font-weight: 600;
+}
+
+.rateMedium {
+  color: #d97706;
+  font-weight: 600;
+}
+
+.rateLow {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.detailButton {
+  padding: 0.4rem 0.75rem;
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #4b5563;
+}
+
+.detailButton:hover {
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+.serviceForm {
+  margin: 1.5rem 0 2.5rem;
+  padding: 1.5rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.formHeader {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  color: #374151;
+  font-size: 1.05rem;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
   .formGrid {
-    display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  
-  @media (min-width: 768px) {
-    .formGrid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-  
-  .formSection {
-    margin-bottom: 1rem;
-  }
-  
-  .sectionTitle {
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-  }
-  
-  .inputGroup {
-    margin-bottom: 0.5rem;
-  }
-  
-  .inputLabel {
-    display: block;
-    font-size: 0.875rem;
-    font-weight: 500;
-    margin-bottom: 0.25rem;
-  }
-  
-  .input {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #d1d5db;
-    border-radius: 0.25rem;
-  }
-  
+}
+
+.formSection {
+  margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+.inputGroup {
+  margin-bottom: 1rem;
+}
+
+.inputLabel {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 0.35rem;
+  color: #6b7280;
+}
+
+.input {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  color: #1f2937;
+  background-color: #ffffff;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+}
+
+.input:hover {
+  border-color: #9ca3af;
+}
+
+.categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
   .categoryGrid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.75rem;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
-  
-  @media (min-width: 768px) {
-    .categoryGrid {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-    }
+}
+
+.saveArea {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.saveMessage {
+  padding: 0.5rem 1rem;
+  background-color: #d1fae5;
+  color: #065f46;
+  border-radius: 0.375rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  animation: fadeOut 3s forwards;
+  animation-delay: 3s;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
   }
-  
-  .saveArea {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  to {
+    opacity: 0;
+    visibility: hidden;
   }
-  
-  .saveMessage {
-    padding: 0.25rem 0.75rem;
-    background-color: #d1fae5;
-    color: #065f46;
-    border-radius: 0.25rem;
-  }
-  
-  .saveButtonGroup {
-    display: flex;
-    gap: 0.5rem;
-  }
-  
-  .saveButton {
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.25rem;
-    color: #ffffff;
-    cursor: pointer;
-  }
-  
-  .saveLocalButton {
-    background-color: #3b82f6;
-  }
-  
-  .saveLocalButton:hover {
-    background-color: #2563eb;
-  }
-  
-  .saveServerButton {
-    background-color: #b91c1c;
-  }
-  
-  .saveServerButton:hover {
-    background-color: #991b1b;
-  }
+}
+
+.saveButtonGroup {
+  display: flex;
+  gap: 1rem;
+}
+
+.saveButton {
+  padding: 0.65rem 1.25rem;
+  border-radius: 0.375rem;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.saveLocalButton {
+  background-color: #3b82f6;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+}
+
+.saveLocalButton:hover {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.25);
+}
+
+.saveServerButton {
+  background-color: #b91c1c;
+  box-shadow: 0 2px 4px rgba(185, 28, 28, 0.2);
+}
+
+.saveServerButton:hover {
+  background-color: #991b1b;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(185, 28, 28, 0.25);
+}

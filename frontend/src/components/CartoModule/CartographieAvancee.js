@@ -1,95 +1,54 @@
 // src/components/CartoModule/CartographieAvancee.js
 import React, { useState, useEffect } from 'react';
 import styles from './CartographieAvancee.module.css';
-import SaveButtons from '../../Common/SaveButtons'; // Correct file path
+import SaveButtons from '../../Common/SaveButtons'; // Assurez-vous que le chemin est correct
 import storageService from '../services/storageService';
 import { saveAs } from 'file-saver';
 
-const CartographieAvancee = () => {
+const CartographieAvancee = ({ isVisible }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
 
-  // État pour les données de cartographie avancée
-  const [servicesData, setServicesData] = useState([
-    {
-      id: 1,
-      name: 'Administration',
-      totalEmployees: 45,
-      totalSyndiques: 15,
-      gender: {
-        men: { employees: 20, syndiques: 8 },
-        women: { employees: 25, syndiques: 7 }
-      },
-      categories: {
-        ouvriers: { employees: 5, syndiques: 2 },
-        employes: { employees: 25, syndiques: 8 },
-        agentsMaitrise: { employees: 10, syndiques: 3 },
-        techniciens: { employees: 0, syndiques: 0 },
-        cadres: { employees: 5, syndiques: 2 }
-      }
-    },
-    {
-      id: 2,
-      name: 'Production',
-      totalEmployees: 380,
-      totalSyndiques: 95,
-      gender: {
-        men: { employees: 280, syndiques: 78 },
-        women: { employees: 100, syndiques: 17 }
-      },
-      categories: {
-        ouvriers: { employees: 220, syndiques: 65 },
-        employes: { employees: 80, syndiques: 15 },
-        agentsMaitrise: { employees: 50, syndiques: 10 },
-        techniciens: { employees: 20, syndiques: 4 },
-        cadres: { employees: 10, syndiques: 1 }
-      }
-    },
-    {
-      id: 3,
-      name: 'R&D',
-      totalEmployees: 110,
-      totalSyndiques: 22,
-      gender: {
-        men: { employees: 75, syndiques: 18 },
-        women: { employees: 35, syndiques: 4 }
-      },
-      categories: {
-        ouvriers: { employees: 0, syndiques: 0 },
-        employes: { employees: 20, syndiques: 5 },
-        agentsMaitrise: { employees: 30, syndiques: 7 },
-        techniciens: { employees: 40, syndiques: 8 },
-        cadres: { employees: 20, syndiques: 2 }
-      }
-    }
-  ]);
+  // État pour les données de cartographie avancée - initialisé vide
+  const [servicesData, setServicesData] = useState([]);
+  const loadData = async () => {
+    // Forcer l'initialisation à vide (temporaire)
+    setServicesData([]);
+  };
 
   // Obtenir un service par son ID
   const getServiceById = (id) => {
     return servicesData.find(service => service.id === id);
   };
 
+  // Structure pour un nouveau service vide
+  const getEmptyService = (id) => ({
+    id,
+    name: `Nouveau service ${id}`,
+    totalEmployees: 0,
+    totalSyndiques: 0,
+    gender: {
+      men: { employees: 0, syndiques: 0 },
+      women: { employees: 0, syndiques: 0 }
+    },
+    categories: {
+      ouvriers: { employees: 0, syndiques: 0 },
+      employes: { employees: 0, syndiques: 0 },
+      agentsMaitrise: { employees: 0, syndiques: 0 },
+      techniciens: { employees: 0, syndiques: 0 },
+      cadres: { employees: 0, syndiques: 0 }
+    }
+  });
+
   // Ajouter un nouveau service
   const addNewService = () => {
-    const newService = {
-      id: servicesData.length + 1,
-      name: `Nouveau service ${servicesData.length + 1}`,
-      totalEmployees: 0,
-      totalSyndiques: 0,
-      gender: {
-        men: { employees: 0, syndiques: 0 },
-        women: { employees: 0, syndiques: 0 }
-      },
-      categories: {
-        ouvriers: { employees: 0, syndiques: 0 },
-        employes: { employees: 0, syndiques: 0 },
-        agentsMaitrise: { employees: 0, syndiques: 0 },
-        techniciens: { employees: 0, syndiques: 0 },
-        cadres: { employees: 0, syndiques: 0 }
-      }
-    };
+    const newId = servicesData.length > 0 
+      ? Math.max(...servicesData.map(service => service.id)) + 1 
+      : 1;
+    
+    const newService = getEmptyService(newId);
     setServicesData([...servicesData, newService]);
-    setSelectedService(newService.id);
+    setSelectedService(newId);
   };
 
   // Calculer les totaux de l'entreprise
@@ -214,7 +173,7 @@ const CartographieAvancee = () => {
       try {
         // Essayer de charger depuis le localStorage d'abord
         const localData = storageService.loadFromLocal('cartographieAvancee');
-        if (localData) {
+        if (localData && Array.isArray(localData) && localData.length > 0) {
           setServicesData(localData);
           console.log('Données chargées localement');
           return;
@@ -222,7 +181,7 @@ const CartographieAvancee = () => {
         
         // Si aucune donnée locale, essayer de charger depuis le serveur
         const serverData = await storageService.loadFromServer('cartographieAvancee');
-        if (serverData && Array.isArray(serverData)) {
+        if (serverData && Array.isArray(serverData) && serverData.length > 0) {
           setServicesData(serverData);
           console.log('Données chargées depuis le serveur');
         }
@@ -307,66 +266,72 @@ const CartographieAvancee = () => {
         </div>
       </div>
 
-      {/* Récapitulatif global */}
-      <div className={styles.summary}>
-        <div className={styles.summaryCard}>
-          <h3 className={styles.summaryTitle}>Situation globale</h3>
-          <div className={styles.summaryRow}>
-            <span>Salariés:</span>
-            <span className="font-semibold">{totals.employees}</span>
-          </div>
-          <div className={styles.summaryRow}>
-            <span>Syndiqués:</span>
-            <span className="font-semibold">{totals.syndiques}</span>
-          </div>
-          <div className={styles.summaryRow}>
-            <span>Taux:</span>
-            <span className={`font-semibold ${getRateColorClass(globalRate)}`}>{globalRate}%</span>
-          </div>
-        </div>
-        
-        <div className={styles.summaryCard}>
-          <h3 className={styles.summaryTitle}>Répartition par genre</h3>
-          <div className={styles.genderGrid}>
-            <div>
-              <h4 className={styles.genderTitle}>Hommes</h4>
-              <div className={styles.genderStat}>Salariés: {totals.gender.men.employees}</div>
-              <div className={styles.genderStat}>Syndiqués: {totals.gender.men.syndiques}</div>
-              <div className={`${styles.genderStat} ${getRateColorClass(menRate)}`}>Taux: {menRate}%</div>
+      {/* Récapitulatif global - uniquement si des services existent */}
+      {servicesData.length > 0 ? (
+        <div className={styles.summary}>
+          <div className={styles.summaryCard}>
+            <h3 className={styles.summaryTitle}>Situation globale</h3>
+            <div className={styles.summaryRow}>
+              <span>Salariés:</span>
+              <span className="font-semibold">{totals.employees}</span>
             </div>
-            <div>
-              <h4 className={styles.genderTitle}>Femmes</h4>
-              <div className={styles.genderStat}>Salariées: {totals.gender.women.employees}</div>
-              <div className={styles.genderStat}>Syndiquées: {totals.gender.women.syndiques}</div>
-              <div className={`${styles.genderStat} ${getRateColorClass(womenRate)}`}>Taux: {womenRate}%</div>
+            <div className={styles.summaryRow}>
+              <span>Syndiqués:</span>
+              <span className="font-semibold">{totals.syndiques}</span>
+            </div>
+            <div className={styles.summaryRow}>
+              <span>Taux:</span>
+              <span className={`font-semibold ${getRateColorClass(globalRate)}`}>{globalRate}%</span>
             </div>
           </div>
-        </div>
-        
-        <div className={styles.summaryCard}>
-          <h3 className={styles.summaryTitle}>Répartition par catégorie</h3>
-          <div className="space-y-1">
-            {Object.entries(totals.categories).map(([category, data]) => {
-              const rate = calculateRate(data.syndiques, data.employees);
-              const categoryNames = {
-                ouvriers: 'Ouvriers',
-                employes: 'Employés',
-                agentsMaitrise: 'Agents de maîtrise',
-                techniciens: 'Techniciens',
-                cadres: 'Cadres'
-              };
-              return (
-                <div key={category} className={styles.categoryRow}>
-                  <span>{categoryNames[category]}:</span>
-                  <span className={`font-semibold ${getRateColorClass(rate)}`}>
-                    {rate}% ({data.syndiques}/{data.employees})
-                  </span>
-                </div>
-              );
-            })}
+          
+          <div className={styles.summaryCard}>
+            <h3 className={styles.summaryTitle}>Répartition par genre</h3>
+            <div className={styles.genderGrid}>
+              <div>
+                <h4 className={styles.genderTitle}>Hommes</h4>
+                <div className={styles.genderStat}>Salariés: {totals.gender.men.employees}</div>
+                <div className={styles.genderStat}>Syndiqués: {totals.gender.men.syndiques}</div>
+                <div className={`${styles.genderStat} ${getRateColorClass(menRate)}`}>Taux: {menRate}%</div>
+              </div>
+              <div>
+                <h4 className={styles.genderTitle}>Femmes</h4>
+                <div className={styles.genderStat}>Salariées: {totals.gender.women.employees}</div>
+                <div className={styles.genderStat}>Syndiquées: {totals.gender.women.syndiques}</div>
+                <div className={`${styles.genderStat} ${getRateColorClass(womenRate)}`}>Taux: {womenRate}%</div>
+              </div>
+            </div>
+          </div>
+          
+          <div className={styles.summaryCard}>
+            <h3 className={styles.summaryTitle}>Répartition par catégorie</h3>
+            <div className="space-y-1">
+              {Object.entries(totals.categories).map(([category, data]) => {
+                const rate = calculateRate(data.syndiques, data.employees);
+                const categoryNames = {
+                  ouvriers: 'Ouvriers',
+                  employes: 'Employés',
+                  agentsMaitrise: 'Agents de maîtrise',
+                  techniciens: 'Techniciens',
+                  cadres: 'Cadres'
+                };
+                return (
+                  <div key={category} className={styles.categoryRow}>
+                    <span>{categoryNames[category]}:</span>
+                    <span className={`font-semibold ${getRateColorClass(rate)}`}>
+                      {rate}% ({data.syndiques}/{data.employees})
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className={styles.emptyState}>
+          <p>Aucun service n'a été défini. Utilisez le bouton "Ajouter un service" pour commencer.</p>
+        </div>
+      )}
 
       {/* Liste des services */}
       <div className="mb-6">
@@ -376,44 +341,46 @@ const CartographieAvancee = () => {
             onClick={addNewService}
             className={styles.addButton}
           >
-            + Ajouter un service
+            Ajouter un service
           </button>
         </div>
         
-        <div className="overflow-x-auto">
-          <table className={styles.table}>
-            <thead className={styles.tableHeader}>
-              <tr>
-                <th className={styles.tableHeaderCell}>Service</th>
-                <th className={`${styles.tableHeaderCell} ${styles.tableCellCenter}`}>Salariés</th>
-                <th className={`${styles.tableHeaderCell} ${styles.tableCellCenter}`}>Syndiqués</th>
-                <th className={`${styles.tableHeaderCell} ${styles.tableCellCenter}`}>Taux</th>
-                <th className={`${styles.tableHeaderCell} ${styles.tableCellCenter}`}>Détails</th>
-              </tr>
-            </thead>
-            <tbody>
-              {servicesData.map(service => {
-                const rate = calculateRate(service.totalSyndiques, service.totalEmployees);
-                return (
-                  <tr key={service.id} className={styles.tableRow}>
-                    <td className={styles.tableCell}>{service.name}</td>
-                    <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>{service.totalEmployees}</td>
-                    <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>{service.totalSyndiques}</td>
-                    <td className={`${styles.tableCell} ${styles.tableCellCenter} font-medium ${getRateColorClass(rate)}`}>{rate}%</td>
-                    <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>
-                      <button 
-                        onClick={() => setSelectedService(service.id === selectedService ? null : service.id)}
-                        className={styles.detailButton}
-                      >
-                        {service.id === selectedService ? 'Masquer' : 'Voir détails'}
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        {servicesData.length > 0 ? (
+          <div className="overflow-x-auto">
+            <table className={styles.table}>
+              <thead className={styles.tableHeader}>
+                <tr>
+                  <th className={styles.tableHeaderCell}>Service</th>
+                  <th className={`${styles.tableHeaderCell} ${styles.tableCellCenter}`}>Salariés</th>
+                  <th className={`${styles.tableHeaderCell} ${styles.tableCellCenter}`}>Syndiqués</th>
+                  <th className={`${styles.tableHeaderCell} ${styles.tableCellCenter}`}>Taux</th>
+                  <th className={`${styles.tableHeaderCell} ${styles.tableCellCenter}`}>Détails</th>
+                </tr>
+              </thead>
+              <tbody>
+                {servicesData.map(service => {
+                  const rate = calculateRate(service.totalSyndiques, service.totalEmployees);
+                  return (
+                    <tr key={service.id} className={styles.tableRow}>
+                      <td className={styles.tableCell}>{service.name}</td>
+                      <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>{service.totalEmployees}</td>
+                      <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>{service.totalSyndiques}</td>
+                      <td className={`${styles.tableCell} ${styles.tableCellCenter} font-medium ${getRateColorClass(rate)}`}>{rate}%</td>
+                      <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>
+                        <button 
+                          onClick={() => setSelectedService(service.id === selectedService ? null : service.id)}
+                          className={styles.detailButton}
+                        >
+                          {service.id === selectedService ? 'Masquer' : 'Voir détails'}
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        ) : null}
       </div>
 
       {/* Formulaire de détails d'un service */}
@@ -565,5 +532,6 @@ const CartographieAvancee = () => {
     </div>
   );
 };
+
 
 export default CartographieAvancee;
