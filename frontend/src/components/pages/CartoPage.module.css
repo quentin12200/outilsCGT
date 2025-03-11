@@ -43,3 +43,28 @@
   line-height: 1.6;
   color: #333;
 }
+
+/* Séparateur pour la section "Aller plus loin" */
+.cartoSectionDivider {
+  display: flex;
+  align-items: center;
+  margin: 2rem 0;
+  text-align: center;
+  font-weight: 600;
+  color: #b91c1c;
+}
+
+.cartoSectionDivider::before,
+.cartoSectionDivider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.cartoSectionDivider::before {
+  margin-right: 1rem;
+}
+
+.cartoSectionDivider::after {
+  margin-left: 1rem;
+}
