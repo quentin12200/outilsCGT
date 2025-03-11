@@ -1,4 +1,3 @@
-// src/components/CartoModule/CartographieAvancee.js
 import React, { useState, useEffect } from 'react';
 import styles from './CartographieAvancee.module.css';
 import SaveButtons from '../../Common/SaveButtons'; // Correct file path

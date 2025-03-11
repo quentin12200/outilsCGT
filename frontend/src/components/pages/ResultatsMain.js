@@ -1,8 +1,7 @@
-// src/components/Modules/ResultatsModule/ResultatsMain.js
 import React, { useState, useEffect } from 'react';
 import ResultatsForm from './ResultatsForm';
-import SaveButtons from '../../Common/Savebuttons/SaveButtons';
-import storageService from '../../services/storageService';
+import SaveButtons from '../../../components/Common/Savebuttons/SaveButtons'; // Corrected path
+import storageService from '../../../services/storageService';
 import styles from './ResultatsMain.module.css';
 
 function ResultatsMain() {

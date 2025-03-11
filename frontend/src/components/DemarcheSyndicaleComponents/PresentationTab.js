@@ -61,6 +61,13 @@ const PresentationTab = ({ activeSubTab, setActiveSubTab, setActiveTab }) => {
         >
           Découvrir l'axe Implantation →
         </button>
+        <div className="schema-container">
+  <img 
+    src="/assets/images/schema-demarche-syndicale.svg" 
+    alt="Schéma global de la démarche syndicale CGT" 
+    className="schema-image"
+  />
+</div>
       </div>
     </div>
   );

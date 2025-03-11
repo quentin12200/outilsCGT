@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="600">
+  <!-- Fond et titre -->
+  <rect width="1000" height="600" fill="#f8f8f8" />
+  <text x="500" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#b91c1c">SCHÉMA GLOBAL DE LA DÉMARCHE SYNDICALE CGT</text>
+  
+  <!-- Phases principales -->
+  <rect x="50" y="80" width="280" height="50" rx="5" fill="#f3d19e" stroke="#e09c23" stroke-width="2" />
+  <text x="190" y="112" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle">AVANT...</text>
+  
+  <rect x="360" y="80" width="280" height="50" rx="5" fill="#a3d39c" stroke="#4caf50" stroke-width="2" />
+  <text x="500" y="112" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle">PENDANT...</text>
+  
+  <rect x="670" y="80" width="280" height="50" rx="5" fill="#9cc2d3" stroke="#2196f3" stroke-width="2" />
+  <text x="810" y="112" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle">APRÈS...</text>
+  
+  <!-- Colonne Vie Syndicale -->
+  <rect x="50" y="150" width="90" height="400" rx="5" fill="#8952b9" />
+  <text transform="translate(80, 350) rotate(-90)" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">VIE SYNDICALE</text>
+  
+  <!-- Organisation -->
+  <rect x="150" y="150" width="800" height="80" rx="5" fill="#e8f5e9" stroke="#4caf50" stroke-width="2" />
+  <text x="550" y="175" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle">ORGANISATION</text>
+  <text x="550" y="205" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">Critères représentativité • Connaissance du salariat • Bilan des pratiques démocratiques • Bilan formation</text>
+  <text x="550" y="225" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">Bilan activité des élus • Droits syndicaux • Finances • Analyse du précédent scrutin • Communication • Lien avec UD/UL/FD</text>
+  
+  <!-- Étapes -->
+  <rect x="150" y="240" width="250" height="140" rx="5" fill="#ffeb3b" stroke="#ffc107" stroke-width="2" />
+  <text x="275" y="265" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle">1ère ÉTAPE : BESOINS</text>
+  <text x="275" y="290" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle">AG Syndiqués</text>
+  <text x="275" y="310" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">Auteurs, acteurs, décideurs</text>
+  <text x="275" y="340" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">• Présentation des enjeux et du contexte</text>
+  <text x="275" y="360" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">• Déploiement avec les outils de recueil</text>
+  
+  <rect x="425" y="240" width="250" height="140" rx="5" fill="#4caf50" stroke="#2e7d32" stroke-width="2" />
+  <text x="550" y="265" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">2ème ÉTAPE : REVENDICATIONS</text>
+  <text x="550" y="290" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">AG Syndiqués</text>
+  <text x="550" y="310" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="white">Auteurs, acteurs, décideurs</text>
+  <text x="550" y="340" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="white">• Bilan des besoins recueillis</text>
+  <text x="550" y="360" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="white">• Élaboration démocratique du cahier revendicatif</text>
+  
+  <rect x="700" y="240" width="250" height="140" rx="5" fill="#2196f3" stroke="#1565c0" stroke-width="2" />
+  <text x="825" y="265" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">3ème ÉTAPE : MOBILISATION</text>
+  <text x="825" y="290" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">AG Salariés</text>
+  <text x="825" y="310" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="white">Débat démocratique et mobilisation</text>
+  <text x="825" y="340" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="white">• Présentation du cahier revendicatif</text>
+  <text x="825" y="360" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="white">• Mobilisation pour le vote et l'action</text>
+  
+  <!-- Communication -->
+  <rect x="150" y="390" width="800" height="40" rx="5" fill="#fff9c4" stroke="#ffd54f" stroke-width="2" />
+  <text x="550" y="415" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle">COMMUNICATION</text>
+  
+  <!-- IRP Prérogatives -->
+  <rect x="150" y="440" width="800" height="40" rx="5" fill="#ffebee" stroke="#ef9a9a" stroke-width="2" />
+  <text x="550" y="465" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle">IRP PRÉROGATIVES</text>
+  
+  <!-- Droits et moyens -->
+  <rect x="150" y="490" width="800" height="40" rx="5" fill="#e1f5fe" stroke="#81d4fa" stroke-width="2" />
+  <text x="550" y="515" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle">DROITS ET MOYENS</text>
+  
+  <!-- UL UD FD UGICT -->
+  <rect x="150" y="540" width="800" height="40" rx="5" fill="#e0f2f1" stroke="#80cbc4" stroke-width="2" />
+  <text x="550" y="565" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle">UL UD FD UGICT</text>
+  
+  <!-- Jour J -->
+  <circle cx="720" cy="310" r="50" fill="#b71c1c" />
+  <text x="720" y="300" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">JOUR J</text>
+  <text x="720" y="325" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">DE LUTTE</text>
+  
+  <!-- Flèches de processus -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#777" />
+    </marker>
+  </defs>
+  
+  <line x1="400" y1="310" x2="425" y2="310" stroke="#777" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="675" y1="310" x2="700" y2="310" stroke="#777" stroke-width="2" marker-end="url(#arrowhead)" />
+</svg>
