@@ -1,65 +1,65 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styles from './HomePage.module.css';
-import heroImage from '../../assets/hero-image.png'; // Add a strong image showing union advocacy
+import heroImage from '../../assets/hero-image.png';
+import ModuleCard from './ModuleCard';
+
+const modules = [
+  {
+    id: 'cartographie',
+    title: 'Cartographie Stratégique',
+    description: 'Visualisez le taux de syndicalisation par service et identifiez les zones prioritaires pour vos actions de développement.',
+    icon: '🗺️',
+    color: styles.blueModule
+  },
+  {
+    id: 'ecole-de-la-democratie',
+    title: 'École de la Démocratie',
+    description: 'Guide complet pour une démarche syndicale démocratique en trois phases : avant, pendant et après l\'action.',
+    icon: '🎓',
+    color: styles.yellowModule
+  },
+  {
+    id: 'retro-planning',
+    title: 'Rétro-planning',
+    description: 'Planifiez efficacement vos actions syndicales avec un calendrier interactif adapté aux échéances importantes.',
+    icon: '📅',
+    color: styles.greenModule
+  },
+  {
+    id: 'assemblees',
+    title: 'Assemblées',
+    description: 'Outils pour préparer et animer efficacement vos assemblées générales et renforcer la participation des adhérents.',
+    icon: '👥',
+    color: styles.purpleModule
+  },
+  {
+    id: 'syndicalisation',
+    title: 'Syndicalisation',
+    description: 'Suivez et développez la syndicalisation dans votre établissement avec des outils de suivi et d\'analyse.',
+    icon: '📊',
+    color: styles.redModule
+  },
+  {
+    id: 'resultats',
+    title: 'Résultats',
+    description: 'Analysez les résultats des actions menées et tirez des enseignements pour améliorer votre stratégie syndicale.',
+    icon: '📈',
+    color: styles.indigoModule
+  },
+  {
+    id: 'demarche',
+    title: 'Démarche Revendicative',
+    description: 'Construisez des cahiers revendicatifs répondant aux besoins réels des salariés et mobilisez autour de vos propositions.',
+    icon: '📝',
+    color: styles.orangeModule
+  }
+];
 
 function HomePage() {
-  // Define modules data
-  const modules = [
-    {
-      id: 'cartographie',
-      title: 'Cartographie Stratégique',
-      description: 'Visualisez le taux de syndicalisation par service et identifiez les zones prioritaires pour vos actions de développement.',
-      icon: '🗺️',
-      color: styles.blueModule
-    },
-    {
-      id: 'ecole-de-la-democratie',
-      title: 'École de la Démocratie',
-      description: 'Guide complet pour une démarche syndicale démocratique en trois phases : avant, pendant et après l\'action.',
-      icon: '🎓',
-      color: styles.yellowModule
-    },
-    {
-      id: 'retro-planning',
-      title: 'Rétro-planning',
-      description: 'Planifiez efficacement vos actions syndicales avec un calendrier interactif adapté aux échéances importantes.',
-      icon: '📅',
-      color: styles.greenModule
-    },
-    {
-      id: 'assemblees',
-      title: 'Assemblées',
-      description: 'Outils pour préparer et animer efficacement vos assemblées générales et renforcer la participation des adhérents.',
-      icon: '👥',
-      color: styles.purpleModule
-    },
-    {
-      id: 'syndicalisation',
-      title: 'Syndicalisation',
-      description: 'Suivez et développez la syndicalisation dans votre établissement avec des outils de suivi et d\'analyse.',
-      icon: '📊',
-      color: styles.redModule
-    },
-    {
-      id: 'resultats',
-      title: 'Résultats',
-      description: 'Analysez les résultats des actions menées et tirez des enseignements pour améliorer votre stratégie syndicale.',
-      icon: '📈',
-      color: styles.indigoModule
-    },
-    {
-      id: 'demarche',
-      title: 'Démarche Revendicative',
-      description: 'Construisez des cahiers revendicatifs répondant aux besoins réels des salariés et mobilisez autour de vos propositions.',
-      icon: '📝',
-      color: styles.orangeModule
-    }
-  ];
-
   return (
     <div className={styles.homePage}>
-      {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
           <h2 className={styles.heroTitle}>Mobilisez, Organisez, Gagnez!</h2>
@@ -75,14 +75,12 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Quote Section */}
       <section className={styles.quoteSection}>
         <blockquote className={styles.quote}>
           <p>"La démarche, c'est mener la bataille revendicative, c'est la construction de la mobilisation pour gagner!"</p>
         </blockquote>
       </section>
       
-      {/* Description Section */}
       <section className={styles.descriptionSection}>
         <div className={styles.container}>
           <p className={styles.description}>
@@ -93,32 +91,17 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Modules Section */}
       <section className={styles.modulesSection}>
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>Nos modules</h2>
           <div className={styles.modulesGrid}>
             {modules.map(module => (
-              <Link 
-                key={module.id} 
-                to={`/${module.id}`} 
-                className={`${styles.moduleCard} ${module.color}`}
-              >
-                <div className={styles.moduleIcon}>{module.icon}</div>
-                <h3 className={styles.moduleTitle}>{module.title}</h3>
-                <p className={styles.moduleDescription}>{module.description}</p>
-                <div className={styles.moduleButtonContainer}>
-                  <span className={styles.moduleButton}>
-                    Accéder →
-                  </span>
-                </div>
-              </Link>
+              <ModuleCard key={module.id} module={module} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Call to Action Section */}
       <section className={styles.ctaSection}>
         <div className={styles.container}>
           <h2 className={styles.ctaTitle}>Renforcez votre syndicat avec nos outils</h2>
@@ -134,4 +117,15 @@ function HomePage() {
   );
 }
 
+HomePage.propTypes = {
+  modules: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired
+  }))
+};
+
 export default HomePage;
+

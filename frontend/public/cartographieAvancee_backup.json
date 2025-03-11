@@ -1,0 +1,116 @@
+[
+  {
+    "id": 1,
+    "name": "Administration",
+    "totalEmployees": 45,
+    "totalSyndiques": 15,
+    "gender": {
+      "men": {
+        "employees": 20,
+        "syndiques": 8
+      },
+      "women": {
+        "employees": 25,
+        "syndiques": 7
+      }
+    },
+    "categories": {
+      "ouvriers": {
+        "employees": 5,
+        "syndiques": 2
+      },
+      "employes": {
+        "employees": 25,
+        "syndiques": 8
+      },
+      "agentsMaitrise": {
+        "employees": 10,
+        "syndiques": 3
+      },
+      "techniciens": {
+        "employees": 0,
+        "syndiques": 0
+      },
+      "cadres": {
+        "employees": 5,
+        "syndiques": 2
+      }
+    }
+  },
+  {
+    "id": 2,
+    "name": "Production",
+    "totalEmployees": 380,
+    "totalSyndiques": 95,
+    "gender": {
+      "men": {
+        "employees": 280,
+        "syndiques": 78
+      },
+      "women": {
+        "employees": 100,
+        "syndiques": 17
+      }
+    },
+    "categories": {
+      "ouvriers": {
+        "employees": 220,
+        "syndiques": 65
+      },
+      "employes": {
+        "employees": 80,
+        "syndiques": 15
+      },
+      "agentsMaitrise": {
+        "employees": 50,
+        "syndiques": 10
+      },
+      "techniciens": {
+        "employees": 20,
+        "syndiques": 4
+      },
+      "cadres": {
+        "employees": 10,
+        "syndiques": 1
+      }
+    }
+  },
+  {
+    "id": 3,
+    "name": "R&D",
+    "totalEmployees": 110,
+    "totalSyndiques": 22,
+    "gender": {
+      "men": {
+        "employees": 75,
+        "syndiques": 18
+      },
+      "women": {
+        "employees": 35,
+        "syndiques": 4
+      }
+    },
+    "categories": {
+      "ouvriers": {
+        "employees": 0,
+        "syndiques": 0
+      },
+      "employes": {
+        "employees": 20,
+        "syndiques": 5
+      },
+      "agentsMaitrise": {
+        "employees": 30,
+        "syndiques": 7
+      },
+      "techniciens": {
+        "employees": 40,
+        "syndiques": 8
+      },
+      "cadres": {
+        "employees": 20,
+        "syndiques": 2
+      }
+    }
+  }
+]
