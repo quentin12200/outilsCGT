@@ -1,5 +1,6 @@
 import React from 'react';
 import CartoMain from '../CartoModule/CartoMain';
+import CartographieAvancee from '../CartoModule/CartographieAvancee';
 import styles from './CartoPage.module.css';
 
 function CartoPage() {
@@ -20,6 +21,12 @@ function CartoPage() {
         </p>
 
         <CartoMain />
+        
+        <div className={styles.cartoSectionDivider}>
+          <span>Cartographie Avancée</span>
+        </div>
+        
+        <CartographieAvancee />
       </div>
     </div>
   );
