@@ -1,0 +1,6 @@
+.schemaContainer {
+    width: 100%;
+    height: 600px; /* par exemple */
+    background: url('../assets/schema-demarche-syndicale.svg') no-repeat center/contain;
+  }
+  

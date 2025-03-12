@@ -1035,3 +1035,142 @@
   border-radius: 0.375rem;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
+.ecoleDemocratieContainer {
+  padding: 1rem;
+  background-color: #fff;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  color: #b91c1c;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+.mainContent {
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+}
+
+.phasesContainer {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr; /* par exemple : vie syndicale - contenu central - jour J */
+  gap: 1rem;
+}
+
+.phasesHeader {
+  grid-column: 1 / span 3;
+  display: flex;
+  justify-content: space-around;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 1rem;
+}
+
+.vieSyndicaleColumn {
+  background-color: #b91c1c;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.25rem;
+  padding: 1rem;
+}
+
+.rotatedTitle {
+  writing-mode: vertical-rl; /* pour écrire verticalement */
+  transform: rotate(180deg);
+  font-weight: 700;
+}
+
+.phasesContent {
+  background-color: #fff;
+  border-radius: 0.25rem;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.orgaBox {
+  margin-bottom: 1.5rem;
+}
+
+.orgaTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #b91c1c;
+  margin-bottom: 0.5rem;
+}
+
+.bulletList {
+  margin-left: 1.5rem;
+  list-style-type: disc;
+}
+
+.stepsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.etapeBox {
+  flex: 1 1 30%;
+  background-color: #f3f4f6;
+  padding: 1rem;
+  border-radius: 0.25rem;
+}
+
+.etapeTitle {
+  font-weight: 600;
+  color: #b91c1c;
+  margin-bottom: 0.5rem;
+}
+
+.transversalBlocks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.transversalItem {
+  background-color: #fef2f2;
+  border-left: 4px solid #b91c1c;
+  padding: 1rem;
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.transversalItem h4 {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #b91c1c;
+}
+
+.jourJBox {
+  background-color: #b91c1c;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  padding: 1rem;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.jourJTitle {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
