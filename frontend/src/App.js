@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navigation from './components/Common/Navigation';
 import FooterFooter from './components/Layout/FooterFooter';
-
+import VueEnsemblePage from './components/pages/VueEnsemblePage';
 // Pages existantes
 import HomePage from './components/pages/HomePage';
 import CartoPage from './components/pages/CartoPage';
@@ -12,8 +12,8 @@ import EcoleDemocratiePage from './components/pages/EcoleDemocratiePage';
 import ResultatsPage from './components/pages/ResultatsPage';
 import SyndicalisationPage from './components/pages/SyndicalisationPage';
 import DemarcheSyndicalePage from './components/pages/DemarcheSyndicalePage';
-
-// Nouveaux modules
+import CampagneElectionsPage from './components/pages/CampagneElectionsPage';
+// Nouveaux modules de campagne
 import PlanActionsPage from './components/pages/PlanActionsPage';
 import PlanPendantPage from './components/pages/PlanPendantPage';
 import PlanAvantPage from './components/pages/PlanAvantPage';
@@ -40,7 +40,7 @@ function App() {
           <Route path="/syndicalisation" element={<SyndicalisationPage />} />
           <Route path="/resultats" element={<ResultatsPage />} />
           <Route path="/demarche" element={<DemarcheSyndicalePage />} />
-
+          <Route path="/vue-ensemble" element={<VueEnsemblePage />} />
           {/* Nouveaux modules de campagne */}
           <Route path="/plan-actions" element={<PlanActionsPage />} />
           <Route path="/plan-pendant" element={<PlanPendantPage />} />
@@ -48,7 +48,7 @@ function App() {
           <Route path="/plan-apres" element={<PlanApresPage />} />
           <Route path="/plan-implanter" element={<PlanImplanterPage />} />
           <Route path="/plan-outils" element={<PlanOutilsPage />} />
-
+          <Route path="/campagne-elections" element={<CampagneElectionsPage />} />
           {/* Outils spécifiques */}
           <Route path="/cahier-revendicatif" element={<CahierRevendicatifTool />} />
           <Route path="/questionnaire" element={<QuestionnaireTool />} />

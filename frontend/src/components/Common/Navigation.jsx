@@ -7,79 +7,69 @@ function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [toolsDropdownOpen, setToolsDropdownOpen] = useState(false);
   const [actionsDropdownOpen, setActionsDropdownOpen] = useState(false);
+  const [campagneDropdownOpen, setCampagneDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
-  // Gère le changement d'apparence de la barre de navigation lors du défilement
+  // Gestion du scroll pour modifier l'apparence de la navbar
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 50);
     };
-
     window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Ferme le menu mobile lorsqu'on change de page
+  // Fermer tous les menus lors d'un changement de page
   useEffect(() => {
     setIsMenuOpen(false);
     setToolsDropdownOpen(false);
     setActionsDropdownOpen(false);
+    setCampagneDropdownOpen(false);
   }, [location]);
 
-  // Désactive le défilement du corps quand le menu mobile est ouvert
+  // Désactiver le scroll du body en mode mobile
   useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
+    document.body.style.overflow = isMenuOpen ? 'hidden' : 'unset';
+    return () => { document.body.style.overflow = 'unset'; };
   }, [isMenuOpen]);
 
-  // Ouvre/ferme le menu mobile
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-    // Si on referme le menu mobile, on referme aussi les sous-menus
     if (isMenuOpen) {
       setToolsDropdownOpen(false);
       setActionsDropdownOpen(false);
+      setCampagneDropdownOpen(false);
     }
   };
 
-  // Ouvre/ferme le sous-menu "Outils"
   const toggleToolsDropdown = () => {
     setToolsDropdownOpen(!toolsDropdownOpen);
-    // Ferme l'autre dropdown si ouvert
+    if (actionsDropdownOpen) setActionsDropdownOpen(false);
+    if (campagneDropdownOpen) setCampagneDropdownOpen(false);
+  };
+
+  const toggleActionsDropdown = () => {
+    setActionsDropdownOpen(!actionsDropdownOpen);
+    if (toolsDropdownOpen) setToolsDropdownOpen(false);
+    if (campagneDropdownOpen) setCampagneDropdownOpen(false);
+  };
+
+  const toggleCampagneDropdown = () => {
+    setCampagneDropdownOpen(!campagneDropdownOpen);
+    if (toolsDropdownOpen) setToolsDropdownOpen(false);
     if (actionsDropdownOpen) setActionsDropdownOpen(false);
   };
 
-  // Ouvre/ferme le sous-menu "Actions"
-  const toggleActionsDropdown = () => {
-    setActionsDropdownOpen(!actionsDropdownOpen);
-    // Ferme l'autre dropdown si ouvert
-    if (toolsDropdownOpen) setToolsDropdownOpen(false);
-  };
-
-  // Ferme tout quand on clique sur l'overlay (en mode mobile)
   const handleOverlayClick = () => {
     setIsMenuOpen(false);
     setToolsDropdownOpen(false);
     setActionsDropdownOpen(false);
+    setCampagneDropdownOpen(false);
   };
 
   return (
     <>
-      {/* Overlay pour fermer le menu en cliquant à l'extérieur (mobile) */}
       {isMenuOpen && (
         <div 
           className={`${styles.overlay} ${isMenuOpen ? styles.overlayActive : ''}`} 
@@ -90,13 +80,11 @@ function Navigation() {
       
       <nav className={`${styles.navbar} ${isScrolled ? styles.scrolled : ''}`}>
         <div className={styles.container}>
-          {/* Logo + Titre */}
           <Link to="/" className={styles.logoContainer}>
             <img src={cgtLogo} alt="Logo CGT" className={styles.logo} />
             <h1 className={styles.title}>Outils CGT</h1>
           </Link>
 
-          {/* Bouton hamburger (mobile) */}
           <button 
             className={`${styles.mobileMenuButton} ${isMenuOpen ? styles.menuOpen : ''}`}
             onClick={toggleMenu}
@@ -106,9 +94,7 @@ function Navigation() {
             <span className={styles.hamburgerIcon}></span>
           </button>
 
-          {/* Liste principale */}
           <ul className={`${styles.navList} ${isMenuOpen ? styles.menuOpen : ''}`}>
-            {/* Lien Accueil */}
             <li>
               <Link to="/" className={styles.navItem}>
                 <i className={`${styles.icon} ${styles.homeIcon}`}></i>
@@ -116,7 +102,7 @@ function Navigation() {
               </Link>
             </li>
 
-            {/* Sous-menu Outils */}
+            {/* Dropdown Outils */}
             <li className={styles.dropdown}>
               <button 
                 type="button" 
@@ -153,7 +139,7 @@ function Navigation() {
               )}
             </li>
 
-            {/* Sous-menu Actions */}
+            {/* Dropdown Actions */}
             <li className={styles.dropdown}>
               <button 
                 type="button" 
@@ -181,6 +167,68 @@ function Navigation() {
                       Démarche
                     </Link>
                   </li>
+                </ul>
+              )}
+            </li>
+
+            {/* Nouveau dropdown Campagne */}
+            <li className={styles.dropdown}>
+              <button 
+                type="button" 
+                className={styles.navItem}
+                onClick={toggleCampagneDropdown}
+                aria-expanded={campagneDropdownOpen}
+              >
+                <i className={`${styles.icon} ${styles.campagneIcon}`}></i>
+                Campagne
+              </button>
+              {campagneDropdownOpen && (
+                <ul className={styles.dropdownMenu} role="menu">
+                  <li role="none">
+                    <Link to="/plan-actions" className={styles.dropdownItem} role="menuitem">
+                      Plan d'action
+                    </Link>
+                  </li>
+                  <li role="none">
+                    <Link to="/plan-pendant" className={styles.dropdownItem} role="menuitem">
+                      Plan pendant
+                    </Link>
+                  </li>
+                  <li role="none">
+                    <Link to="/plan-avant" className={styles.dropdownItem} role="menuitem">
+                      Plan avant
+                    </Link>
+                  </li>
+                  <li role="none">
+                    <Link to="/plan-apres" className={styles.dropdownItem} role="menuitem">
+                      Plan après
+                    </Link>
+                  </li>
+                  <li role="none">
+                    <Link to="/plan-implanter" className={styles.dropdownItem} role="menuitem">
+                      Plan implanter
+                    </Link>
+                  </li>
+                  <li role="none">
+                    <Link to="/plan-outils" className={styles.dropdownItem} role="menuitem">
+                      Plan outils
+                    </Link>
+                  </li>
+                  <li role="none">
+                    <Link to="/cahier-revendicatif" className={styles.dropdownItem} role="menuitem">
+                      Cahier revendicatif
+                    </Link>
+                  </li>
+                  <li role="none">
+                    <Link to="/questionnaire" className={styles.dropdownItem} role="menuitem">
+                      Questionnaire
+                    </Link>
+                  </li>
+                  <li>
+  <Link to="/vue-ensemble" className={styles.navItem}>
+    Vue d'ensemble
+  </Link>
+</li>
                 </ul>
               )}
             </li>
