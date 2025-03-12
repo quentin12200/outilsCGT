@@ -1,5 +1,6 @@
 // src/components/DemarcheModule/PhaseBesoins.js
 import React from 'react';
+import styles from './PhaseBesoins.module.css';
 
 function PhaseBesoins({ onAddTool }) {
   // Outils associés à cette phase
@@ -11,10 +12,10 @@ function PhaseBesoins({ onAddTool }) {
   ];
 
   return (
-    <div>
-      <h2 className="text-xl font-bold text-red-700 mb-6">Phase 1 : Recueil des besoins</h2>
+    <div className={styles.phaseContainer}>
+      <h2 className={`text-xl font-bold mb-6 ${styles.phaseTitle}`}>Phase 1 : Recueil des besoins</h2>
       
-      <div className="bg-red-50 rounded-lg p-6 mb-8">
+      <div className={`rounded-lg p-6 mb-8 ${styles.objectifsContainer}`}>
         <h3 className="text-lg font-medium mb-3">Objectifs de cette phase</h3>
         <ul className="list-disc pl-6 space-y-2">
           <li>Recueillir les préoccupations, les attentes et les besoins des salariés</li>
@@ -26,11 +27,11 @@ function PhaseBesoins({ onAddTool }) {
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         <div>
-          <h3 className="text-lg font-semibold mb-4">Démarche méthodologique</h3>
+          <h3 className={`text-lg font-semibold mb-4 ${styles.sectionTitle}`}>Démarche méthodologique</h3>
           
           <div className="space-y-6">
-            <div className="bg-white rounded-lg p-4 border border-gray-200">
-              <h4 className="font-medium text-red-700 mb-2">1. Préparation</h4>
+            <div className={`rounded-lg p-4 border border-gray-200 ${styles.methodItem}`}>
+              <h4 className={`font-medium text-red-700 mb-2 ${styles.methodTitle}`}>1. Préparation</h4>
               <ul className="list-disc pl-5 space-y-1 text-sm">
                 <li>Tenir une AG des syndiqués pour présenter la démarche</li>
                 <li>Réaliser une cartographie de l'établissement (services, catégories...)</li>
@@ -39,8 +40,8 @@ function PhaseBesoins({ onAddTool }) {
               </ul>
             </div>
             
-            <div className="bg-white rounded-lg p-4 border border-gray-200">
-              <h4 className="font-medium text-red-700 mb-2">2. Déploiement sur le terrain</h4>
+            <div className={`rounded-lg p-4 border border-gray-200 ${styles.methodItem}`}>
+              <h4 className={`font-medium text-red-700 mb-2 ${styles.methodTitle}`}>2. Déploiement sur le terrain</h4>
               <ul className="list-disc pl-5 space-y-1 text-sm">
                 <li>Organiser des tournées de services régulières</li>
                 <li>Réaliser des entretiens individuels ou collectifs</li>
@@ -49,8 +50,8 @@ function PhaseBesoins({ onAddTool }) {
               </ul>
             </div>
             
-            <div className="bg-white rounded-lg p-4 border border-gray-200">
-              <h4 className="font-medium text-red-700 mb-2">3. Analyse et synthèse</h4>
+            <div className={`rounded-lg p-4 border border-gray-200 ${styles.methodItem}`}>
+              <h4 className={`font-medium text-red-700 mb-2 ${styles.methodTitle}`}>3. Analyse et synthèse</h4>
               <ul className="list-disc pl-5 space-y-1 text-sm">
                 <li>Compiler et classer les besoins par thématiques</li>
                 <li>Identifier les problématiques communes et récurrentes</li>
@@ -62,9 +63,9 @@ function PhaseBesoins({ onAddTool }) {
         </div>
         
         <div>
-          <h3 className="text-lg font-semibold mb-4">Conseils pratiques</h3>
+          <h3 className={`text-lg font-semibold mb-4 ${styles.sectionTitle}`}>Conseils pratiques</h3>
           
-          <div className="bg-yellow-50 rounded-lg p-5 border border-yellow-200 mb-6">
+          <div className={`rounded-lg p-5 border border-yellow-200 mb-6 ${styles.alertBox}`}>
             <h4 className="font-medium text-yellow-800 mb-2">Points d'attention</h4>
             <ul className="list-disc pl-5 space-y-2 text-yellow-800">
               <li>Veiller à toucher <strong>tous les services</strong> et <strong>toutes les catégories</strong> de personnel</li>
@@ -82,7 +83,7 @@ function PhaseBesoins({ onAddTool }) {
                   <span>{tool}</span>
                   <button
                     onClick={() => onAddTool(tool)}
-                    className="text-blue-600 hover:text-blue-800"
+                    className={styles.toolButton}
                   >
                     + Ajouter à ma boîte
                   </button>
@@ -91,7 +92,7 @@ function PhaseBesoins({ onAddTool }) {
             </div>
           </div>
           
-          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+          <div className={`rounded-lg p-4 border border-blue-200 ${styles.infoBox}`}>
             <h4 className="font-medium text-blue-800 mb-2">Indicateurs de réussite</h4>
             <ul className="list-disc pl-5 space-y-1 text-sm text-blue-800">
               <li>Nombre de salariés consultés / Taux de couverture de l'établissement</li>
@@ -104,10 +105,10 @@ function PhaseBesoins({ onAddTool }) {
       </div>
       
       <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold mb-4">Exemples de questionnaires</h3>
+        <h3 className={`text-lg font-semibold mb-4 ${styles.sectionTitle}`}>Exemples de questionnaires</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
+          <div className={styles.questionnaire}>
             <h4 className="font-medium text-red-700 mb-2">Questionnaire général</h4>
             <div className="bg-gray-50 p-4 rounded">
               <p className="text-sm text-gray-800 mb-3">
@@ -131,7 +132,7 @@ function PhaseBesoins({ onAddTool }) {
             </div>
           </div>
           
-          <div>
+          <div className={styles.questionnaire}>
             <h4 className="font-medium text-red-700 mb-2">Questionnaire spécifique</h4>
             <div className="bg-gray-50 p-4 rounded">
               <p className="text-sm text-gray-800 mb-3">
@@ -158,7 +159,7 @@ function PhaseBesoins({ onAddTool }) {
         
         <div className="mt-6 text-center">
           <button 
-            className="px-4 py-2 bg-red-700 text-white rounded hover:bg-red-800"
+            className={styles.downloadButton}
             onClick={() => onAddTool('Questionnaire besoins')}
           >
             Télécharger les modèles de questionnaires

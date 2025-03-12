@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="600">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="auto">
   <!-- Fond et titre -->
-  <rect width="1000" height="600" fill="#f8f8f8" />
+  <!--<rect width="1000" height="600" fill="#f8f8f8" /> -->
   <text x="500" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#b91c1c">SCHÉMA GLOBAL DE LA DÉMARCHE SYNDICALE CGT</text>
   
   <!-- Phases principales -->
