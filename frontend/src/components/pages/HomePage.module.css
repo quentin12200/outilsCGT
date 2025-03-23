@@ -6,15 +6,27 @@
   --cgt-blue: #1565C0;
 }
 
+/* Fix for mobile viewport height issues */
+html, body {
+  height: -webkit-fill-available;
+  overflow-x: hidden;
+}
+
 .homePage {
   font-family: 'Roboto', sans-serif;
   color: #333;
+  min-height: 100vh;
+  /* mobile viewport fix */
+  min-height: -webkit-fill-available;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
+  width: 100%;
 }
 
 /* Hero Section */
@@ -432,7 +444,9 @@
   
   .heroImageContainer {
     order: 2;
-    display: none;
+    display: flex;
+    max-width: 200px;
+    margin: 0 auto;
   }
   
   .modulesGrid {
@@ -481,6 +495,10 @@
   
   .manifestoContent {
     padding: 1.5rem;
+  }
+  
+  .heroImageContainer {
+    max-width: 150px;
   }
   
   .modulesGrid {
@@ -541,6 +559,10 @@
   
   .manifestoSubtitle {
     margin-bottom: 0.3rem;
+  }
+  
+  .heroImageContainer {
+    max-width: 120px;
   }
   
   .quoteSection {
