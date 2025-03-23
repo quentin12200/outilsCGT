@@ -1,258 +1,454 @@
 /* src/components/Modules/ResultatsModule/ResultatsMain.module.css */
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: 2rem;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tabButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  color: #4b5563;
+  transition: all 0.2s ease;
+}
+
+.tabButton:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.tabIcon {
+  font-size: 1rem;
+}
+
+.activeTab {
+  background-color: #b91c1c;
+  color: white;
+  border-color: #b91c1c;
+}
+
+.activeTab:hover {
+  background-color: #991b1b;
+  color: white;
+}
+
+.pdfButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #b91c1c;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.pdfButton:hover {
+  background-color: #991b1b;
+}
+
+.card {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.resultsSection {
+  width: 100%;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #b91c1c; /* Rouge CGT */
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.electionDate {
+  text-align: center;
+  color: #6b7280;
+  margin-bottom: 2rem;
+  font-size: 0.875rem;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .statsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.scoreCard {
+  background-color: #f9fafb;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.departmentsCard {
+  background-color: #f9fafb;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #1f2937;
+  text-align: center;
+}
+
+/* Graphique circulaire amélioré */
+.pieChartWrapper {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 2rem;
+}
+
+.pieChart {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #f3f4f6;
+}
+
+.pieBackground {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #e5e7eb;
+}
+
+.pieForeground {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  transform-origin: right center;
+  background-color: #b91c1c;
+}
+
+.pieCenter {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+.pieValue {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #b91c1c;
+  line-height: 1;
+}
+
+.pieLabel {
+  font-size: 0.75rem;
+  color: #6b7280;
+  text-align: center;
+}
+
+/* Annotations */
+.pieAnnotations {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.cgtAnnotation, .autresAnnotation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: left center;
+}
+
+.annotationText {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.cgtAnnotation .annotationText {
+  color: #b91c1c;
+}
+
+.autresAnnotation .annotationText {
+  color: #6b7280;
+}
+
+.evolution {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.evolutionPositive {
+  color: #16a34a;
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.evolutionNegative {
+  color: #dc2626;
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.evolutionNote {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* Statistiques détaillées */
+.detailedStats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  width: 100%;
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.statIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: #fee2e2;
+  color: #b91c1c;
+  font-size: 1.25rem;
+}
+
+.statContent {
+  flex: 1;
+}
+
+.statValue {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1.2;
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+/* Départements */
+.departmentList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.departmentItem {
+  background-color: white;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.departmentHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.departmentName {
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.departmentPercentage {
+  font-weight: 700;
+  color: #b91c1c;
+}
+
+.progressBar {
+  width: 100%;
+  height: 0.5rem;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: #dc2626;
+  transition: width 0.3s ease;
+}
+
+.departmentStats {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+/* Analyse */
+.analysisSection {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 2rem;
+  margin-top: 1rem;
+}
+
+.analysisGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .analysisGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.analysisCard {
+  background-color: #f9fafb;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+.analysisTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.analysisList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.analysisList li {
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem;
+  position: relative;
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.analysisList li:before {
+  content: "•";
+  position: absolute;
+  left: 0.5rem;
+  color: #b91c1c;
+  font-weight: bold;
+}
+
+.analysisList li:last-child {
+  margin-bottom: 0;
+}
+
+/* Support d'impression */
+@media print {
+  .container {
+    padding: 0;
   }
   
-  @media (min-width: 640px) {
-    .container {
-      padding: 2rem;
-    }
+  .header {
+    display: none;
   }
   
   .card {
-    background-color: white;
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  .title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #b91c1c; /* Rouge CGT */
-    margin-bottom: 1.5rem;
-  }
-  
-  .statsGrid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-  
-  @media (min-width: 768px) {
-    .statsGrid {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-  
-  .scoreCard {
-    background-color: #f9fafb;
-    padding: 1.5rem;
-    border-radius: 0.25rem;
-    border: 1px solid #e5e7eb;
-  }
-  
-  .sectionTitle {
-    font-size: 1.125rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-  
-  .centerContent {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-  }
-  
-  .scoreValue {
-    text-align: center;
-  }
-  
-  .scorePercentage {
-    display: block;
-    font-size: 2.25rem;
-    font-weight: 700;
-    color: #b91c1c;
-  }
-  
-  .scoreLabel {
-    display: block;
-    color: #4b5563;
-  }
-  
-  .evolution {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 0.5rem;
-  }
-  
-  .evolutionPositive {
-    color: #16a34a;
-  }
-  
-  .evolutionNegative {
-    color: #dc2626;
-  }
-  
-  .evolutionNote {
-    margin-left: 0.25rem;
-    font-size: 0.75rem;
-    color: #6b7280;
-  }
-  
-  .statsCards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-  
-  .statsCard {
-    text-align: center;
-    padding: 0.75rem;
-    background-color: white;
-    border-radius: 0.25rem;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  }
-  
-  .statsValue {
-    display: block;
-    font-size: 1.5rem;
-    font-weight: 600;
-  }
-  
-  .statsLabel {
-    display: block;
-    font-size: 0.875rem;
-    color: #4b5563;
-  }
-  
-  .statsSubLabel {
-    display: block;
-    font-size: 0.75rem;
-    color: #6b7280;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
   }
   
   .departmentList {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+    max-height: none;
+    overflow: visible;
   }
   
-  .departmentItem {
-    background-color: white;
-    padding: 0.75rem;
-    border-radius: 0.25rem;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  }
-  
-  .departmentHeader {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.25rem;
-  }
-  
-  .departmentName {
-    font-weight: 500;
-  }
-  
-  .departmentPercentage {
-    font-weight: 700;
-    color: #b91c1c;
-  }
-  
-  .progressBar {
-    width: 100%;
-    height: 0.5rem;
-    background-color: #e5e7eb;
-    border-radius: 9999px;
-    overflow: hidden;
-  }
-  
-  .progressFill {
-    height: 100%;
-    background-color: #dc2626;
-  }
-  
-  .departmentStats {
-    margin-top: 0.25rem;
-    font-size: 0.75rem;
-    color: #4b5563;
+  .pieChartWrapper {
+    page-break-inside: avoid;
   }
   
   .analysisSection {
-    border-top: 1px solid #e5e7eb;
-    padding-top: 1.5rem;
+    page-break-inside: avoid;
   }
-  
-  .analysisGrid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  
-  @media (min-width: 768px) {
-    .analysisGrid {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-  
-  .strengthsCard {
-    background-color: #dcfce7;
-    padding: 1rem;
-    border-radius: 0.25rem;
-    border: 1px solid #86efac;
-  }
-  
-  .strengthsTitle {
-    font-weight: 500;
-    color: #166534;
-    margin-bottom: 0.5rem;
-  }
-  
-  .improvementsCard {
-    background-color: #fef3c7;
-    padding: 1rem;
-    border-radius: 0.25rem;
-    border: 1px solid #fde68a;
-  }
-  
-  .improvementsTitle {
-    font-weight: 500;
-    color: #92400e;
-    margin-bottom: 0.5rem;
-  }
-  
-  .analysisText {
-    font-size: 0.875rem;
-    color: #374151;
-  }
-  
-  .tabs {
-    display: flex;
-    border-bottom: 1px solid #e5e7eb;
-    margin-bottom: 2rem;
-  }
-  
-  .tabButton {
-    padding: 0.75rem 1.5rem;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #6b7280;
-    cursor: pointer;
-    transition: color 0.2s, border-color 0.2s;
-    display: flex;
-    align-items: center;
-  }
-  
-  .tabButton i {
-    margin-right: 0.5rem;
-  }
-  
-  .tabButton:hover {
-    color: #374151;
-  }
-  
-  .activeTab {
-    color: #b91c1c;
-    border-bottom-color: #b91c1c;
-  }
+}

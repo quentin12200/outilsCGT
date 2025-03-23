@@ -4,6 +4,9 @@ import styles from './CartographieAvancee.module.css';
 import SaveButtons from '../../Common/SaveButtons'; // Assurez-vous que le chemin est correct
 import storageService from '../services/storageService';
 import { saveAs } from 'file-saver';
+import PropTypes from 'prop-types';
+import heroImage from '../../assets/hero-image.png'; // Import de l'image du héros
+import { FaDatabase, FaPlus, FaTrash, FaEdit, FaCheck, FaTimes } from 'react-icons/fa';
 
 const CartographieAvancee = ({ isVisible }) => {
   const [showTooltip, setShowTooltip] = useState(false);
@@ -11,20 +14,11 @@ const CartographieAvancee = ({ isVisible }) => {
 
   // État pour les données de cartographie avancée - initialisé vide
   const [servicesData, setServicesData] = useState([]);
-  const loadData = async () => {
-    // Forcer l'initialisation à vide (temporaire)
-    setServicesData([]);
-  };
-
-  // Obtenir un service par son ID
-  const getServiceById = (id) => {
-    return servicesData.find(service => service.id === id);
-  };
-
+  
   // Structure pour un nouveau service vide
   const getEmptyService = (id) => ({
     id,
-    name: `Nouveau service ${id}`,
+    name: `Service ${id}`,
     totalEmployees: 0,
     totalSyndiques: 0,
     gender: {
@@ -39,6 +33,11 @@ const CartographieAvancee = ({ isVisible }) => {
       cadres: { employees: 0, syndiques: 0 }
     }
   });
+
+  // Obtenir un service par son ID
+  const getServiceById = (id) => {
+    return servicesData.find(service => service.id === id);
+  };
 
   // Ajouter un nouveau service
   const addNewService = () => {
@@ -167,31 +166,32 @@ const CartographieAvancee = ({ isVisible }) => {
     setServicesData(updatedServicesWithTotals);
   };
 
-  // Charger les données sauvegardées au chargement
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        // Essayer de charger depuis le localStorage d'abord
-        const localData = storageService.loadFromLocal('cartographieAvancee');
-        if (localData && Array.isArray(localData) && localData.length > 0) {
-          setServicesData(localData);
-          console.log('Données chargées localement');
-          return;
-        }
-        
-        // Si aucune donnée locale, essayer de charger depuis le serveur
-        const serverData = await storageService.loadFromServer('cartographieAvancee');
-        if (serverData && Array.isArray(serverData) && serverData.length > 0) {
-          setServicesData(serverData);
-          console.log('Données chargées depuis le serveur');
-        }
-      } catch (error) {
-        console.error("Erreur lors du chargement des données:", error);
+  // Fonction pour charger les données sauvegardées
+  const loadSavedData = async () => {
+    try {
+      // Essayer de charger depuis le localStorage d'abord
+      const localData = storageService.loadFromLocal('cartographieAvancee');
+      if (localData && Array.isArray(localData) && localData.length > 0) {
+        setServicesData(localData);
+        console.log('Données chargées localement');
+        return;
       }
-    };
-    
-    loadData();
-  }, []);
+      
+      // Si aucune donnée locale, essayer de charger depuis le serveur
+      const serverData = await storageService.loadFromServer('cartographieAvancee');
+      if (serverData && Array.isArray(serverData) && serverData.length > 0) {
+        setServicesData(serverData);
+        console.log('Données chargées depuis le serveur');
+      }
+    } catch (error) {
+      console.error("Erreur lors du chargement des données:", error);
+    }
+  };
+
+  // Ne charge plus les données automatiquement au démarrage
+  // useEffect(() => {
+  //   loadData();
+  // }, []);
 
   // Fonction pour sauvegarder les données dans un fichier
   const saveToFile = (data) => {
@@ -228,6 +228,11 @@ const CartographieAvancee = ({ isVisible }) => {
   const menRate = calculateRate(totals.gender.men.syndiques, totals.gender.men.employees);
   const womenRate = calculateRate(totals.gender.women.syndiques, totals.gender.women.employees);
 
+  // Si le composant n'est pas visible, ne rien afficher
+  if (!isVisible) {
+    return null;
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -236,16 +241,17 @@ const CartographieAvancee = ({ isVisible }) => {
           <button 
             className={styles.infoButton}
             onClick={() => setShowTooltip(!showTooltip)}
+            aria-label="Afficher les conseils pour obtenir les effectifs"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className={styles.infoIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
             Comment obtenir les effectifs?
           </button>
           
           {showTooltip && (
             <div className={styles.tooltip}>
-              <h3 className={styles.tooltipTitle}>Démarche auprès de l'employeur</h3>
+              <div className={styles.tooltipHeader}>
+                <img src={heroImage} alt="Conseiller CGT" className={styles.heroImage} />
+                <h3 className={styles.tooltipTitle}>Démarche auprès de l'employeur</h3>
+              </div>
               <ol className={styles.tooltipList}>
                 <li className={styles.tooltipItem}>Adressez une demande écrite à la Direction des Ressources Humaines</li>
                 <li className={styles.tooltipItem}>Fondez votre demande sur l'article L.2315-81 du Code du Travail (pour les CSE) ou consultez la BDES</li>
@@ -258,6 +264,7 @@ const CartographieAvancee = ({ isVisible }) => {
               <button 
                 className={styles.closeButton}
                 onClick={() => setShowTooltip(false)}
+                aria-label="Fermer les conseils"
               >
                 ✕
               </button>
@@ -266,122 +273,142 @@ const CartographieAvancee = ({ isVisible }) => {
         </div>
       </div>
 
-      {/* Récapitulatif global - uniquement si des services existent */}
-      {servicesData.length > 0 ? (
-        <div className={styles.summary}>
-          <div className={styles.summaryCard}>
-            <h3 className={styles.summaryTitle}>Situation globale</h3>
-            <div className={styles.summaryRow}>
-              <span>Salariés:</span>
-              <span className="font-semibold">{totals.employees}</span>
-            </div>
-            <div className={styles.summaryRow}>
-              <span>Syndiqués:</span>
-              <span className="font-semibold">{totals.syndiques}</span>
-            </div>
-            <div className={styles.summaryRow}>
-              <span>Taux:</span>
-              <span className={`font-semibold ${getRateColorClass(globalRate)}`}>{globalRate}%</span>
-            </div>
-          </div>
-          
-          <div className={styles.summaryCard}>
-            <h3 className={styles.summaryTitle}>Répartition par genre</h3>
-            <div className={styles.genderGrid}>
-              <div>
-                <h4 className={styles.genderTitle}>Hommes</h4>
-                <div className={styles.genderStat}>Salariés: {totals.gender.men.employees}</div>
-                <div className={styles.genderStat}>Syndiqués: {totals.gender.men.syndiques}</div>
-                <div className={`${styles.genderStat} ${getRateColorClass(menRate)}`}>Taux: {menRate}%</div>
-              </div>
-              <div>
-                <h4 className={styles.genderTitle}>Femmes</h4>
-                <div className={styles.genderStat}>Salariées: {totals.gender.women.employees}</div>
-                <div className={styles.genderStat}>Syndiquées: {totals.gender.women.syndiques}</div>
-                <div className={`${styles.genderStat} ${getRateColorClass(womenRate)}`}>Taux: {womenRate}%</div>
-              </div>
-            </div>
-          </div>
-          
-          <div className={styles.summaryCard}>
-            <h3 className={styles.summaryTitle}>Répartition par catégorie</h3>
-            <div className="space-y-1">
-              {Object.entries(totals.categories).map(([category, data]) => {
-                const rate = calculateRate(data.syndiques, data.employees);
-                const categoryNames = {
-                  ouvriers: 'Ouvriers',
-                  employes: 'Employés',
-                  agentsMaitrise: 'Agents de maîtrise',
-                  techniciens: 'Techniciens',
-                  cadres: 'Cadres'
-                };
-                return (
-                  <div key={category} className={styles.categoryRow}>
-                    <span>{categoryNames[category]}:</span>
-                    <span className={`font-semibold ${getRateColorClass(rate)}`}>
-                      {rate}% ({data.syndiques}/{data.employees})
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
+      {/* Message d'introduction si aucun service n'existe */}
+      {servicesData.length === 0 ? (
+        <div className={styles.emptyState}>
+          <p>Pour commencer votre cartographie avancée, cliquez sur le bouton "Ajouter un service" ci-dessous.</p>
+          <p>Vous pourrez ensuite saisir les données détaillées par genre et par catégorie professionnelle.</p>
+          <div className={styles.buttonContainer}>
+            <button 
+              onClick={loadSavedData}
+              className={styles.loadButton}
+              aria-label="Charger les données sauvegardées"
+            >
+              <FaDatabase /> Charger les données sauvegardées
+            </button>
+            <button 
+              onClick={addNewService}
+              className={styles.addButton}
+              aria-label="Ajouter un nouveau service"
+            >
+              <FaPlus /> Ajouter un service
+            </button>
           </div>
         </div>
       ) : (
-        <div className={styles.emptyState}>
-          <p>Aucun service n'a été défini. Utilisez le bouton "Ajouter un service" pour commencer.</p>
-        </div>
-      )}
-
-      {/* Liste des services */}
-      <div className="mb-6">
-        <div className={styles.serviceListHeader}>
-          <h3 className={styles.serviceTitle}>Services</h3>
-          <button 
-            onClick={addNewService}
-            className={styles.addButton}
-          >
-            Ajouter un service
-          </button>
-        </div>
-        
-        {servicesData.length > 0 ? (
-          <div className="overflow-x-auto">
-            <table className={styles.table}>
-              <thead className={styles.tableHeader}>
-                <tr>
-                  <th className={styles.tableHeaderCell}>Service</th>
-                  <th className={`${styles.tableHeaderCell} ${styles.tableCellCenter}`}>Salariés</th>
-                  <th className={`${styles.tableHeaderCell} ${styles.tableCellCenter}`}>Syndiqués</th>
-                  <th className={`${styles.tableHeaderCell} ${styles.tableCellCenter}`}>Taux</th>
-                  <th className={`${styles.tableHeaderCell} ${styles.tableCellCenter}`}>Détails</th>
-                </tr>
-              </thead>
-              <tbody>
-                {servicesData.map(service => {
-                  const rate = calculateRate(service.totalSyndiques, service.totalEmployees);
+        <>
+          {/* Récapitulatif global - uniquement si des services existent */}
+          <div className={styles.summary}>
+            <div className={styles.summaryCard}>
+              <h3 className={styles.summaryTitle}>Situation globale</h3>
+              <div className={styles.summaryRow}>
+                <span>Salariés:</span>
+                <span className="font-semibold">{totals.employees}</span>
+              </div>
+              <div className={styles.summaryRow}>
+                <span>Syndiqués:</span>
+                <span className="font-semibold">{totals.syndiques}</span>
+              </div>
+              <div className={styles.summaryRow}>
+                <span>Taux:</span>
+                <span className={`font-semibold ${getRateColorClass(globalRate)}`}>{globalRate}%</span>
+              </div>
+            </div>
+            
+            <div className={styles.summaryCard}>
+              <h3 className={styles.summaryTitle}>Répartition par genre</h3>
+              <div className={styles.genderGrid}>
+                <div>
+                  <h4 className={styles.genderTitle}>Hommes</h4>
+                  <div className={styles.genderStat}>Salariés: {totals.gender.men.employees}</div>
+                  <div className={styles.genderStat}>Syndiqués: {totals.gender.men.syndiques}</div>
+                  <div className={`${styles.genderStat} ${getRateColorClass(menRate)}`}>Taux: {menRate}%</div>
+                </div>
+                <div>
+                  <h4 className={styles.genderTitle}>Femmes</h4>
+                  <div className={styles.genderStat}>Salariées: {totals.gender.women.employees}</div>
+                  <div className={styles.genderStat}>Syndiquées: {totals.gender.women.syndiques}</div>
+                  <div className={`${styles.genderStat} ${getRateColorClass(womenRate)}`}>Taux: {womenRate}%</div>
+                </div>
+              </div>
+            </div>
+            
+            <div className={styles.summaryCard}>
+              <h3 className={styles.summaryTitle}>Répartition par catégorie</h3>
+              <div className="space-y-1">
+                {Object.entries(totals.categories).map(([category, data]) => {
+                  const rate = calculateRate(data.syndiques, data.employees);
+                  const categoryNames = {
+                    ouvriers: 'Ouvriers',
+                    employes: 'Employés',
+                    agentsMaitrise: 'Agents de maîtrise',
+                    techniciens: 'Techniciens',
+                    cadres: 'Cadres'
+                  };
                   return (
-                    <tr key={service.id} className={styles.tableRow}>
-                      <td className={styles.tableCell}>{service.name}</td>
-                      <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>{service.totalEmployees}</td>
-                      <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>{service.totalSyndiques}</td>
-                      <td className={`${styles.tableCell} ${styles.tableCellCenter} font-medium ${getRateColorClass(rate)}`}>{rate}%</td>
-                      <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>
-                        <button 
-                          onClick={() => setSelectedService(service.id === selectedService ? null : service.id)}
-                          className={styles.detailButton}
-                        >
-                          {service.id === selectedService ? 'Masquer' : 'Voir détails'}
-                        </button>
-                      </td>
-                    </tr>
+                    <div key={category} className={styles.categoryRow}>
+                      <span>{categoryNames[category]}:</span>
+                      <span className={`font-semibold ${getRateColorClass(rate)}`}>
+                        {rate}% ({data.syndiques}/{data.employees})
+                      </span>
+                    </div>
                   );
                 })}
-              </tbody>
-            </table>
+              </div>
+            </div>
           </div>
-        ) : null}
-      </div>
+
+          {/* Liste des services */}
+          <div className="mb-6">
+            <div className={styles.serviceListHeader}>
+              <h3 className={styles.serviceTitle}>Services</h3>
+              <button 
+                onClick={addNewService}
+                className={styles.addButton}
+                aria-label="Ajouter un nouveau service"
+              >
+                <FaPlus /> Ajouter un service
+              </button>
+            </div>
+            
+            <div className="overflow-x-auto">
+              <table className={styles.table}>
+                <thead className={styles.tableHeader}>
+                  <tr>
+                    <th className={styles.tableHeaderCell}>Service</th>
+                    <th className={`${styles.tableHeaderCell} ${styles.tableCellCenter}`}>Salariés</th>
+                    <th className={`${styles.tableHeaderCell} ${styles.tableCellCenter}`}>Syndiqués</th>
+                    <th className={`${styles.tableHeaderCell} ${styles.tableCellCenter}`}>Taux</th>
+                    <th className={`${styles.tableHeaderCell} ${styles.tableCellCenter}`}>Détails</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {servicesData.map(service => {
+                    const rate = calculateRate(service.totalSyndiques, service.totalEmployees);
+                    return (
+                      <tr key={service.id} className={styles.tableRow}>
+                        <td className={styles.tableCell}>{service.name}</td>
+                        <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>{service.totalEmployees}</td>
+                        <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>{service.totalSyndiques}</td>
+                        <td className={`${styles.tableCell} ${styles.tableCellCenter} font-medium ${getRateColorClass(rate)}`}>{rate}%</td>
+                        <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>
+                          <button 
+                            onClick={() => setSelectedService(service.id === selectedService ? null : service.id)}
+                            className={styles.detailButton}
+                            aria-label="Afficher les détails du service"
+                          >
+                            {service.id === selectedService ? 'Masquer' : 'Voir détails'}
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Formulaire de détails d'un service */}
       {selectedService && (
@@ -523,15 +550,33 @@ const CartographieAvancee = ({ isVisible }) => {
         </div>
       )}
 
-      {/* Utilisation du composant SaveButtons */}
-      <SaveButtons
-        onSaveLocal={handleSaveLocal}
-        onSaveServer={handleSaveServer}
-        moduleName="cartographieAvancee"
-      />
+      {/* Boutons pour charger et sauvegarder */}
+      <div className={styles.buttonContainer}>
+        <button 
+          onClick={loadSavedData}
+          className={styles.loadButton}
+          aria-label="Charger les données sauvegardées"
+        >
+          <FaDatabase /> Charger les données sauvegardées
+        </button>
+        <SaveButtons
+          onSaveLocal={handleSaveLocal}
+          onSaveServer={handleSaveServer}
+          moduleName="cartographieAvancee"
+        />
+      </div>
     </div>
   );
 };
 
+// Définition des PropTypes
+CartographieAvancee.propTypes = {
+  isVisible: PropTypes.bool
+};
+
+// Valeurs par défaut
+CartographieAvancee.defaultProps = {
+  isVisible: false
+};
 
 export default CartographieAvancee;

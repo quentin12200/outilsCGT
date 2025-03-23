@@ -1,6 +1,7 @@
 // src/components/Modules/SyndicalisationModule/SyndicalisationStats.js
 import React from 'react';
 import styles from './SyndicalisationStats.module.css';
+import { FaUsers, FaUserCheck, FaPercentage, FaChartLine } from 'react-icons/fa';
 
 function SyndicalisationStats({ data, onSetTarget }) {
   // Sort departments by syndication rate (ascending)
@@ -30,7 +31,7 @@ function SyndicalisationStats({ data, onSetTarget }) {
       <h2 className={styles.statsTitle}>Analyse de la syndicalisation</h2>
       
       <div className={styles.statsGrid}>
-        <div>
+        <div className={styles.statsColumn}>
           <h3 className={styles.sectionTitle}>Répartition par service</h3>
           
           <div className={styles.departmentList}>
@@ -54,7 +55,90 @@ function SyndicalisationStats({ data, onSetTarget }) {
           </div>
         </div>
         
-        <div>
+        <div className={styles.statsColumn}>
+          <h3 className={styles.sectionTitle}>Taux de syndicalisation global</h3>
+          
+          <div className={styles.globalStatsContainer}>
+            {/* Graphique circulaire amélioré */}
+            <div className={styles.pieChartWrapper}>
+              <div className={styles.pieChart}>
+                <div className={styles.pieBackground}></div>
+                <div 
+                  className={styles.pieForeground} 
+                  style={{ 
+                    transform: `rotate(${data.currentRatio * 3.6}deg)`,
+                    backgroundColor: data.currentRatio >= 30 ? '#b91c1c' : '#ef4444'
+                  }}
+                ></div>
+                <div className={styles.pieCenter}>
+                  <span className={styles.pieValue}>{data.currentRatio}%</span>
+                  <span className={styles.pieLabel}>Taux global</span>
+                </div>
+              </div>
+              
+              {/* Annotations */}
+              <div className={styles.pieAnnotations}>
+                {data.currentRatio >= 5 && data.currentRatio <= 95 && (
+                  <>
+                    <div className={styles.syndiquesAnnotation} style={{ 
+                      transform: `rotate(${data.currentRatio / 100 * Math.PI}rad) translate(80px, 0)` 
+                    }}>
+                      <span className={styles.annotationText}>Syndiqués</span>
+                    </div>
+                    <div className={styles.nonSyndiquesAnnotation} style={{ 
+                      transform: `rotate(${(data.currentRatio / 100 + 1) * Math.PI}rad) translate(80px, 0)` 
+                    }}>
+                      <span className={styles.annotationText}>Non-syndiqués</span>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+            
+            {/* Statistiques détaillées */}
+            <div className={styles.detailedStats}>
+              <div className={styles.statItem}>
+                <div className={styles.statIcon}>
+                  <FaUsers />
+                </div>
+                <div className={styles.statContent}>
+                  <div className={styles.statValue}>{data.totalEmployees}</div>
+                  <div className={styles.statLabel}>Salariés totaux</div>
+                </div>
+              </div>
+              
+              <div className={styles.statItem}>
+                <div className={styles.statIcon}>
+                  <FaUserCheck />
+                </div>
+                <div className={styles.statContent}>
+                  <div className={styles.statValue}>{data.currentMembers}</div>
+                  <div className={styles.statLabel}>Syndiqués</div>
+                </div>
+              </div>
+              
+              <div className={styles.statItem}>
+                <div className={styles.statIcon}>
+                  <FaPercentage />
+                </div>
+                <div className={styles.statContent}>
+                  <div className={styles.statValue}>{data.currentRatio}%</div>
+                  <div className={styles.statLabel}>Taux actuel</div>
+                </div>
+              </div>
+              
+              <div className={styles.statItem}>
+                <div className={styles.statIcon}>
+                  <FaChartLine />
+                </div>
+                <div className={styles.statContent}>
+                  <div className={styles.statValue}>{data.sectorAverage}%</div>
+                  <div className={styles.statLabel}>Moyenne du secteur</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
           <h3 className={styles.sectionTitle}>Points clés</h3>
           
           <div className={styles.keyStats}>
@@ -119,54 +203,35 @@ function SyndicalisationStats({ data, onSetTarget }) {
                   ))}
                 </div>
                 {data.targetRatio > 0 && (
-                  <div className={styles.targetInfo}>
-                    <p>Pour atteindre {data.targetRatio}% de syndicalisation:</p>
-                    <p className="font-medium mt-1">
-                      Il faut convaincre {Math.ceil((data.targetRatio * data.totalEmployees / 100) - data.currentMembers)} salariés supplémentaires
+                  <div className="mt-2">
+                    <p>
+                      Pour atteindre {data.targetRatio}%, il faut convaincre {Math.ceil((data.targetRatio / 100 * data.totalEmployees) - data.currentMembers)} salariés supplémentaires.
                     </p>
+                    <div className={styles.progressBarContainer}>
+                      <div className={styles.progressBar}>
+                        <div 
+                          className={styles.currentProgress}
+                          style={{ width: `${data.currentRatio}%` }}
+                        ></div>
+                        <div 
+                          className={styles.targetProgress}
+                          style={{ 
+                            width: `${data.targetRatio - data.currentRatio}%`,
+                            left: `${data.currentRatio}%`
+                          }}
+                        ></div>
+                      </div>
+                      <div className={styles.progressLabels}>
+                        <span className={styles.currentLabel}>{data.currentRatio}%</span>
+                        <span className={styles.targetLabel} style={{ left: `${data.targetRatio}%` }}>
+                          {data.targetRatio}%
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
             </div>
-            
-            <div className={styles.keyStatCard}>
-              <h4 className={styles.keyStatTitle}>Taux global actuel</h4>
-              <div className="flex items-center">
-                <span className={`${styles.globalRateValue} ${getTextColorClass(data.currentRatio)}`}>
-                  {data.currentRatio}%
-                </span>
-                <span className={styles.globalRateCount}>
-                  ({data.currentMembers} syndiqués)
-                </span>
-              </div>
-              <p className={styles.sectorAverage}>
-                Moyenne nationale du secteur: {data.sectorAverage || "--"}%
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div className={styles.actionSection}>
-        <h3 className={styles.sectionTitle}>Actions recommandées</h3>
-        <div className={styles.actionGrid}>
-          {lowestDept && (
-            <div className={`${styles.actionCard} ${styles.priorityCard}`}>
-              <h4 className={styles.priorityTitle}>Priorité: {lowestDept.name}</h4>
-              <p className={styles.actionText}>
-                Ce service a le taux de syndicalisation le plus bas ({lowestDept.ratio}%). 
-                Organiser une réunion d'information ciblée pour présenter les avantages 
-                du syndicat aux {lowestDept.employees - lowestDept.members} salariés non syndiqués.
-              </p>
-            </div>
-          )}
-          <div className={`${styles.actionCard} ${styles.strategyCard}`}>
-            <h4 className={styles.strategyTitle}>Stratégie globale</h4>
-            <p className={styles.actionText}>
-              Pour atteindre un taux de syndicalisation de {data.targetRatio || 35}%, 
-              prévoir une campagne de recrutement avec documentation, 
-              événements conviviaux et ambassadeurs par service.
-            </p>
           </div>
         </div>
       </div>

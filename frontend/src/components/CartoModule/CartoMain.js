@@ -1,18 +1,16 @@
 // src/components/CartoModule/CartoMain.js
-import React, { useState } from 'react';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import styles from './CartoMain.module.css';
 import ServiceForm from './ServiceForm';
 import ServiceCard from './ServiceCard';
 import GlobalSummary from './GlobalSummary';
 import ActionPlan from './ActionPlan';
-import CartographieAvancee from './CartographieAvancee';
 
-function CartoMain() {
+const CartoMain = forwardRef((props, ref) => {
   const [services, setServices] = useState([
     { name: '', salaries: 0, syndiques: 0 }
   ]);
   const [submitted, setSubmitted] = useState(false);
-  const [showAdvanced, setShowAdvanced] = useState(false);
   const [stats, setStats] = useState({
     totalSalaries: 0,
     totalSyndiques: 0,
@@ -20,6 +18,16 @@ function CartoMain() {
     above50: [],
     below25: []
   });
+  
+  // Expose les références pour le parent
+  useImperativeHandle(ref, () => ({
+    getSummaryRef: () => summaryRef.current,
+    getFullSynthesisRef: () => fullSynthesisRef.current,
+    getStats: () => stats
+  }));
+  
+  const summaryRef = React.createRef();
+  const fullSynthesisRef = React.createRef();
 
   const addService = () => {
     setServices([...services, { name: '', salaries: 0, syndiques: 0 }]);
@@ -35,60 +43,57 @@ function CartoMain() {
 
   const updateService = (index, field, value) => {
     const updatedServices = [...services];
+    
+    // Convertir en nombre si c'est un champ numérique
     if (field === 'salaries' || field === 'syndiques') {
       value = parseInt(value) || 0;
+      
+      // Vérifier que les syndiqués ne dépassent pas les salariés
+      if (field === 'syndiques' && value > updatedServices[index].salaries) {
+        value = updatedServices[index].salaries;
+      }
     }
-    if (field === 'syndiques' && value > updatedServices[index].salaries) {
-      value = updatedServices[index].salaries;
-    }
-    updatedServices[index][field] = value;
+    
+    updatedServices[index] = {
+      ...updatedServices[index],
+      [field]: value
+    };
+    
     setServices(updatedServices);
   };
 
   const submitServices = () => {
-    // Vérifie que tous les services ont un nom
-    const emptyServices = services.filter(s => !s.name.trim());
-    if (emptyServices.length > 0) {
+    // Vérifier si tous les services ont un nom
+    const hasEmptyName = services.some(service => !service.name.trim());
+    if (hasEmptyName) {
       alert("Tous les services doivent avoir un nom.");
       return;
     }
 
-    // Vérifie la cohérence
-    for (const service of services) {
-      if (service.syndiques > service.salaries) {
-        alert(`Le service "${service.name}" a plus de syndiqués que de salariés.`);
-        return;
-      }
-    }
-
-    // Calcule les stats globales
+    // Calculer les statistiques globales
     let totalSalaries = 0;
     let totalSyndiques = 0;
-    let above50 = [];
-    let below25 = [];
+    const above50 = [];
+    const below25 = [];
 
     services.forEach(service => {
       totalSalaries += service.salaries;
       totalSyndiques += service.syndiques;
-      if (service.salaries > 0) {
-        const rate = service.syndiques / service.salaries;
-        if (rate >= 0.5) {
-          above50.push(service.name);
-        }
-        if (rate < 0.25 && service.salaries > 5) {
-          below25.push(service.name);
-        }
+      
+      // Calculer le taux de syndicalisation pour ce service
+      const ratio = service.salaries > 0 ? (service.syndiques / service.salaries) * 100 : 0;
+      
+      // Classer le service selon son taux
+      if (ratio >= 50) {
+        above50.push(service);
+      } else if (ratio < 25) {
+        below25.push(service);
       }
     });
 
     const globalRatio = totalSalaries > 0 ? (totalSyndiques / totalSalaries) * 100 : 0;
     setStats({ totalSalaries, totalSyndiques, globalRatio, above50, below25 });
     setSubmitted(true);
-  };
-
-  // Fonction pour basculer l'affichage de la cartographie avancée
-  const toggleAdvancedCartography = () => {
-    setShowAdvanced(!showAdvanced);
   };
 
   return (
@@ -105,7 +110,13 @@ function CartoMain() {
 
       {submitted && (
         <>
-          <GlobalSummary stats={stats} />
+          <div ref={fullSynthesisRef} className={styles.fullSynthesisSection}>
+            <div ref={summaryRef} className={styles.summarySection}>
+              <GlobalSummary stats={stats} />
+            </div>
+
+            <ActionPlan stats={stats} services={services} />
+          </div>
 
           <div className={styles.cardBlock}>
             <h3 className={styles.cardTitle}>Cartographie des services</h3>
@@ -118,25 +129,10 @@ function CartoMain() {
               ))}
             </div>
           </div>
-
-          <ActionPlan stats={stats} services={services} />
         </>
       )}
-
-      {/* Bouton pour afficher/masquer la cartographie avancée */}
-      <div className={styles.advancedButtonContainer}>
-        <button 
-          className={styles.advancedButton}
-          onClick={toggleAdvancedCartography}
-        >
-          {showAdvanced ? 'Masquer la cartographie avancée' : 'Afficher la cartographie avancée'}
-        </button>
-      </div>
-
-      {/* Composant CartographieAvancee qui ne s'affiche que si showAdvanced est vrai */}
-      <CartographieAvancee isVisible={showAdvanced} />
     </div>
   );
-}
+});
 
 export default CartoMain;

@@ -1,219 +1,379 @@
 /* src/components/Modules/SyndicalisationModule/SyndicalisationStats.module.css */
 
 .statsContainer {
-    background-color: white;
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  .statsTitle {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #b91c1c; /* Rouge CGT */
-    margin-bottom: 1.5rem;
-  }
-  
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.statsTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #b91c1c; /* Rouge CGT */
+  margin-bottom: 1.5rem;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
   .statsGrid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    grid-template-columns: 1fr 1fr;
   }
-  
-  @media (min-width: 768px) {
-    .statsGrid {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-  
-  .sectionTitle {
-    font-size: 1.125rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-  
-  .departmentList {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .departmentItem {
-    background-color: #f9fafb;
-    padding: 0.75rem;
-    border-radius: 0.25rem;
-    border: 1px solid #e5e7eb;
-  }
-  
-  .departmentHeader {
-    display: flex;
+}
+
+.statsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.departmentList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.departmentItem {
+  background-color: #f9fafb;
+  border-radius: 0.375rem;
+  padding: 0.75rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.departmentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.departmentName {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.departmentRatio {
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.departmentStats {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+}
+
+.progressBar {
+  height: 0.5rem;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progressBarContainer {
+  position: relative;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.progressLabels {
+  position: relative;
+  height: 20px;
+  margin-top: 5px;
+}
+
+.currentLabel, .targetLabel {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  color: #4b5563;
+  top: 0;
+}
+
+.currentProgress {
+  position: absolute;
+  height: 100%;
+  background-color: #b91c1c;
+  border-radius: 9999px 0 0 9999px;
+}
+
+.targetProgress {
+  position: absolute;
+  height: 100%;
+  background-color: #fecaca;
+  border-radius: 0 9999px 9999px 0;
+}
+
+.veryHighRatio {
+  background-color: #15803d; /* Vert foncé */
+  height: 100%;
+}
+
+.highRatio {
+  background-color: #b91c1c; /* Rouge CGT */
+  height: 100%;
+}
+
+.mediumRatio {
+  background-color: #f59e0b; /* Orange */
+  height: 100%;
+}
+
+.lowRatio {
+  background-color: #ef4444; /* Rouge clair */
+  height: 100%;
+}
+
+.textVeryHigh {
+  color: #15803d;
+}
+
+.textHigh {
+  color: #b91c1c;
+}
+
+.textMedium {
+  color: #f59e0b;
+}
+
+.textLow {
+  color: #ef4444;
+}
+
+.keyStats {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.keyStatCard {
+  background-color: #f9fafb;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.keyStatTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.75rem;
+}
+
+.targetButtons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.targetButton {
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  color: #4b5563;
+  font-weight: 500;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.targetButton:hover {
+  background-color: #e5e7eb;
+}
+
+.targetButtonActive {
+  background-color: #b91c1c;
+  border-color: #991b1b;
+  color: white;
+}
+
+.targetButtonActive:hover {
+  background-color: #991b1b;
+}
+
+/* Styles pour le graphique circulaire */
+.globalStatsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .globalStatsContainer {
+    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
-    margin-bottom: 0.25rem;
   }
-  
-  .departmentName {
-    font-weight: 500;
-  }
-  
-  .departmentRatio {
-    font-weight: 700;
-  }
-  
-  .progressBar {
-    width: 100%;
-    height: 0.5rem;
-    background-color: #e5e7eb;
-    border-radius: 9999px;
-    overflow: hidden;
-  }
-  
-  .veryHighRatio {
-    height: 100%;
-    background-color: #22c55e;
-  }
-  
-  .highRatio {
-    height: 100%;
-    background-color: #3b82f6;
-  }
-  
-  .mediumRatio {
-    height: 100%;
-    background-color: #f59e0b;
-  }
-  
-  .lowRatio {
-    height: 100%;
-    background-color: #ef4444;
-  }
-  
-  .textVeryHigh {
-    color: #15803d;
-  }
-  
-  .textHigh {
-    color: #1d4ed8;
-  }
-  
-  .textMedium {
-    color: #b45309;
-  }
-  
-  .textLow {
-    color: #b91c1c;
-  }
-  
-  .departmentStats {
-    margin-top: 0.5rem;
-    font-size: 0.875rem;
-    color: #4b5563;
-  }
-  
-  .keyStats {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  
-  .keyStatCard {
-    background-color: #f9fafb;
-    padding: 1rem;
-    border-radius: 0.25rem;
-    border: 1px solid #e5e7eb;
-  }
-  
-  .keyStatTitle {
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-    color: #374151;
-  }
-  
-  .actionSection {
-    border-top: 1px solid #e5e7eb;
-    padding-top: 1.5rem;
-  }
-  
-  .actionGrid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  
-  @media (min-width: 768px) {
-    .actionGrid {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-  
-  .actionCard {
-    padding: 1rem;
-    border-radius: 0.25rem;
-    border: 1px solid;
-  }
-  
-  .priorityCard {
-    background-color: #fef3c7;
-    border-color: #fde68a;
-  }
-  
-  .priorityTitle {
-    font-weight: 600;
-    color: #92400e;
-    margin-bottom: 0.5rem;
-  }
-  
-  .strategyCard {
-    background-color: #dbeafe;
-    border-color: #bfdbfe;
-  }
-  
-  .strategyTitle {
-    font-weight: 600;
-    color: #1e40af;
-    margin-bottom: 0.5rem;
-  }
-  
-  .actionText {
-    font-size: 0.875rem;
-    color: #374151;
-  }
-  
-  .targetSelector {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-  }
-  
-  .targetButton {
-    padding: 0.25rem 0.75rem;
-    border-radius: 0.25rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    background-color: #e5e7eb;
-    color: #4b5563;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .targetButtonActive {
-    background-color: #b91c1c;
-    color: white;
-  }
-  
-  .globalRateValue {
-    font-size: 1.5rem;
-    font-weight: 700;
-  }
-  
-  .globalRateCount {
-    margin-left: 0.5rem;
-    color: #4b5563;
-  }
-  
-  .sectorAverage {
-    margin-top: 0.5rem;
-    font-size: 0.875rem;
-    color: #4b5563;
-  }
+}
+
+/* Wrapper pour le graphique */
+.pieChartWrapper {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  margin: 0 auto;
+  /* Important pour la capture PDF */
+  overflow: visible !important;
+  z-index: 1;
+}
+
+/* Graphique circulaire */
+.pieChart {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: visible !important; /* Important pour la capture PDF */
+  z-index: 1;
+}
+
+/* Fond du graphique */
+.pieBackground {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #e5e7eb;
+}
+
+/* Premier plan du graphique (partie colorée) */
+.pieForeground {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  border-radius: 100% 0 0 100% / 50% 0 0 50%;
+  left: 50%;
+  transform-origin: left center;
+  background-color: #b91c1c; /* Rouge CGT */
+}
+
+/* Centre du graphique avec le pourcentage */
+.pieCenter {
+  position: absolute;
+  width: 70%;
+  height: 70%;
+  background-color: white;
+  border-radius: 50%;
+  top: 15%;
+  left: 15%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.pieValue {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #b91c1c;
+  line-height: 1;
+}
+
+.pieLabel {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* Annotations */
+.pieAnnotations {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.syndiquesAnnotation, .nonSyndiquesAnnotation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: left center;
+  white-space: nowrap;
+}
+
+.annotationText {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.syndiquesAnnotation .annotationText {
+  color: #b91c1c;
+}
+
+.nonSyndiquesAnnotation .annotationText {
+  color: #6b7280;
+}
+
+/* Statistiques détaillées */
+.detailedStats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background-color: #f9fafb;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.statIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border-radius: 0.375rem;
+  font-size: 1.25rem;
+}
+
+.statContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.statValue {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}

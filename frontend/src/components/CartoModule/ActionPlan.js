@@ -32,7 +32,7 @@ function ActionPlan({ stats, services }) {
               </p>
               <ul className={styles.list}>
                 {priorityServices.map((service, idx) => (
-                  <li key={idx}>{service}</li>
+                  <li key={idx}>{service.name}</li>
                 ))}
               </ul>
             </>
@@ -68,7 +68,7 @@ function ActionPlan({ stats, services }) {
           </p>
           <ul className={styles.list}>
             {stats.above50.map((service, idx) => (
-              <li key={idx}>{service}</li>
+              <li key={idx}>{service.name}</li>
             ))}
           </ul>
           <p className={styles.note}>

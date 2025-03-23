@@ -2,289 +2,450 @@
 
 /* Conteneur principal */
 .container {
-    background-color: #ffffff;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    margin-bottom: 1.5rem;
-  }
-  
-  /* Titre de la synthèse */
-  .summaryTitle {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #b91c1c;
-    margin-bottom: 1.5rem;
-  }
-  
-  /* Grille pour les statistiques */
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  margin-bottom: 1.5rem;
+}
+
+/* Titre de la synthèse */
+.summaryTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #b91c1c;
+  margin-bottom: 1.5rem;
+}
+
+/* Grille pour les statistiques */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
   .grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
   }
-  
-  @media (min-width: 768px) {
-    .grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  
-  /* Cartes individuelles */
-  .statCard {
-    background-color: #f9fafb;
-    padding: 1.5rem 1rem;
-    border-radius: 0.5rem;
-    text-align: center;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s;
-    border-top: 4px solid #9ca3af;
-  }
-  
-  .statCard:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-  }
-  
-  /* Classes de couleur pour le taux */
-  .highRatio {
-    border-top-color: #10b981;
-    background-color: #ecfdf5;
-  }
-  
-  .mediumRatio {
-    border-top-color: #f59e0b;
-    background-color: #fffbeb;
-  }
-  
-  .lowRatio {
-    border-top-color: #ef4444;
-    background-color: #fef2f2;
-  }
-  
-  .statLabel {
-    font-size: 0.875rem;
-    color: #6b7280;
-    margin-bottom: 0.5rem;
-  }
-  
-  .statValue {
-    font-size: 2rem;
-    font-weight: 700;
-  }
-  
-  .highRatio .statValue {
-    color: #10b981;
-  }
-  
-  .mediumRatio .statValue {
-    color: #f59e0b;
-  }
-  
-  .lowRatio .statValue {
-    color: #ef4444;
-  }
-  
-  /* Section barre de progression */
-  .progressSection {
-    margin: 2rem 0;
-  }
-  
-  .progressLabels {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-  }
-  
-  .progressLabel {
-    font-weight: 500;
-    color: #4b5563;
-  }
-  
-  .progressValue {
-    font-weight: 600;
-  }
-  
-  .highRatio .progressValue {
-    color: #10b981;
-  }
-  
-  .mediumRatio .progressValue {
-    color: #f59e0b;
-  }
-  
-  .lowRatio .progressValue {
-    color: #ef4444;
-  }
-  
-  .progressContainer {
-    margin-bottom: 0.25rem;
-  }
-  
-  .progressBar {
-    width: 100%;
-    background-color: #e5e7eb;
-    border-radius: 9999px;
-    height: 0.75rem;
-    overflow: hidden;
-  }
-  
-  .progressFill {
-    height: 100%;
-    border-radius: 9999px;
-    transition: width 0.6s ease;
-  }
-  
-  .progressFill.highRatio {
-    background-color: #10b981;
-    border-top-color: transparent;
-  }
-  
-  .progressFill.mediumRatio {
-    background-color: #f59e0b;
-    border-top-color: transparent;
-  }
-  
-  .progressFill.lowRatio {
-    background-color: #ef4444;
-    border-top-color: transparent;
-  }
-  
-  .progressScale {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.75rem;
-    color: #9ca3af;
-  }
-  
-  /* Bloc d'analyse et recommandations */
-  .analysisBox {
-    border-radius: 0.5rem;
-    padding: 1.25rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .analysisBox.highRatio {
-    background-color: #ecfdf5;
-    border-left: 4px solid #10b981;
-  }
-  
-  .analysisBox.mediumRatio {
-    background-color: #fffbeb;
-    border-left: 4px solid #f59e0b;
-  }
-  
-  .analysisBox.lowRatio {
-    background-color: #fef2f2;
-    border-left: 4px solid #ef4444;
-  }
-  
-  .analysisTitle {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-  }
-  
-  .analysisBox.highRatio .analysisTitle {
-    color: #065f46;
-  }
-  
-  .analysisBox.mediumRatio .analysisTitle {
-    color: #92400e;
-  }
-  
-  .analysisBox.lowRatio .analysisTitle {
-    color: #991b1b;
-  }
-  
-  .analysisText {
-    color: #4b5563;
-  }
-  
-  /* Section graphique */
-  .chartSection {
-    background-color: #f9fafb;
-    padding: 1.25rem;
-    border-radius: 0.5rem;
-    margin-top: 1.5rem;
-  }
-  
-  .chartTitle {
-    font-size: 1.125rem;
-    font-weight: 600;
-    margin-bottom: 1.25rem;
-    color: #4b5563;
-    text-align: center;
-  }
-  
+}
+
+/* Cartes individuelles */
+.statCard {
+  background-color: #f9fafb;
+  padding: 1.5rem 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+  border-top: 4px solid #9ca3af;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.statCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+/* Icônes des statistiques */
+.statIcon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 0.75rem;
+  color: #6b7280;
+}
+
+.icon {
+  width: 100%;
+  height: 100%;
+}
+
+.highRatio .statIcon {
+  color: #10b981;
+}
+
+.mediumRatio .statIcon {
+  color: #f59e0b;
+}
+
+.lowRatio .statIcon {
+  color: #ef4444;
+}
+
+/* Classes de couleur pour le taux */
+.highRatio {
+  border-top-color: #10b981;
+}
+
+.mediumRatio {
+  border-top-color: #f59e0b;
+}
+
+.lowRatio {
+  border-top-color: #ef4444;
+}
+
+/* Valeur de la statistique */
+.statValue {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.25rem;
+}
+
+.highRatio .statValue {
+  color: #10b981;
+}
+
+.mediumRatio .statValue {
+  color: #f59e0b;
+}
+
+.lowRatio .statValue {
+  color: #ef4444;
+}
+
+/* Label de la statistique */
+.statLabel {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Section de la barre de progression */
+.progressSection {
+  background-color: #f9fafb;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #9ca3af;
+}
+
+.progressSection.highRatio {
+  border-left-color: #10b981;
+}
+
+.progressSection.mediumRatio {
+  border-left-color: #f59e0b;
+}
+
+.progressSection.lowRatio {
+  border-left-color: #ef4444;
+}
+
+.progressLabels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.progressLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.progressValue {
+  font-weight: 600;
+}
+
+.highRatio .progressValue {
+  color: #10b981;
+}
+
+.mediumRatio .progressValue {
+  color: #f59e0b;
+}
+
+.lowRatio .progressValue {
+  color: #ef4444;
+}
+
+.progressContainer {
+  margin-bottom: 0.25rem;
+}
+
+.progressBar {
+  width: 100%;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  height: 0.75rem;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.6s ease;
+}
+
+.progressFill.highRatio {
+  background-color: #10b981;
+  border-top-color: transparent;
+}
+
+.progressFill.mediumRatio {
+  background-color: #f59e0b;
+  border-top-color: transparent;
+}
+
+.progressFill.lowRatio {
+  background-color: #ef4444;
+  border-top-color: transparent;
+}
+
+.progressScale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+/* Bloc d'analyse et recommandations */
+.analysisBox {
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.analysisBox.highRatio {
+  background-color: #ecfdf5;
+  border-left: 4px solid #10b981;
+}
+
+.analysisBox.mediumRatio {
+  background-color: #fffbeb;
+  border-left: 4px solid #f59e0b;
+}
+
+.analysisBox.lowRatio {
+  background-color: #fef2f2;
+  border-left: 4px solid #ef4444;
+}
+
+.analysisTitle {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.analysisBox.highRatio .analysisTitle {
+  color: #065f46;
+}
+
+.analysisBox.mediumRatio .analysisTitle {
+  color: #92400e;
+}
+
+.analysisBox.lowRatio .analysisTitle {
+  color: #991b1b;
+}
+
+.analysisText {
+  color: #4b5563;
+}
+
+/* Section graphique améliorée */
+.chartSection {
+  background-color: #f9fafb;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  margin-top: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.chartTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #4b5563;
+  text-align: center;
+}
+
+.pieChartContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
   .pieChartContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
   }
-  
-  @media (min-width: 768px) {
-    .pieChartContainer {
-      flex-direction: row;
-      justify-content: space-around;
-    }
-  }
-  
-  .pieChart {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background-color: #e5e7eb;
-    overflow: hidden;
-  }
-  
-  .pieSlice {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    transform-origin: 50% 50%;
-  }
-  
-  .pieCenter {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    top: 50px;
-    left: 50px;
-    background-color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .pieCenterText {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #b91c1c;
-  }
-  
-  .pieLegend {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  
-  .legendItem {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  
-  .legendColor {
-    width: 16px;
-    height: 16px;
-    border-radius: 4px;
-  }
-  
-  .legendText {
-    font-size: 0.875rem;
-    color: #4b5563;
-  }
+}
+
+/* Wrapper pour le graphique */
+.pieChartWrapper {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  margin: 0 auto;
+  /* Important pour la capture PDF */
+  overflow: visible !important;
+  z-index: 1;
+}
+
+/* Graphique circulaire */
+.pieChart {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: visible !important; /* Important pour la capture PDF */
+  z-index: 1;
+}
+
+/* Fond du graphique */
+.pieBackground {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #e5e7eb;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Portion du graphique */
+.pieSlice {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 50%;
+  background-color: #b91c1c;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.5s ease-in-out;
+}
+
+/* Centre du graphique */
+.pieCenter {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  top: 60px;
+  left: 60px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 2;
+}
+
+.pieCenterText {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #b91c1c;
+  line-height: 1;
+}
+
+.pieCenterLabel {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* Annotations du graphique */
+.pieAnnotations {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.syndiquesAnnotation,
+.nonSyndiquesAnnotation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0 0;
+  white-space: nowrap;
+}
+
+.annotationText {
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.syndiquesAnnotation .annotationText {
+  color: #b91c1c;
+}
+
+.nonSyndiquesAnnotation .annotationText {
+  color: #4b5563;
+}
+
+/* Détails statistiques */
+.statDetails {
+  flex: 1;
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  min-width: 250px;
+}
+
+.detailsTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.detailsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.detailItem {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  align-items: center;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  background-color: #f9fafb;
+}
+
+.detailLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.legendColor {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.detailValue {
+  font-weight: 600;
+  color: #111827;
+  text-align: right;
+}
+
+.detailPercent {
+  font-weight: 600;
+  color: #6b7280;
+  text-align: right;
+}
