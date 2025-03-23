@@ -5,6 +5,8 @@ import SaveButtons from '../../Common/Savebuttons/SaveButtons';
 import storageService from '../../services/storageService';
 import styles from './ResultatsMain.module.css';
 import { FaVoteYea, FaUsers, FaChair, FaChartPie } from 'react-icons/fa';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 function ResultatsMain() {
   const [activeTab, setActiveTab] = useState('stats'); // 'stats' ou 'form'
@@ -80,12 +82,8 @@ function ResultatsMain() {
     }
     
     try {
-      // Importer dynamiquement les modules nécessaires pour le PDF
-      const html2canvas = await import('html2canvas');
-      const jsPDF = await import('jspdf');
-      
       // Créer le PDF
-      const pdf = new jsPDF.default('p', 'mm', 'a4');
+      const pdf = new jsPDF('p', 'mm', 'a4');
       
       // Ajouter l'en-tête
       pdf.setFontSize(18);
@@ -99,7 +97,7 @@ function ResultatsMain() {
       pdf.text(`Généré le ${today}`, 190, 35, { align: 'right' });
       
       // Capturer la section complète des résultats
-      const canvas = await html2canvas.default(fullResultsRef.current, {
+      const canvas = await html2canvas(fullResultsRef.current, {
         scale: 2,
         useCORS: true,
         logging: false,

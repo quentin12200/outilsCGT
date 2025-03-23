@@ -111,6 +111,55 @@ function HomePage() {
             Commencer maintenant
           </Link>
         </div>
+        <div className={styles.manifestoContent}>
+          <h2 className={styles.manifestoTitle}>Militer à la CGT : une démarche construite pour gagner</h2>
+          
+          <p className={styles.manifestoParagraph}>
+            Militer à la CGT, ce n'est pas une question de hasard. On ne s'improvise pas syndicaliste : on s'organise. 
+            Derrière chaque victoire, chaque mobilisation, il y a une méthode, une démarche collective qui s'appuie 
+            sur des repères clairs et des outils concrets.
+          </p>
+          
+          <div className={styles.manifestoPoints}>
+            <div className={styles.manifestoItem}>
+              <h3 className={styles.manifestoSubtitle}>Militer, c'est partir de nos forces.</h3>
+              <p>
+                Connaître la cartographie de nos syndicats, des services et des établissements, c'est savoir où nous sommes implantés, 
+                où nous devons nous renforcer. Se fixer des objectifs de syndicalisation, c'est se donner les moyens de construire 
+                un rapport de force durable.
+              </p>
+            </div>
+            
+            <div className={styles.manifestoItem}>
+              <h3 className={styles.manifestoSubtitle}>Militer, c'est partir des salarié·es.</h3>
+              <p>
+                C'est écouter leurs aspirations individuelles et collectives, à travers le cahier revendicatif construit par 
+                et avec les syndiqué·es. C'est faire émerger des revendications légitimes et partagées.
+              </p>
+            </div>
+            
+            <div className={styles.manifestoItem}>
+              <h3 className={styles.manifestoSubtitle}>Militer, c'est faire vivre la démocratie syndicale.</h3>
+              <p>
+                En organisant des assemblées générales, on rend compte, on débat, on décide collectivement des suites à donner. 
+                C'est là que se construit la confiance, que se forge l'unité.
+              </p>
+            </div>
+            
+            <div className={styles.manifestoItem}>
+              <h3 className={styles.manifestoSubtitle}>Militer, c'est recommencer.</h3>
+              <p>
+                La démarche syndicale est un processus vivant : on analyse, on agit, on évalue, on recommence. 
+                C'est ce rythme qui fait notre force.
+              </p>
+            </div>
+          </div>
+          
+          <p className={styles.manifestoConclusion}>
+            Avec méthode, avec volonté, avec conviction, la CGT agit pour transformer les colères en revendications, 
+            les idées en actions, et les actions en victoires. Parce que rien ne se gagne seul, et rien ne se gagne sans stratégie.
+          </p>
+        </div>
         <div className={styles.heroImageContainer}>
           <img src={heroImage} alt="CGT en action" className={styles.heroImage} />
         </div>

@@ -121,6 +121,11 @@ function Navigation() {
                     </Link>
                   </li>
                   <li role="none">
+                    <Link to="/carto-syndicalisation" className={styles.dropdownItem} role="menuitem">
+                      <span className={styles.newFeature}>Nouveau</span> Carto-Syndicalisation
+                    </Link>
+                  </li>
+                  <li role="none">
                     <Link to="/retro-planning" className={styles.dropdownItem} role="menuitem">
                       Rétro-planning
                     </Link>

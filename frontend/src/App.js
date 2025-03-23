@@ -1,16 +1,14 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Navigation from './components/Common/Navigation';
 import FooterFooter from './components/Layout/FooterFooter';
 import VueEnsemblePage from './components/pages/VueEnsemblePage';
 // Pages existantes
 import HomePage from './components/pages/HomePage';
-import CartoPage from './components/pages/CartoPage';
 import AssembleePage from './components/pages/AssembleePage';
 import RetroplanningPage from './components/pages/RetroplanningPage';
 import EcoleDemocratiePage from './components/pages/EcoleDemocratiePage';
 import ResultatsPage from './components/pages/ResultatsPage';
-import SyndicalisationPage from './components/pages/SyndicalisationPage';
 import DemarcheSyndicalePage from './components/pages/DemarcheSyndicalePage';
 import CampagneElectionsPage from './components/pages/CampagneElectionsPage';
 // Nouveaux modules de campagne
@@ -20,6 +18,8 @@ import PlanAvantPage from './components/pages/PlanAvantPage';
 import PlanApresPage from './components/pages/PlanApresPage';
 import PlanImplanterPage from './components/pages/PlanImplanterPage';
 import PlanOutilsPage from './components/pages/PlanOutilsPage';
+// Nouveau composant fusionné
+import CartoSyndicalisationPage from './components/pages/CartoSyndicalisationPage';
 
 // Outils spécifiques
 import CahierRevendicatifTool from './components/pages/CahierRevendicatifTool';
@@ -33,14 +33,17 @@ function App() {
         <Routes>
           {/* Routes principales */}
           <Route path="/" element={<HomePage />} />
-          <Route path="/cartographie" element={<CartoPage />} />
+          {/* Redirection des anciennes routes vers la nouvelle page fusionnée */}
+          <Route path="/cartographie" element={<Navigate to="/carto-syndicalisation" replace />} />
+          <Route path="/syndicalisation" element={<Navigate to="/carto-syndicalisation" replace />} />
           <Route path="/retro-planning" element={<RetroplanningPage />} />
           <Route path="/ecole-de-la-democratie" element={<EcoleDemocratiePage />} />
           <Route path="/assemblees" element={<AssembleePage />} />
-          <Route path="/syndicalisation" element={<SyndicalisationPage />} />
           <Route path="/resultats" element={<ResultatsPage />} />
           <Route path="/demarche" element={<DemarcheSyndicalePage />} />
           <Route path="/vue-ensemble" element={<VueEnsemblePage />} />
+          {/* Nouveau composant fusionné */}
+          <Route path="/carto-syndicalisation" element={<CartoSyndicalisationPage />} />
           {/* Nouveaux modules de campagne */}
           <Route path="/plan-actions" element={<PlanActionsPage />} />
           <Route path="/plan-pendant" element={<PlanPendantPage />} />

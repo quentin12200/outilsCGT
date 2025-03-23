@@ -1,0 +1,486 @@
+/* CartoSyndicalisationPage.module.css */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 2rem;
+  color: var(--cgt-red);
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--cgt-text-dark);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.companyForm {
+  background-color: var(--cgt-background-light);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--cgt-box-shadow-sm);
+}
+
+.formGroup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.formLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--cgt-text-dark);
+  min-width: 180px;
+}
+
+.formInput {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid var(--cgt-border-color);
+  border-radius: var(--cgt-border-radius);
+  font-size: 1rem;
+  transition: var(--cgt-transition);
+}
+
+.formInput:focus {
+  outline: none;
+  border-color: var(--cgt-red);
+  box-shadow: 0 0 0 2px rgba(185, 28, 28, 0.2);
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--cgt-border-color);
+  padding-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tabButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--cgt-background-light);
+  border: 1px solid var(--cgt-border-color);
+  border-radius: var(--cgt-border-radius) var(--cgt-border-radius) 0 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cgt-text-dark);
+  cursor: pointer;
+  transition: var(--cgt-transition);
+  position: relative;
+  top: 1px;
+}
+
+.tabButton:hover {
+  background-color: #f9f9f9;
+}
+
+.activeTab {
+  background-color: white;
+  border-bottom-color: white;
+  color: var(--cgt-red);
+}
+
+.tabContent {
+  background-color: white;
+  border-radius: 0 var(--cgt-border-radius) var(--cgt-border-radius) var(--cgt-border-radius);
+  padding: 1rem;
+  min-height: 400px;
+}
+
+.cartoParagraph, .syndicalisationParagraph {
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  color: var(--cgt-text-dark);
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  gap: 1rem;
+  position: relative;
+  z-index: 5;
+}
+
+.exportDropdown {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.exportButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--cgt-blue);
+  color: white;
+  border: none;
+  border-radius: var(--cgt-border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.exportButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: all 0.6s ease;
+}
+
+.exportButton:hover::before {
+  left: 100%;
+}
+
+.exportButton:hover {
+  background-color: var(--cgt-blue-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.exportButton:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dropdownArrow {
+  font-size: 0.7rem;
+  margin-left: 0.25rem;
+  transition: transform 0.3s ease;
+}
+
+.exportButton[aria-expanded="true"] .dropdownArrow {
+  transform: rotate(180deg);
+}
+
+.exportOptions {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background-color: white;
+  border: none;
+  border-radius: var(--cgt-border-radius);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  min-width: 250px;
+  animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.exportOptionButton {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.9rem 1.25rem;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  text-align: left;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--cgt-text-dark);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.exportOptionButton:last-child {
+  border-bottom: none;
+}
+
+.exportOptionButton:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+  color: var(--cgt-red);
+  padding-left: 1.5rem;
+}
+
+.exportOptionButton svg {
+  color: var(--cgt-blue);
+  transition: all 0.2s ease;
+  font-size: 1.1rem;
+}
+
+.exportOptionButton:hover svg {
+  color: var(--cgt-red);
+  transform: scale(1.1);
+}
+
+.pdfButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--cgt-red);
+  color: white;
+  border: none;
+  border-radius: var(--cgt-border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pdfButton:hover {
+  background-color: var(--cgt-red-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.pdfButton:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles spécifiques pour les différents contenus d'onglets */
+.cartoContent, .syndicalisationContent, .avanceeContent {
+  animation: fadeIn 0.3s ease;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .tabs {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .tabButton {
+    width: 100%;
+    border-radius: var(--cgt-border-radius);
+  }
+  
+  .activeTab {
+    border-bottom-color: var(--cgt-border-color);
+  }
+  
+  .formGroup {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .formLabel {
+    margin-bottom: 0.5rem;
+  }
+  
+  .formInput {
+    width: 100%;
+  }
+  
+  .actionButtons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .exportOptions {
+    width: 100%;
+    right: auto;
+    left: 0;
+  }
+}
+
+/* Support d'impression */
+@media print {
+  .tabs, .actionButtons, .companyForm {
+    display: none;
+  }
+  
+  .container {
+    padding: 0;
+  }
+  
+  .tabContent {
+    padding: 0;
+    border: none;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Styles pour l'aide */
+.helpContainer {
+  position: relative;
+  margin-top: 1rem;
+}
+
+.helpButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--cgt-blue-light);
+  color: var(--cgt-blue-dark);
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.helpButton:hover {
+  background-color: var(--cgt-blue);
+  color: white;
+}
+
+.helpTooltip {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 350px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  padding: 1.5rem;
+  z-index: 100;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.tooltipHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.heroImage {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.tooltipTitle {
+  margin: 0;
+  color: var(--cgt-red);
+  font-size: 1.1rem;
+}
+
+.tooltipList {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.tooltipItem {
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+  font-size: 0.95rem;
+}
+
+.tooltipWarning {
+  background-color: #fff5f5;
+  border-left: 3px solid var(--cgt-red);
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  color: #e53e3e;
+}
+
+.tooltipCloseButton {
+  width: 100%;
+  background-color: var(--cgt-blue);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.tooltipCloseButton:hover {
+  background-color: var(--cgt-blue-dark);
+}
+
+/* Styles pour les boutons d'export */
+.pdfButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--cgt-red);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pdfButton:hover {
+  background-color: var(--cgt-red-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .helpTooltip {
+    width: 300px;
+    right: -50px;
+  }
+  
+  .actionButtons {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .pdfButton, .exportButton {
+    width: 100%;
+    justify-content: center;
+  }
+}

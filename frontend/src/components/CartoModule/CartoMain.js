@@ -23,11 +23,13 @@ const CartoMain = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     getSummaryRef: () => summaryRef.current,
     getFullSynthesisRef: () => fullSynthesisRef.current,
+    getCardBlockRef: () => cardBlockRef.current,
     getStats: () => stats
   }));
   
   const summaryRef = React.createRef();
   const fullSynthesisRef = React.createRef();
+  const cardBlockRef = React.createRef();
 
   const addService = () => {
     setServices([...services, { name: '', salaries: 0, syndiques: 0 }]);
@@ -118,7 +120,7 @@ const CartoMain = forwardRef((props, ref) => {
             <ActionPlan stats={stats} services={services} />
           </div>
 
-          <div className={styles.cardBlock}>
+          <div ref={cardBlockRef} className={styles.cardBlock}>
             <h3 className={styles.cardTitle}>Cartographie des services</h3>
             <div className={styles.serviceGrid}>
               {services.map((service, index) => (

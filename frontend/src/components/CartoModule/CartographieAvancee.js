@@ -1,20 +1,29 @@
 // src/components/CartoModule/CartographieAvancee.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import styles from './CartographieAvancee.module.css';
 import SaveButtons from '../../Common/SaveButtons'; // Assurez-vous que le chemin est correct
 import storageService from '../services/storageService';
 import { saveAs } from 'file-saver';
 import PropTypes from 'prop-types';
 import heroImage from '../../assets/hero-image.png'; // Import de l'image du héros
-import { FaDatabase, FaPlus, FaTrash, FaEdit, FaCheck, FaTimes } from 'react-icons/fa';
+import { FaDatabase, FaPlus, FaTrash, FaEdit, FaCheck, FaTimes, FaChartPie, FaUsers, FaMale, FaFemale, FaUserTie } from 'react-icons/fa';
 
-const CartographieAvancee = ({ isVisible }) => {
+const CartographieAvancee = forwardRef(({ isVisible }, ref) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
 
   // État pour les données de cartographie avancée - initialisé vide
   const [servicesData, setServicesData] = useState([]);
   
+  // Référence pour le tableau des services (pour l'export PDF)
+  const servicesTableRef = useRef(null);
+  
+  // Exposer les méthodes via useImperativeHandle
+  useImperativeHandle(ref, () => ({
+    getServicesData: () => servicesData,
+    getServicesTableRef: () => servicesTableRef.current
+  }));
+
   // Structure pour un nouveau service vide
   const getEmptyService = (id) => ({
     id,
@@ -228,6 +237,125 @@ const CartographieAvancee = ({ isVisible }) => {
   const menRate = calculateRate(totals.gender.men.syndiques, totals.gender.men.employees);
   const womenRate = calculateRate(totals.gender.women.syndiques, totals.gender.women.employees);
 
+  // Données pour la répartition par genre
+  const genderData = {
+    men: totals.gender.men.employees,
+    women: totals.gender.women.employees
+  };
+
+  // Données pour le graphique de catégories
+  const categoryChartData = Object.entries(totals.categories).map(([category, data]) => {
+    const categoryNames = {
+      ouvriers: "Ouvriers",
+      employes: "Employés",
+      agentsMaitrise: "Agents de maîtrise",
+      techniciens: "Techniciens",
+      cadres: "Cadres"
+    };
+    return {
+      name: categoryNames[category],
+      employees: data.employees,
+      syndiques: data.syndiques,
+      rate: calculateRate(data.syndiques, data.employees)
+    };
+  });
+
+  // Fonction pour générer un graphique en barres horizontal pour la répartition par genre
+  const renderGenderBarChart = (data) => {
+    const total = Object.values(data).reduce((sum, value) => sum + value, 0);
+    if (total === 0) return <div className={styles.noDataMessage}>Aucune donnée disponible</div>;
+    
+    return (
+      <div className={styles.barChartContainer}>
+        <div className={styles.barChartItem}>
+          <div className={styles.barLabel}>
+            <FaMale style={{ marginRight: '8px' }} /> Hommes
+          </div>
+          <div className={styles.barWrapper}>
+            <div 
+              className={styles.barMen} 
+              style={{ width: `${(data.men / total) * 100}%` }}
+            >
+              {data.men > 0 && (
+                <span className={styles.barLabelInside}>
+                  {Math.round((data.men / total) * 100)}%
+                </span>
+              )}
+            </div>
+            <div className={styles.barValues}>
+              <span>{data.men} salariés</span>
+            </div>
+          </div>
+        </div>
+        
+        <div className={styles.barChartItem}>
+          <div className={styles.barLabel}>
+            <FaFemale style={{ marginRight: '8px' }} /> Femmes
+          </div>
+          <div className={styles.barWrapper}>
+            <div 
+              className={styles.barWomen} 
+              style={{ width: `${(data.women / total) * 100}%` }}
+            >
+              {data.women > 0 && (
+                <span className={styles.barLabelInside}>
+                  {Math.round((data.women / total) * 100)}%
+                </span>
+              )}
+            </div>
+            <div className={styles.barValues}>
+              <span>{data.women} salariées</span>
+            </div>
+          </div>
+        </div>
+        
+        <div className={styles.barChartTotal}>
+          <span>Total: {total} salariés</span>
+        </div>
+      </div>
+    );
+  };
+
+  // Fonction pour générer un graphique en barres horizontal
+  const renderBarChart = (data) => {
+    const maxEmployees = Math.max(...data.map(item => item.employees), 1);
+    
+    return (
+      <div className={styles.barChartContainer}>
+        {data.map((item, index) => (
+          <div key={index} className={styles.barChartItem}>
+            <div className={styles.barLabel}>{item.name}</div>
+            <div className={styles.barWrapper}>
+              <div 
+                className={styles.barTotal} 
+                style={{ width: `${(item.employees / maxEmployees) * 100}%` }}
+              >
+                <div 
+                  className={styles.barSyndiques} 
+                  style={{ width: `${item.employees > 0 ? (item.syndiques / item.employees) * 100 : 0}%` }}
+                ></div>
+              </div>
+              <div className={styles.barValues}>
+                <span>{item.employees}</span>
+                <span className={`${styles.barRate} ${getRateColorClass(item.rate)}`}>{item.rate}%</span>
+              </div>
+            </div>
+          </div>
+        ))}
+        <div className={styles.barLegend}>
+          <div className={styles.legendItem}>
+            <span className={styles.legendColor} style={{ backgroundColor: 'var(--cgt-blue-light)' }}></span>
+            <span>Total employés</span>
+          </div>
+          <div className={styles.legendItem}>
+            <span className={styles.legendColor} style={{ backgroundColor: 'var(--cgt-red)' }}></span>
+            <span>Syndiqués</span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // Si le composant n'est pas visible, ne rien afficher
   if (!isVisible) {
     return null;
@@ -239,68 +367,57 @@ const CartographieAvancee = ({ isVisible }) => {
         <h2 className={styles.title}>Cartographie Avancée</h2>
         <div className="relative">
           <button 
-            className={styles.infoButton}
+            type="button"
+            className={styles.helpButton}
             onClick={() => setShowTooltip(!showTooltip)}
-            aria-label="Afficher les conseils pour obtenir les effectifs"
+            aria-label="Afficher l'aide"
           >
-            Comment obtenir les effectifs?
+            ?
           </button>
-          
           {showTooltip && (
             <div className={styles.tooltip}>
               <div className={styles.tooltipHeader}>
-                <img src={heroImage} alt="Conseiller CGT" className={styles.heroImage} />
-                <h3 className={styles.tooltipTitle}>Démarche auprès de l'employeur</h3>
+                <img src={heroImage} alt="CGT Hero" className={styles.heroImage} />
+                <h3 className={styles.tooltipTitle}>Guide de la cartographie avancée</h3>
               </div>
               <ol className={styles.tooltipList}>
-                <li className={styles.tooltipItem}>Adressez une demande écrite à la Direction des Ressources Humaines</li>
-                <li className={styles.tooltipItem}>Fondez votre demande sur l'article L.2315-81 du Code du Travail (pour les CSE) ou consultez la BDES</li>
-                <li className={styles.tooltipItem}>Précisez le détail souhaité (service, genre, catégorie, etc.)</li>
-                <li className={styles.tooltipItem}>Fixez un délai raisonnable de réponse (15 jours)</li>
+                <li className={styles.tooltipItem}>Ajoutez des services en cliquant sur le bouton "Ajouter un service".</li>
+                <li className={styles.tooltipItem}>Pour chaque service, renseignez le nombre total d'employés et de syndiqués.</li>
+                <li className={styles.tooltipItem}>Détaillez la répartition par genre et par catégorie professionnelle.</li>
+                <li className={styles.tooltipItem}>Les statistiques globales se mettent à jour automatiquement.</li>
+                <li className={styles.tooltipItem}>N'oubliez pas de sauvegarder vos données régulièrement.</li>
               </ol>
-              <div className={styles.tooltipWarning}>
-                En cas de refus, contactez l'inspection du travail ou votre UL/UD
-              </div>
               <button 
-                className={styles.closeButton}
+                className={styles.tooltipCloseButton}
                 onClick={() => setShowTooltip(false)}
-                aria-label="Fermer les conseils"
+                aria-label="Fermer l'aide"
               >
-                ✕
+                Fermer
               </button>
             </div>
           )}
         </div>
       </div>
 
-      {/* Message d'introduction si aucun service n'existe */}
       {servicesData.length === 0 ? (
         <div className={styles.emptyState}>
-          <p>Pour commencer votre cartographie avancée, cliquez sur le bouton "Ajouter un service" ci-dessous.</p>
-          <p>Vous pourrez ensuite saisir les données détaillées par genre et par catégorie professionnelle.</p>
-          <div className={styles.buttonContainer}>
-            <button 
-              onClick={loadSavedData}
-              className={styles.loadButton}
-              aria-label="Charger les données sauvegardées"
-            >
-              <FaDatabase /> Charger les données sauvegardées
-            </button>
-            <button 
-              onClick={addNewService}
-              className={styles.addButton}
-              aria-label="Ajouter un nouveau service"
-            >
-              <FaPlus /> Ajouter un service
-            </button>
-          </div>
+          <p>Aucun service n'a été ajouté à la cartographie.</p>
+          <button 
+            onClick={addNewService} 
+            className={styles.addButton}
+            aria-label="Ajouter un nouveau service"
+          >
+            <FaPlus /> Ajouter un service
+          </button>
         </div>
       ) : (
         <>
           {/* Récapitulatif global - uniquement si des services existent */}
           <div className={styles.summary}>
             <div className={styles.summaryCard}>
-              <h3 className={styles.summaryTitle}>Situation globale</h3>
+              <h3 className={styles.summaryTitle}>
+                <FaChartPie style={{ marginRight: '8px' }} /> Situation globale
+              </h3>
               <div className={styles.summaryRow}>
                 <span>Salariés:</span>
                 <span className="font-semibold">{totals.employees}</span>
@@ -316,45 +433,47 @@ const CartographieAvancee = ({ isVisible }) => {
             </div>
             
             <div className={styles.summaryCard}>
-              <h3 className={styles.summaryTitle}>Répartition par genre</h3>
+              <h3 className={styles.summaryTitle}>
+                <FaUsers style={{ marginRight: '8px' }} /> Répartition par genre
+              </h3>
+              {renderGenderBarChart(genderData)}
               <div className={styles.genderGrid}>
                 <div>
-                  <h4 className={styles.genderTitle}>Hommes</h4>
-                  <div className={styles.genderStat}>Salariés: {totals.gender.men.employees}</div>
-                  <div className={styles.genderStat}>Syndiqués: {totals.gender.men.syndiques}</div>
+                  <h4 className={styles.genderTitle}>
+                    <FaMale style={{ marginRight: '4px' }} /> Hommes
+                  </h4>
+                  <div className={styles.genderStat}>
+                    <span>Salariés:</span> 
+                    <span>{totals.gender.men.employees}</span>
+                  </div>
+                  <div className={styles.genderStat}>
+                    <span>Syndiqués:</span> 
+                    <span>{totals.gender.men.syndiques}</span>
+                  </div>
                   <div className={`${styles.genderStat} ${getRateColorClass(menRate)}`}>Taux: {menRate}%</div>
                 </div>
                 <div>
-                  <h4 className={styles.genderTitle}>Femmes</h4>
-                  <div className={styles.genderStat}>Salariées: {totals.gender.women.employees}</div>
-                  <div className={styles.genderStat}>Syndiquées: {totals.gender.women.syndiques}</div>
+                  <h4 className={styles.genderTitle}>
+                    <FaFemale style={{ marginRight: '4px' }} /> Femmes
+                  </h4>
+                  <div className={styles.genderStat}>
+                    <span>Salariées:</span> 
+                    <span>{totals.gender.women.employees}</span>
+                  </div>
+                  <div className={styles.genderStat}>
+                    <span>Syndiquées:</span> 
+                    <span>{totals.gender.women.syndiques}</span>
+                  </div>
                   <div className={`${styles.genderStat} ${getRateColorClass(womenRate)}`}>Taux: {womenRate}%</div>
                 </div>
               </div>
             </div>
             
             <div className={styles.summaryCard}>
-              <h3 className={styles.summaryTitle}>Répartition par catégorie</h3>
-              <div className="space-y-1">
-                {Object.entries(totals.categories).map(([category, data]) => {
-                  const rate = calculateRate(data.syndiques, data.employees);
-                  const categoryNames = {
-                    ouvriers: 'Ouvriers',
-                    employes: 'Employés',
-                    agentsMaitrise: 'Agents de maîtrise',
-                    techniciens: 'Techniciens',
-                    cadres: 'Cadres'
-                  };
-                  return (
-                    <div key={category} className={styles.categoryRow}>
-                      <span>{categoryNames[category]}:</span>
-                      <span className={`font-semibold ${getRateColorClass(rate)}`}>
-                        {rate}% ({data.syndiques}/{data.employees})
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
+              <h3 className={styles.summaryTitle}>
+                <FaUserTie style={{ marginRight: '8px' }} /> Répartition par catégorie
+              </h3>
+              {renderBarChart(categoryChartData)}
             </div>
           </div>
 
@@ -372,7 +491,7 @@ const CartographieAvancee = ({ isVisible }) => {
             </div>
             
             <div className="overflow-x-auto">
-              <table className={styles.table}>
+              <table ref={servicesTableRef} className={styles.table}>
                 <thead className={styles.tableHeader}>
                   <tr>
                     <th className={styles.tableHeaderCell}>Service</th>
@@ -567,7 +686,7 @@ const CartographieAvancee = ({ isVisible }) => {
       </div>
     </div>
   );
-};
+});
 
 // Définition des PropTypes
 CartographieAvancee.propTypes = {
