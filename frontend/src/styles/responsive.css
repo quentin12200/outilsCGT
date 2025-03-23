@@ -1,0 +1,167 @@
+/* Responsive design optimizations for small screens (iPhone SE, etc.) */
+
+/* Base responsive adjustments */
+@media screen and (max-width: 375px) {
+  /* Adjust global container padding for small screens */
+  .globalContainer {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  /* Reduce font sizes */
+  body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  /* Adjust form fields for small screens */
+  input, 
+  select, 
+  textarea {
+    font-size: 16px !important; /* Prevents iOS zoom on focus */
+    padding: 0.5rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Adjust buttons for small screens */
+  .button,
+  button {
+    padding: 0.5rem 1rem !important;
+    font-size: 14px !important;
+    width: 100% !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Adjust grid layouts */
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Adjust flex layouts */
+  .flex-row {
+    flex-direction: column !important;
+  }
+
+  /* Specific adjustments for components based on memories */
+  
+  /* CartographieAvancee component */
+  [class*="cartographie-grid"] {
+    grid-template-columns: 1fr !important;
+    gap: 0.5rem !important;
+  }
+
+  /* Service cards in CartoMain */
+  [class*="service-card"] {
+    width: 100% !important;
+    margin: 0.25rem 0 !important;
+  }
+
+  /* Tabs in TabNav */
+  [class*="tab-button"] {
+    padding: 0.5rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* Retroplanning phases */
+  [class*="phase-container"] {
+    padding: 0.5rem !important;
+  }
+
+  [class*="phase-header"] {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  [class*="phase-period"] {
+    margin-top: 0.25rem !important;
+    width: 100% !important;
+  }
+
+  /* SaveButtons component */
+  [class*="save-buttons-container"] {
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+
+  [class*="save-button"],
+  [class*="cancel-button"] {
+    width: 100% !important;
+    margin: 0.25rem 0 !important;
+  }
+}
+
+/* iPhone SE specific adjustments (320px width) */
+@media screen and (max-width: 320px) {
+  /* Further reduce paddings */
+  .globalContainer {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  /* Even smaller font sizes */
+  body {
+    font-size: 13px;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  h2 {
+    font-size: 1.15rem;
+  }
+
+  /* Reduce margins and paddings */
+  .mt-4 { margin-top: 0.75rem !important; }
+  .mb-4 { margin-bottom: 0.75rem !important; }
+  .mt-8 { margin-top: 1.5rem !important; }
+  .mb-8 { margin-bottom: 1.5rem !important; }
+  .p-4  { padding: 0.75rem !important; }
+  .p-6  { padding: 1rem !important; }
+}
+
+/* Fix for mobile viewport height issues */
+@supports (-webkit-touch-callout: none) {
+  /* CSS specific to iOS devices */
+  body {
+    min-height: -webkit-fill-available;
+  }
+  
+  html {
+    height: -webkit-fill-available;
+  }
+}
+
+/* Fix for input fields on iOS */
+@media screen and (max-width: 768px) {
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="tel"],
+  select,
+  textarea {
+    font-size: 16px !important; /* Prevents iOS zoom on focus */
+    appearance: none !important; /* Removes default styling */
+    -webkit-appearance: none !important;
+    border-radius: 0 !important; /* Fixes rounded corners issue on some iOS versions */
+  }
+  
+  /* Fix for buttons on iOS */
+  button {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+  }
+}

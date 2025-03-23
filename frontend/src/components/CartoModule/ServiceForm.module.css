@@ -68,6 +68,22 @@
     align-items: center;
     margin-bottom: 1rem;
   }
+
+  /* Groupe d'input avec label */
+  .inputGroup {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  /* Label pour mobile */
+  .mobileLabel {
+    display: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    color: #4b5563;
+  }
   
   /* Champs de texte */
   .inputField {
@@ -75,6 +91,7 @@
     border: 1px solid #d1d5db;
     border-radius: 0.25rem;
     width: 100%;
+    font-size: 16px; /* Taille optimale pour éviter le zoom sur iOS */
   }
   
   .inputField:focus {
@@ -90,6 +107,7 @@
     border-radius: 0.25rem;
     text-align: center;
     width: 100%;
+    font-size: 16px; /* Taille optimale pour éviter le zoom sur iOS */
   }
   
   .numberField:focus {
@@ -109,6 +127,7 @@
     transition: background-color 0.2s;
     width: 100%;
     font-weight: 500;
+    font-size: 14px;
   }
   
   .removeButton:hover {
@@ -133,6 +152,7 @@
     cursor: pointer;
     transition: background-color 0.2s;
     font-weight: 500;
+    font-size: 14px;
   }
   
   .addButton:hover {
@@ -149,8 +169,107 @@
     cursor: pointer;
     transition: background-color 0.2s;
     font-weight: 500;
+    font-size: 14px;
   }
   
   .submitButton:hover {
     background-color: #991b1b;
+  }
+
+  /* Responsive design pour les petits écrans */
+  @media screen and (max-width: 640px) {
+    .formContainer {
+      padding: 1rem;
+    }
+
+    .formHeader {
+      display: none; /* Masquer les en-têtes sur mobile */
+    }
+
+    .inputRow {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .mobileLabel {
+      display: block; /* Afficher les labels sur mobile */
+    }
+
+    .inputField, .numberField {
+      padding: 0.75rem;
+      font-size: 16px;
+      height: 44px; /* Hauteur optimale pour les doigts */
+    }
+
+    .removeButton {
+      padding: 0.75rem;
+      height: 44px;
+      margin-top: 0.5rem;
+    }
+
+    .actionButtons {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .addButton, .submitButton {
+      width: 100%;
+      padding: 0.75rem;
+      height: 44px;
+      font-size: 16px;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  /* Spécifique iPhone SE et très petits écrans */
+  @media screen and (max-width: 375px) {
+    .formContainer {
+      padding: 0.75rem;
+      border-radius: 0.25rem;
+    }
+
+    .description {
+      font-size: 0.9rem;
+    }
+
+    .sectionTitle {
+      font-size: 1rem;
+    }
+
+    .inputField, .numberField {
+      padding: 0.75rem;
+      font-size: 16px;
+      height: 44px; /* Hauteur optimale pour les doigts */
+      border-width: 1px;
+    }
+
+    .mobileLabel {
+      font-size: 0.8rem;
+      margin-bottom: 0.2rem;
+    }
+
+    /* Augmenter l'espacement entre les groupes d'inputs */
+    .inputGroup {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Ajuster les boutons pour qu'ils soient plus grands et faciles à toucher */
+    .removeButton, .addButton, .submitButton {
+      height: 48px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  /* Fix pour iOS */
+  @supports (-webkit-touch-callout: none) {
+    .inputField, .numberField, .removeButton, .addButton, .submitButton {
+      -webkit-appearance: none;
+      appearance: none;
+    }
   }
