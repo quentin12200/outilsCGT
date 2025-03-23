@@ -6,7 +6,6 @@ import cgtLogo from '../../assets/logo-cgt.png';
 function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [toolsDropdownOpen, setToolsDropdownOpen] = useState(false);
-  const [actionsDropdownOpen, setActionsDropdownOpen] = useState(false);
   const [campagneDropdownOpen, setCampagneDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
@@ -24,7 +23,6 @@ function Navigation() {
   useEffect(() => {
     setIsMenuOpen(false);
     setToolsDropdownOpen(false);
-    setActionsDropdownOpen(false);
     setCampagneDropdownOpen(false);
   }, [location]);
 
@@ -38,33 +36,23 @@ function Navigation() {
     setIsMenuOpen(!isMenuOpen);
     if (isMenuOpen) {
       setToolsDropdownOpen(false);
-      setActionsDropdownOpen(false);
       setCampagneDropdownOpen(false);
     }
   };
 
   const toggleToolsDropdown = () => {
     setToolsDropdownOpen(!toolsDropdownOpen);
-    if (actionsDropdownOpen) setActionsDropdownOpen(false);
-    if (campagneDropdownOpen) setCampagneDropdownOpen(false);
-  };
-
-  const toggleActionsDropdown = () => {
-    setActionsDropdownOpen(!actionsDropdownOpen);
-    if (toolsDropdownOpen) setToolsDropdownOpen(false);
     if (campagneDropdownOpen) setCampagneDropdownOpen(false);
   };
 
   const toggleCampagneDropdown = () => {
     setCampagneDropdownOpen(!campagneDropdownOpen);
     if (toolsDropdownOpen) setToolsDropdownOpen(false);
-    if (actionsDropdownOpen) setActionsDropdownOpen(false);
   };
 
   const handleOverlayClick = () => {
     setIsMenuOpen(false);
     setToolsDropdownOpen(false);
-    setActionsDropdownOpen(false);
     setCampagneDropdownOpen(false);
   };
 
@@ -81,8 +69,8 @@ function Navigation() {
       <nav className={`${styles.navbar} ${isScrolled ? styles.scrolled : ''}`}>
         <div className={styles.container}>
           <Link to="/" className={styles.logoContainer}>
-            <img src={cgtLogo} alt="Logo CGT" className={styles.logo} />
-            <h1 className={styles.title}>Outils CGT</h1>
+            <img src={cgtLogo} alt="Logo CGT Aveyron" className={styles.logo} />
+            <h1 className={styles.title}>Outils CGT Aveyron</h1>
           </Link>
 
           <button 
@@ -121,44 +109,7 @@ function Navigation() {
                     </Link>
                   </li>
                   <li role="none">
-                    <Link to="/carto-syndicalisation" className={styles.dropdownItem} role="menuitem">
-                      <span className={styles.newFeature}>Nouveau</span> Carto-Syndicalisation
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/retro-planning" className={styles.dropdownItem} role="menuitem">
-                      Rétro-planning
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/ecole-de-la-democratie" className={styles.dropdownItem} role="menuitem">
-                      École Démocratie
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/assemblees" className={styles.dropdownItem} role="menuitem">
-                      Assemblées
-                    </Link>
-                  </li>
-                </ul>
-              )}
-            </li>
-
-            {/* Dropdown Actions */}
-            <li className={styles.dropdown}>
-              <button 
-                type="button" 
-                className={styles.navItem} 
-                onClick={toggleActionsDropdown}
-                aria-expanded={actionsDropdownOpen}
-              >
-                <i className={`${styles.icon} ${styles.flagIcon}`}></i>
-                Actions
-              </button>
-              {actionsDropdownOpen && (
-                <ul className={styles.dropdownMenu} role="menu">
-                  <li role="none">
-                    <Link to="/syndicalisation" className={styles.dropdownItem} role="menuitem">
+                    <Link to="/syndicalisation?tab=syndicalisation" className={styles.dropdownItem} role="menuitem">
                       Syndicalisation
                     </Link>
                   </li>
@@ -168,12 +119,20 @@ function Navigation() {
                     </Link>
                   </li>
                   <li role="none">
-                    <Link to="/demarche" className={styles.dropdownItem} role="menuitem">
-                      Démarche
+                    <Link to="/retro-planning" className={styles.dropdownItem} role="menuitem">
+                      Rétro-planning
                     </Link>
                   </li>
                 </ul>
               )}
+            </li>
+
+            {/* Lien Démarche */}
+            <li>
+              <Link to="/demarche" className={styles.navItem}>
+                <i className={`${styles.icon} ${styles.documentIcon}`}></i>
+                Démarche
+              </Link>
             </li>
 
             {/* Nouveau dropdown Campagne */}
@@ -189,26 +148,6 @@ function Navigation() {
               </button>
               {campagneDropdownOpen && (
                 <ul className={styles.dropdownMenu} role="menu">
-                  <li role="none">
-                    <Link to="/plan-actions" className={styles.dropdownItem} role="menuitem">
-                      Plan d'action
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/plan-pendant" className={styles.dropdownItem} role="menuitem">
-                      Plan pendant
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/plan-avant" className={styles.dropdownItem} role="menuitem">
-                      Plan avant
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/plan-apres" className={styles.dropdownItem} role="menuitem">
-                      Plan après
-                    </Link>
-                  </li>
                   <li role="none">
                     <Link to="/plan-implanter" className={styles.dropdownItem} role="menuitem">
                       Plan implanter
@@ -229,11 +168,6 @@ function Navigation() {
                       Questionnaire
                     </Link>
                   </li>
-                  <li>
-  <Link to="/vue-ensemble" className={styles.navItem}>
-    Vue d'ensemble
-  </Link>
-</li>
                 </ul>
               )}
             </li>

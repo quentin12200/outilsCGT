@@ -1,5 +1,6 @@
 // src/components/pages/CartoSyndicalisationPage.js
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import CartoMain from '../CartoModule/CartoMain';
 import SyndicalisationMain from '../Modules/SyndicalisationModule/SyndicalisationMain';
 import CartographieAvancee from '../CartoModule/CartographieAvancee';
@@ -9,7 +10,8 @@ import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import heroImage from '../../assets/hero-image.png'; // Import de l'image du héros
 
-function CartoSyndicalisationPage() {
+const CartoSyndicalisationPage = () => {
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState('cartographie');
   const [companyName, setCompanyName] = useState('');
   const cartoMainRef = useRef(null);
@@ -17,6 +19,15 @@ function CartoSyndicalisationPage() {
   const cartoAvanceeRef = useRef(null);
   const [showExportOptions, setShowExportOptions] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+
+  // Effet pour définir l'onglet actif en fonction du paramètre d'URL
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const tabParam = searchParams.get('tab');
+    if (tabParam && ['cartographie', 'syndicalisation', 'avancee'].includes(tabParam)) {
+      setActiveTab(tabParam);
+    }
+  }, [location.search]);
 
   const generatePDF = async () => {
     if (!cartoMainRef.current) return;

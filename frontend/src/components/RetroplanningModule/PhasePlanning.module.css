@@ -158,3 +158,177 @@
     width: 1.25rem;
     height: 1.25rem;
   }
+
+/* Styles pour l'éditeur de phase */
+.phaseEditor {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* Amélioration de la responsivité pour les petits écrans */
+@media (max-width: 480px) {
+  .phaseEditor {
+    padding: 1rem;
+    width: 95%;
+  }
+  
+  .phaseEditorTitle {
+    font-size: 1.25rem;
+  }
+  
+  .phaseEditor input,
+  .phaseEditor textarea {
+    padding: 0.5rem;
+    font-size: 16px; /* Empêche le zoom automatique sur iOS */
+  }
+  
+  .periodeValue input {
+    max-width: 100%;
+    font-size: 16px; /* Empêche le zoom automatique sur iOS */
+  }
+  
+  .phaseEditorButton {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.phaseEditorTitle {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color, #e30613);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.phaseEditorLabel {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.phaseEditor input,
+.phaseEditor textarea {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.phaseEditor textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.phaseEditorButton {
+  background-color: var(--primary-color, #e30613);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 1rem;
+}
+
+.phaseEditorButton:hover {
+  background-color: var(--primary-color-dark, #c00);
+}
+
+.editButton {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.editButton:hover {
+  background-color: #e0e0e0;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* Styles pour l'input d'édition de période */
+.periodeValue input {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  width: 100%;
+  max-width: 200px;
+}
+
+.periodeValue span {
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.periodeValue span:hover {
+  background-color: #f0f0f0;
+}
+
+/* Styles pour les boutons d'ajout de phase */
+.addPhaseButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: #f8f8f8;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.addPhaseButton:hover {
+  background-color: #f0f0f0;
+  border-color: #aaa;
+}
+
+.addPhaseIcon {
+  width: 24px;
+  height: 24px;
+  color: #666;
+}
+
+.addPhaseText {
+  font-size: 1rem;
+  color: #666;
+}

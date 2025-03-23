@@ -1,6 +1,7 @@
 // src/components/DemarcheModule/PhaseBesoins.js
 import React from 'react';
 import styles from './PhaseBesoins.module.css';
+import { FaCheckCircle, FaBook, FaInfoCircle, FaTools, FaClipboardList, FaChartBar } from 'react-icons/fa';
 
 function PhaseBesoins({ onAddTool }) {
   // Outils associés à cette phase
@@ -13,26 +14,42 @@ function PhaseBesoins({ onAddTool }) {
 
   return (
     <div className={styles.phaseContainer}>
-      <h2 className={`text-xl font-bold mb-6 ${styles.phaseTitle}`}>Phase 1 : Recueil des besoins</h2>
+      <h2 className={styles.phaseTitle}>Phase 1 : Recueil des besoins</h2>
       
-      <div className={`rounded-lg p-6 mb-8 ${styles.objectifsContainer}`}>
-        <h3 className="text-lg font-medium mb-3">Objectifs de cette phase</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Recueillir les préoccupations, les attentes et les besoins des salariés</li>
-          <li>Établir un contact direct et régulier avec tous les salariés, syndiqués ou non</li>
-          <li>Analyser et synthétiser les besoins exprimés pour préparer la phase suivante</li>
-          <li>Renforcer l'image d'un syndicat à l'écoute et proche des salariés</li>
+      <div className={styles.objectifsContainer}>
+        <h3 className={styles.objectifsTitle}>
+          <FaCheckCircle className={styles.iconObjectif} />
+          Objectifs de cette phase
+        </h3>
+        <ul className={styles.objectifsList}>
+          {[
+            "Recueillir les préoccupations, les attentes et les besoins des salariés",
+            "Établir un contact direct et régulier avec tous les salariés, syndiqués ou non",
+            "Analyser et synthétiser les besoins exprimés pour préparer la phase suivante",
+            "Renforcer l'image d'un syndicat à l'écoute et proche des salariés"
+          ].map((item, index) => (
+            <li key={index} className={styles.objectifsItem}>
+              <span className={styles.objectifsNumber}>{index + 1}</span>
+              <span>{item}</span>
+            </li>
+          ))}
         </ul>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-        <div>
-          <h3 className={`text-lg font-semibold mb-4 ${styles.sectionTitle}`}>Démarche méthodologique</h3>
+      <div className={styles.gridContainer}>
+        <div className={styles.gridItem}>
+          <h3 className={styles.sectionTitle}>
+            <FaBook className={styles.iconSection} />
+            Démarche méthodologique
+          </h3>
           
-          <div className="space-y-6">
-            <div className={`rounded-lg p-4 border border-gray-200 ${styles.methodItem}`}>
-              <h4 className={`font-medium text-red-700 mb-2 ${styles.methodTitle}`}>1. Préparation</h4>
-              <ul className="list-disc pl-5 space-y-1 text-sm">
+          <div className={styles.methodSteps}>
+            <div className={styles.methodStep}>
+              <h4 className={styles.stepTitle}>
+                <span className={styles.stepNumber}>1</span>
+                Préparation
+              </h4>
+              <ul className={styles.stepList}>
                 <li>Tenir une AG des syndiqués pour présenter la démarche</li>
                 <li>Réaliser une cartographie de l'établissement (services, catégories...)</li>
                 <li>Préparer les outils de recueil (questionnaires, grilles d'entretien...)</li>
@@ -40,9 +57,12 @@ function PhaseBesoins({ onAddTool }) {
               </ul>
             </div>
             
-            <div className={`rounded-lg p-4 border border-gray-200 ${styles.methodItem}`}>
-              <h4 className={`font-medium text-red-700 mb-2 ${styles.methodTitle}`}>2. Déploiement sur le terrain</h4>
-              <ul className="list-disc pl-5 space-y-1 text-sm">
+            <div className={styles.methodStep}>
+              <h4 className={styles.stepTitle}>
+                <span className={styles.stepNumber}>2</span>
+                Déploiement sur le terrain
+              </h4>
+              <ul className={styles.stepList}>
                 <li>Organiser des tournées de services régulières</li>
                 <li>Réaliser des entretiens individuels ou collectifs</li>
                 <li>Distribuer et collecter des questionnaires</li>
@@ -50,9 +70,12 @@ function PhaseBesoins({ onAddTool }) {
               </ul>
             </div>
             
-            <div className={`rounded-lg p-4 border border-gray-200 ${styles.methodItem}`}>
-              <h4 className={`font-medium text-red-700 mb-2 ${styles.methodTitle}`}>3. Analyse et synthèse</h4>
-              <ul className="list-disc pl-5 space-y-1 text-sm">
+            <div className={styles.methodStep}>
+              <h4 className={styles.stepTitle}>
+                <span className={styles.stepNumber}>3</span>
+                Analyse et synthèse
+              </h4>
+              <ul className={styles.stepList}>
                 <li>Compiler et classer les besoins par thématiques</li>
                 <li>Identifier les problématiques communes et récurrentes</li>
                 <li>Prioriser les sujets selon leur importance pour les salariés</li>
@@ -62,12 +85,18 @@ function PhaseBesoins({ onAddTool }) {
           </div>
         </div>
         
-        <div>
-          <h3 className={`text-lg font-semibold mb-4 ${styles.sectionTitle}`}>Conseils pratiques</h3>
+        <div className={styles.gridItem}>
+          <h3 className={styles.sectionTitle}>
+            <FaInfoCircle className={styles.iconSection} />
+            Conseils pratiques
+          </h3>
           
-          <div className={`rounded-lg p-5 border border-yellow-200 mb-6 ${styles.alertBox}`}>
-            <h4 className="font-medium text-yellow-800 mb-2">Points d'attention</h4>
-            <ul className="list-disc pl-5 space-y-2 text-yellow-800">
+          <div className={styles.alertBox}>
+            <h4 className={styles.alertTitle}>
+              <FaInfoCircle className={styles.alertIcon} />
+              Points d'attention
+            </h4>
+            <ul className={styles.alertList}>
               <li>Veiller à toucher <strong>tous les services</strong> et <strong>toutes les catégories</strong> de personnel</li>
               <li>Écouter <strong>sans a priori</strong>, même si certaines expressions peuvent paraître éloignées des positions CGT</li>
               <li>Prendre en compte les <strong>spécificités</strong> (jeunes, femmes, précaires, cadres...)</li>
@@ -75,26 +104,35 @@ function PhaseBesoins({ onAddTool }) {
             </ul>
           </div>
           
-          <div className="bg-white rounded-lg p-4 border border-gray-200 mb-6">
-            <h4 className="font-medium text-red-700 mb-2">Outils recommandés</h4>
-            <div className="space-y-2">
+          <div className={styles.toolsBox}>
+            <h4 className={styles.toolsTitle}>
+              <FaTools className={styles.toolsIcon} />
+              Outils recommandés
+            </h4>
+            <div className={styles.toolsList}>
               {tools.map(tool => (
-                <div key={tool} className="flex items-center justify-between">
-                  <span>{tool}</span>
+                <div key={tool} className={styles.toolItem}>
+                  <span className={styles.toolName}>
+                    <FaClipboardList className={styles.toolIcon} />
+                    {tool}
+                  </span>
                   <button
                     onClick={() => onAddTool(tool)}
                     className={styles.toolButton}
                   >
-                    + Ajouter à ma boîte
+                    + Ajouter
                   </button>
                 </div>
               ))}
             </div>
           </div>
           
-          <div className={`rounded-lg p-4 border border-blue-200 ${styles.infoBox}`}>
-            <h4 className="font-medium text-blue-800 mb-2">Indicateurs de réussite</h4>
-            <ul className="list-disc pl-5 space-y-1 text-sm text-blue-800">
+          <div className={styles.infoBox}>
+            <h4 className={styles.infoTitle}>
+              <FaChartBar className={styles.infoIcon} />
+              Indicateurs de réussite
+            </h4>
+            <ul className={styles.infoList}>
               <li>Nombre de salariés consultés / Taux de couverture de l'établissement</li>
               <li>Richesse et diversité des besoins exprimés</li>
               <li>Qualité de la documentation et de la synthèse des besoins</li>
@@ -104,27 +142,32 @@ function PhaseBesoins({ onAddTool }) {
         </div>
       </div>
       
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h3 className={`text-lg font-semibold mb-4 ${styles.sectionTitle}`}>Exemples de questionnaires</h3>
+      <div className={styles.examplesSection}>
+        <h3 className={styles.sectionTitle}>
+          <FaClipboardList className={styles.iconSection} />
+          Exemples de questionnaires
+        </h3>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className={styles.questionnaire}>
-            <h4 className="font-medium text-red-700 mb-2">Questionnaire général</h4>
-            <div className="bg-gray-50 p-4 rounded">
-              <p className="text-sm text-gray-800 mb-3">
-                <strong>Conditions de travail</strong>
+        <div className={styles.examplesGrid}>
+          <div className={styles.exampleCard}>
+            <div className={styles.exampleHeader}>
+              <h4 className={styles.exampleTitle}>Questionnaire général</h4>
+            </div>
+            <div className={styles.exampleContent}>
+              <p className={styles.exampleSubtitle}>
+                Conditions de travail
               </p>
-              <ul className="list-disc pl-5 text-sm text-gray-700 space-y-1">
+              <ul className={styles.exampleList}>
                 <li>Comment évaluez-vous votre charge de travail actuelle ?</li>
                 <li>Disposez-vous des moyens nécessaires pour réaliser votre travail correctement ?</li>
                 <li>Quels sont les principaux facteurs de stress dans votre activité ?</li>
                 <li>Quelles améliorations prioritaires souhaiteriez-vous concernant vos conditions de travail ?</li>
               </ul>
               
-              <p className="text-sm text-gray-800 mt-4 mb-3">
-                <strong>Rémunération</strong>
+              <p className={styles.exampleSubtitle}>
+                Rémunération
               </p>
-              <ul className="list-disc pl-5 text-sm text-gray-700 space-y-1">
+              <ul className={styles.exampleList}>
                 <li>Votre rémunération vous semble-t-elle en adéquation avec votre travail ?</li>
                 <li>Quelle évolution de carrière envisagez-vous ?</li>
                 <li>Quelles mesures permettraient de mieux reconnaître votre travail ?</li>
@@ -132,23 +175,25 @@ function PhaseBesoins({ onAddTool }) {
             </div>
           </div>
           
-          <div className={styles.questionnaire}>
-            <h4 className="font-medium text-red-700 mb-2">Questionnaire spécifique</h4>
-            <div className="bg-gray-50 p-4 rounded">
-              <p className="text-sm text-gray-800 mb-3">
-                <strong>Télétravail</strong>
+          <div className={styles.exampleCard}>
+            <div className={styles.exampleHeader}>
+              <h4 className={styles.exampleTitle}>Questionnaire spécifique</h4>
+            </div>
+            <div className={styles.exampleContent}>
+              <p className={styles.exampleSubtitle}>
+                Télétravail
               </p>
-              <ul className="list-disc pl-5 text-sm text-gray-700 space-y-1">
+              <ul className={styles.exampleList}>
                 <li>Combien de jours de télétravail effectuez-vous actuellement ?</li>
                 <li>Quels sont les avantages et inconvénients du télétravail pour vous ?</li>
                 <li>Quelles améliorations souhaiteriez-vous concernant l'organisation du télétravail ?</li>
                 <li>Quelles mesures vous aideraient à mieux concilier vie professionnelle et vie personnelle ?</li>
               </ul>
               
-              <p className="text-sm text-gray-800 mt-4 mb-3">
-                <strong>Égalité professionnelle</strong>
+              <p className={styles.exampleSubtitle}>
+                Égalité professionnelle
               </p>
-              <ul className="list-disc pl-5 text-sm text-gray-700 space-y-1">
+              <ul className={styles.exampleList}>
                 <li>Avez-vous constaté des inégalités de traitement dans votre service ?</li>
                 <li>Quelles mesures permettraient de mieux garantir l'égalité femmes/hommes ?</li>
                 <li>Quelles actions pour favoriser l'évolution professionnelle de tous et toutes ?</li>
@@ -157,11 +202,14 @@ function PhaseBesoins({ onAddTool }) {
           </div>
         </div>
         
-        <div className="mt-6 text-center">
+        <div className={styles.downloadContainer}>
           <button 
             className={styles.downloadButton}
             onClick={() => onAddTool('Questionnaire besoins')}
           >
+            <svg xmlns="http://www.w3.org/2000/svg" className={styles.downloadIcon} viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
             Télécharger les modèles de questionnaires
           </button>
         </div>

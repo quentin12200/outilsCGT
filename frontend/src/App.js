@@ -7,7 +7,6 @@ import VueEnsemblePage from './components/pages/VueEnsemblePage';
 import HomePage from './components/pages/HomePage';
 import AssembleePage from './components/pages/AssembleePage';
 import RetroplanningPage from './components/pages/RetroplanningPage';
-import EcoleDemocratiePage from './components/pages/EcoleDemocratiePage';
 import ResultatsPage from './components/pages/ResultatsPage';
 import DemarcheSyndicalePage from './components/pages/DemarcheSyndicalePage';
 import CampagneElectionsPage from './components/pages/CampagneElectionsPage';
@@ -37,7 +36,7 @@ function App() {
           <Route path="/cartographie" element={<Navigate to="/carto-syndicalisation" replace />} />
           <Route path="/syndicalisation" element={<Navigate to="/carto-syndicalisation" replace />} />
           <Route path="/retro-planning" element={<RetroplanningPage />} />
-          <Route path="/ecole-de-la-democratie" element={<EcoleDemocratiePage />} />
+          <Route path="/ecole-de-la-democratie" element={<Navigate to="/demarche?tab=ecole-democratie" replace />} />
           <Route path="/assemblees" element={<AssembleePage />} />
           <Route path="/resultats" element={<ResultatsPage />} />
           <Route path="/demarche" element={<DemarcheSyndicalePage />} />

@@ -1,24 +1,31 @@
 // src/components/pages/DemarcheSyndicalePage.js
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import styles from './DemarchePage.module.css';
 import TabNav from '../Modules/Demarche/TabNav';
 import PhaseBesoins from '../DemarcheModule/PhaseBesoins';
+import PhaseRevendications from '../DemarcheModule/PhaseRevendications';
 import SchemaGlobal from '../Modules/Demarche/SchemaGlobal';
 
 function DemarcheSyndicalePage() {
+  // Récupérer les paramètres d'URL
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const tabParam = queryParams.get('tab');
+
   // États pour gérer les onglets, les sous-onglets et la sélection d'outils
-  const [activeTab, setActiveTab] = useState('vue-ensemble');
+  const [activeTab, setActiveTab] = useState(tabParam || 'ecole-democratie');
   const [activeSubTab, setActiveSubTab] = useState(null);
   const [selectedTools, setSelectedTools] = useState([]);
 
   // Définition des onglets principaux avec leurs couleurs
   const tabs = [
+    { id: 'ecole-democratie', label: 'École de la démocratie', color: 'bg-indigo-600' },
     { id: 'vue-ensemble', label: "Vue d'ensemble", color: 'bg-red-700' },
     { id: 'besoins', label: 'Recueil des besoins', color: 'bg-yellow-600' },
     { id: 'revendications', label: 'Construction revendicative', color: 'bg-green-600' },
     { id: 'mobilisation', label: 'Mobilisation', color: 'bg-blue-600' },
-    { id: 'action', label: 'Action / Lutte', color: 'bg-purple-600' },
-    { id: 'ecole-democratie', label: 'École de la démocratie', color: 'bg-indigo-600' }
+    { id: 'action', label: 'Action / Lutte', color: 'bg-purple-600' }
   ];
 
   // Réinitialisation du sous-onglet en fonction de l'onglet principal sélectionné
@@ -31,7 +38,7 @@ function DemarcheSyndicalePage() {
         setActiveSubTab('methodes');
         break;
       case 'revendications':
-        setActiveSubTab('processus');
+        setActiveSubTab('reperes');
         break;
       case 'mobilisation':
         setActiveSubTab('communication');
@@ -150,6 +157,12 @@ function DemarcheSyndicalePage() {
                   Cahier
                 </button>
                 <button 
+                  className={`${styles.subNavButton} ${activeSubTab === 'reperes' && styles.activeSubNav}`}
+                  onClick={() => handleSubTabChange('reperes')}
+                >
+                  Repères
+                </button>
+                <button 
                   className={`${styles.subNavButton} ${activeSubTab === 'validation' && styles.activeSubNav}`}
                   onClick={() => handleSubTabChange('validation')}
                 >
@@ -193,6 +206,15 @@ function DemarcheSyndicalePage() {
                         Ajouter à ma boîte à outils
                       </button>
                     </div>
+                  </div>
+                )}
+                {activeSubTab === 'reperes' && (
+                  <div className={styles.reperesContent}>
+                    <h3 className={styles.subSectionTitle}>Repères revendicatifs</h3>
+                    <p className={styles.contentIntro}>
+                      Les repères revendicatifs de la CGT sont des outils précieux pour construire vos revendications locales.
+                    </p>
+                    <PhaseRevendications />
                   </div>
                 )}
                 {activeSubTab === 'validation' && (
@@ -381,7 +403,183 @@ function DemarcheSyndicalePage() {
           {activeTab === 'ecole-democratie' && (
             <div className={styles.ecoleDemocratie}>
               <h2 className={styles.sectionTitle}>École de la démocratie</h2>
-              <SchemaGlobal onSelectEtape={(etape) => alert(`Étape sélectionnée : ${etape}`)} />
+              <div className={styles.subNavContainer}>
+                <button 
+                  className={`${styles.subNavButton} ${activeSubTab === 'concept' && styles.activeSubNav}`}
+                  onClick={() => handleSubTabChange('concept')}
+                >
+                  Concept
+                </button>
+                <button 
+                  className={`${styles.subNavButton} ${activeSubTab === 'principes' && styles.activeSubNav}`}
+                  onClick={() => handleSubTabChange('principes')}
+                >
+                  Principes
+                </button>
+                <button 
+                  className={`${styles.subNavButton} ${activeSubTab === 'schema' && styles.activeSubNav}`}
+                  onClick={() => handleSubTabChange('schema')}
+                >
+                  Schéma global
+                </button>
+                <button 
+                  className={`${styles.subNavButton} ${activeSubTab === 'outils-democratie' && styles.activeSubNav}`}
+                  onClick={() => handleSubTabChange('outils-democratie')}
+                >
+                  Outils
+                </button>
+              </div>
+              <div className={styles.subTabContent}>
+                {activeSubTab === 'concept' && (
+                  <div className={styles.conceptContent}>
+                    <h3 className={styles.subSectionTitle}>Le concept de démocratie syndicale</h3>
+                    <p className={styles.contentText}>
+                      L'École de la démocratie représente l'approche fondamentale de la CGT pour structurer la démarche syndicale.
+                      Elle repose sur un processus démocratique en trois phases : Avant, Pendant et Après.
+                    </p>
+                    <div className={styles.infoCard}>
+                      <h4 className={styles.infoCardTitle}>Principes fondamentaux</h4>
+                      <ul className={styles.bulletList}>
+                        <li>Les syndiqués sont auteurs, acteurs et décideurs</li>
+                        <li>Consultation systématique des salariés</li>
+                        <li>Élaboration démocratique des revendications</li>
+                        <li>Mobilisation collective</li>
+                        <li>Négociation transparente</li>
+                        <li>Bilan des actions</li>
+                      </ul>
+                    </div>
+                    <div className={styles.toolPromo}>
+                      <p>
+                        <strong>Outil recommandé :</strong> Guide des principes démocratiques
+                      </p>
+                      <button className={styles.addToolButton} onClick={() => handleAddTool("Guide des principes démocratiques")}>
+                        Ajouter à ma boîte à outils
+                      </button>
+                    </div>
+                  </div>
+                )}
+                
+                {activeSubTab === 'principes' && (
+                  <div className={styles.principesContent}>
+                    <h3 className={styles.subSectionTitle}>Les principes de la démocratie syndicale</h3>
+                    <p className={styles.contentText}>
+                      La démocratie syndicale est au cœur de l'action CGT et s'articule autour de plusieurs principes essentiels.
+                    </p>
+                    
+                    <div className={styles.outilsGrid}>
+                      <div className={styles.principeCard}>
+                        <div className={styles.outilIcon}>🗣️</div>
+                        <h4>Consultation des salariés</h4>
+                        <p>Recueillir systématiquement les besoins et attentes des salariés pour construire des revendications légitimes.</p>
+                      </div>
+                      
+                      <div className={styles.principeCard}>
+                        <div className={styles.outilIcon}>🗳️</div>
+                        <h4>Vote démocratique</h4>
+                        <p>Soumettre les décisions importantes au vote des syndiqués et consulter les salariés.</p>
+                      </div>
+                      
+                      <div className={styles.principeCard}>
+                        <div className={styles.outilIcon}>👥</div>
+                        <h4>Mobilisation collective</h4>
+                        <p>Impliquer l'ensemble des salariés dans les actions et construire un rapport de force favorable.</p>
+                      </div>
+                      
+                      <div className={styles.principeCard}>
+                        <div className={styles.outilIcon}>🤝</div>
+                        <h4>Négociation</h4>
+                        <p>Négocier sur la base des revendications validées collectivement et rendre compte régulièrement.</p>
+                      </div>
+                      
+                      <div className={styles.principeCard}>
+                        <div className={styles.outilIcon}>📊</div>
+                        <h4>Bilan des actions</h4>
+                        <p>Évaluer collectivement les résultats obtenus et ajuster la stratégie en conséquence.</p>
+                      </div>
+                      
+                      <div className={styles.principeCard}>
+                        <div className={styles.outilIcon}>📢</div>
+                        <h4>Communication transparente</h4>
+                        <p>Informer régulièrement les syndiqués et les salariés des avancées et des décisions.</p>
+                      </div>
+                    </div>
+                    
+                    <div className={styles.toolPromo}>
+                      <p>
+                        <strong>Outil recommandé :</strong> Kit d'animation démocratique
+                      </p>
+                      <button className={styles.addToolButton} onClick={() => handleAddTool("Kit d'animation démocratique")}>
+                        Ajouter à ma boîte à outils
+                      </button>
+                    </div>
+                  </div>
+                )}
+                
+                {activeSubTab === 'schema' && (
+                  <div className={styles.schemaContent}>
+                    <h3 className={styles.subSectionTitle}>Schéma global de la démarche syndicale</h3>
+                    <p className={styles.contentText}>
+                      Ce schéma illustre les différentes phases de la démarche syndicale CGT et leurs interactions.
+                    </p>
+                    <SchemaGlobal onSelectEtape={(etape) => {
+                      setActiveTab(etape);
+                      window.scrollTo(0, 0);
+                    }} />
+                    
+                    <div className={styles.phasesExplication}>
+                      <h4 className={styles.subSubSectionTitle}>Structure "Avant / Pendant / Après"</h4>
+                      <p>
+                        La démarche syndicale s'articule autour de trois phases temporelles, chacune avec ses enjeux spécifiques :
+                      </p>
+                      <ul className={styles.bulletList}>
+                        <li><strong>Avant :</strong> Organisation, recueil des besoins, élaboration des revendications</li>
+                        <li><strong>Pendant :</strong> Mobilisation, action, lutte</li>
+                        <li><strong>Après :</strong> Bilan, suivi, préparation des futures actions</li>
+                      </ul>
+                    </div>
+                  </div>
+                )}
+                
+                {activeSubTab === 'outils-democratie' && (
+                  <div className={styles.outilsDemocratieContent}>
+                    <h3 className={styles.subSectionTitle}>Outils pour la démocratie syndicale</h3>
+                    <div className={styles.outilsGrid}>
+                      <div className={styles.outilCard}>
+                        <div className={styles.outilIcon}>📋</div>
+                        <h4 className={styles.outilTitle}>Guide d'organisation d'AG</h4>
+                        <p className={styles.outilDesc}>
+                          Méthodes et conseils pour organiser des assemblées générales efficaces et démocratiques.
+                        </p>
+                        <button className={styles.addToolButton} onClick={() => handleAddTool("Guide d'organisation d'AG")}>
+                          Ajouter à ma boîte à outils
+                        </button>
+                      </div>
+                      
+                      <div className={styles.outilCard}>
+                        <div className={styles.outilIcon}>📝</div>
+                        <h4 className={styles.outilTitle}>Modèles de consultation</h4>
+                        <p className={styles.outilDesc}>
+                          Questionnaires et formulaires pour recueillir efficacement les besoins des salariés.
+                        </p>
+                        <button className={styles.addToolButton} onClick={() => handleAddTool("Modèles de consultation")}>
+                          Ajouter à ma boîte à outils
+                        </button>
+                      </div>
+                      
+                      <div className={styles.outilCard}>
+                        <div className={styles.outilIcon}>🔄</div>
+                        <h4 className={styles.outilTitle}>Méthode de bilan participatif</h4>
+                        <p className={styles.outilDesc}>
+                          Techniques pour évaluer collectivement les actions et en tirer des enseignements.
+                        </p>
+                        <button className={styles.addToolButton} onClick={() => handleAddTool("Méthode de bilan participatif")}>
+                          Ajouter à ma boîte à outils
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>

@@ -71,9 +71,8 @@
   
   .formInput:focus {
     outline: none;
-    ring: 2px;
-    ring-color: #ef4444;
-    border-color: #ef4444;
+    border-color: var(--primary-color, #e30613);
+    box-shadow: 0 0 0 2px rgba(227, 6, 19, 0.2);
   }
   
   .dayCounter {
@@ -315,4 +314,248 @@
     margin-right: 0.5rem;
     width: 1.25rem;
     height: 1.25rem;
+  }
+
+  /* Styles pour le modal d'ajout de phase */
+  .modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modalContent {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  /* Amélioration de la responsivité pour les petits écrans */
+  @media (max-width: 480px) {
+    .modalContent {
+      padding: 1rem;
+      width: 95%;
+    }
+    
+    .modalTitle {
+      font-size: 1.25rem;
+    }
+    
+    .formInput {
+      padding: 0.5rem;
+      font-size: 16px; /* Empêche le zoom automatique sur iOS */
+    }
+    
+    .modalButton {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      margin-right: 0;
+    }
+    
+    .formGroup {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .modalTitle {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color, #e30613);
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .formGroup {
+    margin-bottom: 1.5rem;
+  }
+
+  .formLabel {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .formInput {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+
+  textarea.formInput {
+    min-height: 100px;
+    resize: vertical;
+  }
+
+  .modalButton {
+    background-color: var(--primary-color, #e30613);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-right: 1rem;
+  }
+
+  .modalButton:last-child {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+
+  .modalButton:hover {
+    background-color: var(--primary-color-dark, #c00);
+  }
+
+  .modalButton:last-child:hover {
+    background-color: #e0e0e0;
+  }
+
+  /* Bouton d'ajout de phase */
+  .addButton {
+    display: block;
+    margin: 2rem auto;
+    background-color: var(--primary-color, #e30613);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .addButton:hover {
+    background-color: var(--primary-color-dark, #c00);
+  }
+
+  /* Amélioration de la responsivité pour les tableaux */
+  @media (max-width: 768px) {
+    .tableContainer {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .phasesTable {
+      min-width: 600px;
+    }
+    
+    .phaseBadge {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .phaseCircle {
+      margin-bottom: 0.5rem;
+    }
+    
+    .formRow {
+      flex-direction: column;
+    }
+    
+    .formGroup {
+      width: 100%;
+      padding-right: 0;
+      margin-bottom: 1rem;
+    }
+    
+    .addButton {
+      width: 100%;
+    }
+  }
+
+  /* Amélioration supplémentaire pour les très petits écrans */
+  @media (max-width: 480px) {
+    .container {
+      padding: 1rem;
+    }
+    
+    .title {
+      font-size: 1.5rem;
+    }
+    
+    .formInput, 
+    .formSelect {
+      font-size: 16px; /* Empêche le zoom automatique sur iOS */
+    }
+    
+    .tableHeader {
+      font-size: 0.8rem;
+    }
+    
+    .tableCell {
+      padding: 0.5rem;
+    }
+    
+    .phaseName {
+      font-size: 0.9rem;
+    }
+    
+    .phaseDesc {
+      font-size: 0.8rem;
+    }
+  }
+
+  /* Styles pour le bouton d'export PDF */
+  .exportButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1.5rem auto;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--primary-color, #e30613);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .exportButton:hover {
+    background-color: var(--primary-color-dark, #c00);
+  }
+
+  .exportButton:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  /* Styles pour le bouton d'export PDF sur mobile */
+  @media (max-width: 480px) {
+    .exportButton {
+      width: 90%;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+    }
   }
