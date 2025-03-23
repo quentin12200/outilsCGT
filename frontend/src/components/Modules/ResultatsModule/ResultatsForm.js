@@ -11,7 +11,12 @@ function ResultatsForm({ onSave, initialData }) {
     percentage: '',
     seats: '',
     totalSeats: '',
-    previousPercentage: '',
+    previousVotes: '',
+    colleges: [
+      { name: 'Premier collège (Ouvriers/Employés)', inscriptions: '', votants: '', voixCGT: '' },
+      { name: 'Deuxième collège (Techniciens/Agents de maîtrise)', inscriptions: '', votants: '', voixCGT: '' },
+      { name: 'Troisième collège (Cadres)', inscriptions: '', votants: '', voixCGT: '' }
+    ],
     departments: [
       { name: 'Administration', votes: '', total: '' },
       { name: 'Production', votes: '', total: '' },
@@ -39,6 +44,18 @@ function ResultatsForm({ onSave, initialData }) {
     });
   };
 
+  const handleCollegeChange = (index, field, value) => {
+    const updatedColleges = [...formData.colleges];
+    updatedColleges[index] = {
+      ...updatedColleges[index],
+      [field]: value
+    };
+    setFormData({
+      ...formData,
+      colleges: updatedColleges
+    });
+  };
+
   const addDepartment = () => {
     setFormData({
       ...formData,
@@ -58,6 +75,25 @@ function ResultatsForm({ onSave, initialData }) {
     });
   };
 
+  const addCollege = () => {
+    setFormData({
+      ...formData,
+      colleges: [
+        ...formData.colleges,
+        { name: '', inscriptions: '', votants: '', voixCGT: '' }
+      ]
+    });
+  };
+
+  const removeCollege = (index) => {
+    const updatedColleges = [...formData.colleges];
+    updatedColleges.splice(index, 1);
+    setFormData({
+      ...formData,
+      colleges: updatedColleges
+    });
+  };
+
   const calculateResults = () => {
     // Auto-calculate percentages and totals
     const departments = formData.departments.map(dept => {
@@ -69,13 +105,38 @@ function ResultatsForm({ onSave, initialData }) {
       };
     });
 
-    const totalVotes = parseInt(formData.totalVotes) || 0;
-    const cgtVotes = parseInt(formData.cgtVotes) || 0;
-    const previousPercentage = parseInt(formData.previousPercentage) || 0;
+    // Calculate college totals
+    let totalInscriptions = 0;
+    let totalVotants = 0;
+    let totalVoixCGT = 0;
+
+    const colleges = formData.colleges.map(college => {
+      const inscriptions = parseInt(college.inscriptions) || 0;
+      const votants = parseInt(college.votants) || 0;
+      const voixCGT = parseInt(college.voixCGT) || 0;
+      
+      totalInscriptions += inscriptions;
+      totalVotants += votants;
+      totalVoixCGT += voixCGT;
+      
+      return {
+        ...college,
+        participation: Math.round((votants / inscriptions) * 100) || 0,
+        pourcentageCGT: Math.round((voixCGT / votants) * 100) || 0
+      };
+    });
+
+    const totalVotes = parseInt(formData.totalVotes) || totalVotants;
+    const cgtVotes = parseInt(formData.cgtVotes) || totalVoixCGT;
+    const previousVotes = parseInt(formData.previousVotes) || 0;
+    const previousPercentage = previousVotes > 0 && totalVotes > 0 ? Math.round((previousVotes / totalVotes) * 100) : 0;
     
     setFormData({
       ...formData,
       departments,
+      colleges,
+      totalVotes: totalVotes || totalVotants,
+      cgtVotes: cgtVotes || totalVoixCGT,
       percentage: Math.round((cgtVotes / totalVotes) * 100) || 0,
       evolution: Math.round((cgtVotes / totalVotes) * 100) - previousPercentage
     });
@@ -188,111 +249,150 @@ function ResultatsForm({ onSave, initialData }) {
           </div>
           
           <div className={styles.formGroup}>
-            <label className={styles.formLabel} htmlFor="previousPercentage">Score précédent (%)</label>
+            <label className={styles.formLabel} htmlFor="previousVotes">Voix CGT élections précédentes</label>
             <input 
               type="number" 
-              id="previousPercentage" 
-              name="previousPercentage" 
+              id="previousVotes" 
+              name="previousVotes" 
               className={styles.formInput}
-              min="0" 
-              max="100"
-              value={formData.previousPercentage || ''}
+              min="0"
+              value={formData.previousVotes || ''}
               onChange={handleChange}
             />
-            <p className={styles.formHelp}>Laissez vide s'il s'agit des premières élections</p>
           </div>
-          
-          {formData.cgtVotes && formData.totalVotes && (
-            <div className={styles.resultPreview}>
-              <div className={styles.previewTitle}>Score calculé</div>
-              <div className={styles.previewValue}>
-                {Math.round((parseInt(formData.cgtVotes) / parseInt(formData.totalVotes)) * 100)}%
-              </div>
-              {formData.previousPercentage && (
-                <div className={styles.previewDescription}>
-                  {Math.round((parseInt(formData.cgtVotes) / parseInt(formData.totalVotes)) * 100) - parseInt(formData.previousPercentage) > 0 ? '↑' : '↓'} 
-                  {Math.abs(Math.round((parseInt(formData.cgtVotes) / parseInt(formData.totalVotes)) * 100) - parseInt(formData.previousPercentage))}% 
-                  par rapport aux élections précédentes
-                </div>
-              )}
-            </div>
-          )}
         </div>
       </div>
       
+      {/* Section des collèges électoraux */}
       <div className={styles.formSection}>
-        <h3 className={styles.sectionTitle}>Répartition par service</h3>
+        <h3 className={styles.sectionTitle}>Collèges électoraux</h3>
+        <p className={styles.sectionDescription}>Saisissez les données par collège électoral selon le PV officiel</p>
         
-        {formData.departments.map((dept, index) => (
-          <div key={index} className={styles.departmentInputs}>
-            <div className={styles.departmentHeader}>
-              <span className={styles.departmentTitle}>
-                {dept.name || `Service ${index + 1}`}
-              </span>
-              <div className={styles.departmentButtons}>
-                {index > 0 && (
-                  <button 
-                    type="button" 
-                    className={`${styles.departmentButton} ${styles.removeButton}`}
-                    onClick={() => removeDepartment(index)}
-                  >
-                    Supprimer
-                  </button>
-                )}
-              </div>
-            </div>
-            
+        {formData.colleges.map((college, index) => (
+          <div key={index} className={styles.departmentRow}>
             <div className={styles.formGroup}>
-              <label className={styles.formLabel} htmlFor={`dept-name-${index}`}>Nom du service</label>
+              <label className={styles.formLabel}>Nom du collège</label>
               <input 
                 type="text" 
-                id={`dept-name-${index}`}
                 className={styles.formInput}
-                value={dept.name || ''}
-                onChange={(e) => handleDepartmentChange(index, 'name', e.target.value)}
+                value={college.name}
+                onChange={(e) => handleCollegeChange(index, 'name', e.target.value)}
                 required
               />
             </div>
             
-            <div className={styles.inlineInputs}>
-              <div className={`${styles.formGroup} ${styles.inlineInput}`}>
-                <label className={styles.formLabel} htmlFor={`dept-votes-${index}`}>Voix CGT</label>
-                <input 
-                  type="number" 
-                  id={`dept-votes-${index}`}
-                  className={styles.formInput}
-                  min="0"
-                  value={dept.votes || ''}
-                  onChange={(e) => handleDepartmentChange(index, 'votes', e.target.value)}
-                  required
-                />
-              </div>
-              
-              <div className={`${styles.formGroup} ${styles.inlineInput}`}>
-                <label className={styles.formLabel} htmlFor={`dept-total-${index}`}>Total des suffrages</label>
-                <input 
-                  type="number" 
-                  id={`dept-total-${index}`}
-                  className={styles.formInput}
-                  min="0"
-                  value={dept.total || ''}
-                  onChange={(e) => handleDepartmentChange(index, 'total', e.target.value)}
-                  required
-                />
-              </div>
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Inscrits</label>
+              <input 
+                type="number" 
+                className={styles.formInput}
+                min="0"
+                value={college.inscriptions}
+                onChange={(e) => handleCollegeChange(index, 'inscriptions', e.target.value)}
+                required
+              />
             </div>
             
-            {dept.votes && dept.total && (
-              <div className={styles.formHelp}>
-                Résultat dans ce service: <strong>{Math.round((parseInt(dept.votes) / parseInt(dept.total)) * 100)}%</strong>
-              </div>
-            )}
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Votants</label>
+              <input 
+                type="number" 
+                className={styles.formInput}
+                min="0"
+                value={college.votants}
+                onChange={(e) => handleCollegeChange(index, 'votants', e.target.value)}
+                required
+              />
+            </div>
+            
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Voix CGT</label>
+              <input 
+                type="number" 
+                className={styles.formInput}
+                min="0"
+                value={college.voixCGT}
+                onChange={(e) => handleCollegeChange(index, 'voixCGT', e.target.value)}
+                required
+              />
+            </div>
+            
+            <button 
+              type="button" 
+              className={styles.removeButton}
+              onClick={() => removeCollege(index)}
+              aria-label="Supprimer ce collège"
+            >
+              &times;
+            </button>
           </div>
         ))}
         
         <button 
           type="button" 
-          className={`${styles.departmentButton} ${styles.addButton}`}
+          className={styles.addButton}
+          onClick={addCollege}
+        >
+          + Ajouter un collège
+        </button>
+      </div>
+      
+      {/* Section des services */}
+      <div className={styles.formSection}>
+        <h3 className={styles.sectionTitle}>Répartition par service (estimation)</h3>
+        <p className={styles.sectionDescription}>Ces données sont des estimations internes et ne figurent pas sur le PV officiel</p>
+        
+        {formData.departments.map((dept, index) => (
+          <div key={index} className={styles.departmentRow}>
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Nom du service</label>
+              <input 
+                type="text" 
+                className={styles.formInput}
+                value={dept.name}
+                onChange={(e) => handleDepartmentChange(index, 'name', e.target.value)}
+                required
+              />
+            </div>
+            
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Voix CGT</label>
+              <input 
+                type="number" 
+                className={styles.formInput}
+                min="0"
+                value={dept.votes}
+                onChange={(e) => handleDepartmentChange(index, 'votes', e.target.value)}
+                required
+              />
+            </div>
+            
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Total votants</label>
+              <input 
+                type="number" 
+                className={styles.formInput}
+                min="0"
+                value={dept.total}
+                onChange={(e) => handleDepartmentChange(index, 'total', e.target.value)}
+                required
+              />
+            </div>
+            
+            <button 
+              type="button" 
+              className={styles.removeButton}
+              onClick={() => removeDepartment(index)}
+              aria-label="Supprimer ce service"
+            >
+              &times;
+            </button>
+          </div>
+        ))}
+        
+        <button 
+          type="button" 
+          className={styles.addButton}
           onClick={addDepartment}
         >
           + Ajouter un service
@@ -302,11 +402,12 @@ function ResultatsForm({ onSave, initialData }) {
       <div className={styles.formActions}>
         <button 
           type="button" 
-          className={styles.secondaryButton}
+          className={styles.calculateButton}
           onClick={calculateResults}
         >
           Calculer les résultats
         </button>
+        
         <button 
           type="submit" 
           className={styles.submitButton}

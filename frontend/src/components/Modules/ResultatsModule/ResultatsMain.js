@@ -11,22 +11,27 @@ import { jsPDF } from 'jspdf';
 function ResultatsMain() {
   const [activeTab, setActiveTab] = useState('stats'); // 'stats' ou 'form'
   const [resultatsData, setResultatsData] = useState({
-    participation: 78,
-    cgtVotes: 345,
-    totalVotes: 650,
-    percentage: 53,
-    seats: 4,
-    totalSeats: 7,
-    evolution: +5,
-    previousPercentage: 48,
+    participation: 0,
+    cgtVotes: 0,
+    totalVotes: 0,
+    percentage: 0,
+    seats: 0,
+    totalSeats: 0,
+    evolution: +0,
+    previousVotes: 312,
     date: '2023-11-15',
+    colleges: [
+      { name: 'Premier collège (Ouvriers/Employés)', inscriptions: 0, votants: 0, voixCGT: 0, participation: 0, pourcentageCGT: 75 },
+      { name: 'Deuxième collège (Techniciens/Agents de maîtrise)', inscriptions: 0, votants: 0, voixCGT: 0, participation: 0, pourcentageCGT: 0 },
+      { name: 'Troisième collège (Cadres)', inscriptions: 0, votants: 0, voixCGT: 0, participation: 0, pourcentageCGT: 0 }
+    ],
     departments: [
-      { name: 'Administration', votes: 32, total: 40, percentage: 80 },
-      { name: 'Production', votes: 155, total: 280, percentage: 55 },
-      { name: 'R&D', votes: 45, total: 95, percentage: 47 },
-      { name: 'Logistique', votes: 65, total: 140, percentage: 46 },
-      { name: 'Commercial', votes: 28, total: 65, percentage: 43 },
-      { name: 'Maintenance', votes: 20, total: 30, percentage: 67 }
+      { name: 'Administration', votes: 0, total: 0, percentage: 0 },
+      { name: 'Production', votes: 0, total: 0, percentage: 0 },
+      { name: 'R&D', votes: 0, total: 0, percentage: 0 },
+      { name: 'Logistique', votes: 0, total: 0, percentage: 0 },
+      { name: 'Commercial', votes: 0, total: 0, percentage: 0 },
+      { name: 'Maintenance', votes: 0, total: 0, percentage: 0 }
     ]
   });
   
@@ -99,276 +104,198 @@ function ResultatsMain() {
       // Capturer la section complète des résultats
       const canvas = await html2canvas(fullResultsRef.current, {
         scale: 2,
-        useCORS: true,
-        logging: false,
         backgroundColor: '#ffffff',
-        allowTaint: true,
-        foreignObjectRendering: false,
-        onclone: (document, clone) => {
-          // Ajuster le clone pour une meilleure capture
-          const element = clone.querySelector('.resultsSection');
-          if (element) {
-            element.style.width = '1100px';
-            element.style.margin = '0';
-            element.style.padding = '20px';
-            element.style.boxShadow = 'none';
-            
-            // S'assurer que les éléments du graphique sont correctement capturés
-            const pieCharts = clone.querySelectorAll('.pieChart, .pieChartWrapper');
-            pieCharts.forEach(chart => {
-              chart.style.overflow = 'visible';
-              chart.style.zIndex = '1';
-            });
-          }
-        }
+        logging: false,
+        useCORS: true
       });
       
       const imgData = canvas.toDataURL('image/png');
-      const imgWidth = 170; // Largeur de l'image en mm
-      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const imgWidth = 190;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
       
-      // Ajouter l'image au PDF
-      pdf.addImage(imgData, 'PNG', 20, 40, imgWidth, imgHeight);
+      pdf.addImage(imgData, 'PNG', 10, 40, imgWidth, imgHeight);
       
-      // Sauvegarder le PDF
-      pdf.save(`resultats_electoraux_${today.replace(/\//g, '-')}.pdf`);
+      // Ajouter les informations de bas de page
+      pdf.setFontSize(8);
+      pdf.setTextColor(100, 100, 100);
+      pdf.text(`Document généré par les outils CGT - Confidentiel - Usage syndical uniquement`, 105, 280, { align: 'center' });
+      
+      // Enregistrer le PDF
+      pdf.save(`Résultats_électoraux_${today.replace(/\//g, '-')}.pdf`);
       
     } catch (error) {
-      console.error('Erreur lors de la génération du PDF:', error);
-      alert('Une erreur est survenue lors de la génération du PDF.');
+      console.error("Erreur lors de la génération du PDF:", error);
+      alert("Une erreur est survenue lors de la génération du PDF.");
     }
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <div className={styles.tabs}>
-          <button 
-            className={`${styles.tabButton} ${activeTab === 'stats' ? styles.activeTab : ''}`}
-            onClick={() => setActiveTab('stats')}
-            aria-pressed={activeTab === 'stats'}
-          >
-            <FaChartPie className={styles.tabIcon} /> Résultats
-          </button>
-          <button 
-            className={`${styles.tabButton} ${activeTab === 'form' ? styles.activeTab : ''}`}
-            onClick={() => setActiveTab('form')}
-            aria-pressed={activeTab === 'form'}
-          >
-            <FaVoteYea className={styles.tabIcon} /> Saisie des résultats
-          </button>
-        </div>
-        
-        {activeTab === 'form' && (
-          <SaveButtons 
-            onSaveLocal={handleSaveLocal}
-            onSaveServer={handleSaveServer}
-            localLabel="Sauvegarder localement"
-            serverLabel="Sauvegarder sur le serveur"
-          />
-        )}
-        
-        {activeTab === 'stats' && (
-          <button 
-            className={styles.pdfButton}
-            onClick={generatePDF}
-            title="Générer un PDF des résultats"
-          >
-            <i className="fas fa-file-pdf"></i> Exporter en PDF
-          </button>
-        )}
+    <div className={styles.resultatsContainer}>
+      <div className={styles.tabsContainer}>
+        <button 
+          className={`${styles.tabButton} ${activeTab === 'stats' ? styles.activeTab : ''}`}
+          onClick={() => setActiveTab('stats')}
+        >
+          <FaChartPie className={styles.tabIcon} /> Résultats
+        </button>
+        <button 
+          className={`${styles.tabButton} ${activeTab === 'form' ? styles.activeTab : ''}`}
+          onClick={() => setActiveTab('form')}
+        >
+          <FaVoteYea className={styles.tabIcon} /> Saisie des résultats
+        </button>
       </div>
-
+      
       {activeTab === 'stats' ? (
-        <div className={styles.card} ref={fullResultsRef}>
-          <div className={`${styles.resultsSection} resultsSection`}>
-            <h2 className={styles.title}>Résultats des élections professionnelles</h2>
-            <p className={styles.electionDate}>Élections du {new Date(resultatsData.date).toLocaleDateString('fr-FR')}</p>
+        <div>
+          <div className={styles.actionsBar}>
+            <button 
+              className={styles.pdfButton}
+              onClick={generatePDF}
+            >
+              Exporter en PDF
+            </button>
+            <SaveButtons 
+              onSaveLocal={handleSaveLocal} 
+              onSaveServer={handleSaveServer}
+              localLabel="Sauvegarder localement"
+              serverLabel="Envoyer au serveur"
+            />
+          </div>
+          
+          <div className={styles.resultsContent} ref={fullResultsRef}>
+            <div className={styles.resultsHeader}>
+              <h2 className={styles.resultsTitle}>Résultats électoraux</h2>
+              <p className={styles.resultsDate}>
+                Élections du {new Date(resultatsData.date).toLocaleDateString('fr-FR')}
+              </p>
+            </div>
             
             <div className={styles.statsGrid}>
-              <div className={styles.scoreCard}>
-                <h3 className={styles.sectionTitle}>Score global CGT</h3>
-                
-                {/* Graphique circulaire amélioré */}
-                <div className={styles.pieChartWrapper}>
-                  <div className={styles.pieChart}>
-                    <div className={styles.pieBackground}></div>
-                    <div 
-                      className={styles.pieForeground} 
-                      style={{ 
-                        transform: `rotate(${resultatsData.percentage * 3.6}deg)`,
-                        backgroundColor: resultatsData.percentage >= 50 ? '#b91c1c' : '#ef4444'
-                      }}
-                    ></div>
-                    <div className={styles.pieCenter}>
-                      <span className={styles.pieValue}>{resultatsData.percentage}%</span>
-                      <span className={styles.pieLabel}>des suffrages</span>
-                    </div>
-                  </div>
-                  
-                  {/* Annotations */}
-                  <div className={styles.pieAnnotations}>
-                    {resultatsData.percentage >= 5 && resultatsData.percentage <= 95 && (
-                      <>
-                        <div className={styles.cgtAnnotation} style={{ 
-                          transform: `rotate(${resultatsData.percentage / 100 * Math.PI}rad) translate(80px, 0)` 
-                        }}>
-                          <span className={styles.annotationText}>CGT</span>
-                        </div>
-                        <div className={styles.autresAnnotation} style={{ 
-                          transform: `rotate(${(resultatsData.percentage / 100 + 1) * Math.PI}rad) translate(80px, 0)` 
-                        }}>
-                          <span className={styles.annotationText}>Autres</span>
-                        </div>
-                      </>
-                    )}
-                  </div>
+              <div className={styles.statCard}>
+                <div className={styles.statIcon}>
+                  <FaVoteYea />
                 </div>
-                
-                <div className={styles.evolution}>
-                  <span className={resultatsData.evolution > 0 ? styles.evolutionPositive : styles.evolutionNegative}>
-                    {resultatsData.evolution > 0 ? '↑' : '↓'} {Math.abs(resultatsData.evolution)}%
-                  </span>
-                  <span className={styles.evolutionNote}>vs élections précédentes ({resultatsData.previousPercentage}%)</span>
-                </div>
-                
-                {/* Statistiques détaillées */}
-                <div className={styles.detailedStats}>
-                  <div className={styles.statItem}>
-                    <div className={styles.statIcon}>
-                      <FaVoteYea />
-                    </div>
-                    <div className={styles.statContent}>
-                      <div className={styles.statValue}>{resultatsData.cgtVotes}</div>
-                      <div className={styles.statLabel}>Voix CGT</div>
-                    </div>
+                <div className={styles.statContent}>
+                  <div className={styles.statValue}>{resultatsData.percentage}%</div>
+                  <div className={styles.statLabel}>Score CGT</div>
+                  <div className={styles.statDetail}>
+                    {resultatsData.cgtVotes} voix sur {resultatsData.totalVotes} suffrages
                   </div>
-                  
-                  <div className={styles.statItem}>
-                    <div className={styles.statIcon}>
-                      <FaUsers />
-                    </div>
-                    <div className={styles.statContent}>
-                      <div className={styles.statValue}>{resultatsData.totalVotes}</div>
-                      <div className={styles.statLabel}>Votants</div>
-                    </div>
-                  </div>
-                  
-                  <div className={styles.statItem}>
-                    <div className={styles.statIcon}>
-                      <FaChair />
-                    </div>
-                    <div className={styles.statContent}>
-                      <div className={styles.statValue}>{resultatsData.seats}/{resultatsData.totalSeats}</div>
-                      <div className={styles.statLabel}>Sièges</div>
-                    </div>
-                  </div>
-                  
-                  <div className={styles.statItem}>
-                    <div className={styles.statIcon}>
-                      <FaUsers />
-                    </div>
-                    <div className={styles.statContent}>
-                      <div className={styles.statValue}>{resultatsData.participation}%</div>
-                      <div className={styles.statLabel}>Participation</div>
+                  <div className={styles.statEvolution}>
+                    {resultatsData.evolution > 0 ? '+' : ''}{resultatsData.evolution}% par rapport aux élections précédentes
+                    <div className={styles.statDetail}>
+                      ({resultatsData.previousVotes} voix aux élections précédentes)
                     </div>
                   </div>
                 </div>
               </div>
               
-              <div className={styles.departmentsCard}>
-                <h3 className={styles.sectionTitle}>Répartition par service</h3>
-                
-                <div className={styles.departmentList}>
-                  {resultatsData.departments
-                    .sort((a, b) => b.percentage - a.percentage)
-                    .map((dept, idx) => (
-                    <div key={idx} className={styles.departmentItem}>
-                      <div className={styles.departmentHeader}>
-                        <span className={styles.departmentName}>{dept.name}</span>
-                        <span className={styles.departmentPercentage}>{dept.percentage}%</span>
-                      </div>
-                      <div className={styles.progressBar}>
-                        <div 
-                          className={styles.progressFill} 
-                          style={{ 
-                            width: `${dept.percentage}%`,
-                            backgroundColor: dept.percentage >= 50 ? '#b91c1c' : '#ef4444'
-                          }}
-                        ></div>
-                      </div>
-                      <div className={styles.departmentStats}>
-                        {dept.votes} voix sur {dept.total} suffrages
-                      </div>
-                    </div>
-                  ))}
+              <div className={styles.statCard}>
+                <div className={styles.statIcon}>
+                  <FaUsers />
+                </div>
+                <div className={styles.statContent}>
+                  <div className={styles.statValue}>{resultatsData.participation}%</div>
+                  <div className={styles.statLabel}>Participation</div>
+                  <div className={styles.statDetail}>
+                    {resultatsData.totalVotes} votants
+                  </div>
+                </div>
+              </div>
+              
+              <div className={styles.statCard}>
+                <div className={styles.statIcon}>
+                  <FaChair />
+                </div>
+                <div className={styles.statContent}>
+                  <div className={styles.statValue}>{resultatsData.seats}/{resultatsData.totalSeats}</div>
+                  <div className={styles.statLabel}>Sièges obtenus</div>
+                  <div className={styles.statDetail}>
+                    {Math.round((resultatsData.seats / resultatsData.totalSeats) * 100)}% des sièges
+                  </div>
                 </div>
               </div>
             </div>
             
-            <div className={styles.analysisSection}>
-              <h3 className={styles.sectionTitle}>Analyse des résultats</h3>
+            {/* Résultats par collège */}
+            <div className={styles.sectionTitle}>
+              <h3>Résultats par collège</h3>
+              <p className={styles.sectionSubtitle}>Données officielles du PV d'élection</p>
+            </div>
+            
+            <div className={styles.collegesTable}>
+              <div className={styles.tableHeader}>
+                <div className={styles.tableHeaderCell}>Collège</div>
+                <div className={styles.tableHeaderCell}>Inscrits</div>
+                <div className={styles.tableHeaderCell}>Votants</div>
+                <div className={styles.tableHeaderCell}>Participation</div>
+                <div className={styles.tableHeaderCell}>Voix CGT</div>
+                <div className={styles.tableHeaderCell}>Score CGT</div>
+              </div>
               
-              <div className={styles.analysisGrid}>
-                <div className={styles.analysisCard}>
-                  <h4 className={styles.analysisTitle}>Points forts</h4>
-                  <ul className={styles.analysisList}>
-                    {resultatsData.departments
-                      .filter(dept => dept.percentage >= 50)
-                      .sort((a, b) => b.percentage - a.percentage)
-                      .slice(0, 3)
-                      .map((dept, idx) => (
-                        <li key={idx}>
-                          <strong>{dept.name}</strong>: {dept.percentage}% des voix, position dominante
-                        </li>
-                      ))
-                    }
-                    {resultatsData.evolution > 0 && (
-                      <li>
-                        <strong>Progression globale</strong> de {resultatsData.evolution}% par rapport aux élections précédentes
-                      </li>
-                    )}
-                    {(resultatsData.seats / resultatsData.totalSeats) >= 0.5 && (
-                      <li>
-                        <strong>Majorité au CSE</strong> avec {resultatsData.seats} sièges sur {resultatsData.totalSeats}
-                      </li>
-                    )}
-                  </ul>
+              {resultatsData.colleges && resultatsData.colleges.map((college, index) => (
+                <div key={index} className={styles.tableRow}>
+                  <div className={styles.tableCell}>{college.name}</div>
+                  <div className={styles.tableCell}>{college.inscriptions}</div>
+                  <div className={styles.tableCell}>{college.votants}</div>
+                  <div className={styles.tableCell}>{college.participation}%</div>
+                  <div className={styles.tableCell}>{college.voixCGT}</div>
+                  <div className={styles.tableCell}>{college.pourcentageCGT}%</div>
                 </div>
-                
-                <div className={styles.analysisCard}>
-                  <h4 className={styles.analysisTitle}>Axes d'amélioration</h4>
-                  <ul className={styles.analysisList}>
-                    {resultatsData.departments
-                      .filter(dept => dept.percentage < 40)
-                      .sort((a, b) => a.percentage - b.percentage)
-                      .slice(0, 3)
-                      .map((dept, idx) => (
-                        <li key={idx}>
-                          <strong>{dept.name}</strong>: Seulement {dept.percentage}% des voix, à renforcer
-                        </li>
-                      ))
-                    }
-                    {resultatsData.evolution < 0 && (
-                      <li>
-                        <strong>Recul</strong> de {Math.abs(resultatsData.evolution)}% par rapport aux élections précédentes
-                      </li>
-                    )}
-                    {resultatsData.participation < 70 && (
-                      <li>
-                        <strong>Participation</strong> de {resultatsData.participation}% à améliorer lors des prochaines élections
-                      </li>
-                    )}
-                  </ul>
+              ))}
+              
+              <div className={styles.tableFooter}>
+                <div className={styles.tableCell}>Total</div>
+                <div className={styles.tableCell}>
+                  {resultatsData.colleges ? resultatsData.colleges.reduce((sum, college) => sum + parseInt(college.inscriptions || 0), 0) : 0}
+                </div>
+                <div className={styles.tableCell}>
+                  {resultatsData.colleges ? resultatsData.colleges.reduce((sum, college) => sum + parseInt(college.votants || 0), 0) : 0}
+                </div>
+                <div className={styles.tableCell}>
+                  {resultatsData.colleges ? Math.round(resultatsData.colleges.reduce((sum, college) => sum + parseInt(college.votants || 0), 0) / resultatsData.colleges.reduce((sum, college) => sum + parseInt(college.inscriptions || 0), 1) * 100) : 0}%
+                </div>
+                <div className={styles.tableCell}>
+                  {resultatsData.colleges ? resultatsData.colleges.reduce((sum, college) => sum + parseInt(college.voixCGT || 0), 0) : 0}
+                </div>
+                <div className={styles.tableCell}>
+                  {resultatsData.colleges ? Math.round(resultatsData.colleges.reduce((sum, college) => sum + parseInt(college.voixCGT || 0), 0) / resultatsData.colleges.reduce((sum, college) => sum + parseInt(college.votants || 0), 1) * 100) : 0}%
                 </div>
               </div>
+            </div>
+            
+            {/* Répartition par service */}
+            <div className={styles.sectionTitle}>
+              <h3>Répartition par service</h3>
+              <p className={styles.sectionSubtitle}>Estimation interne (ne figure pas sur le PV officiel)</p>
+            </div>
+            
+            <div className={styles.departmentsGrid}>
+              {resultatsData.departments.map((dept, index) => (
+                <div key={index} className={styles.departmentCard}>
+                  <div className={styles.departmentName}>{dept.name}</div>
+                  <div className={styles.departmentScore}>
+                    <div className={styles.scoreValue}>{dept.percentage}%</div>
+                    <div className={styles.scoreBar}>
+                      <div 
+                        className={styles.scoreBarFill} 
+                        style={{ width: `${dept.percentage}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                  <div className={styles.departmentDetail}>
+                    {dept.votes} voix sur {dept.total} votants
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       ) : (
         <ResultatsForm 
-          initialData={resultatsData}
           onSave={handleSaveFormData}
+          initialData={resultatsData}
         />
       )}
     </div>

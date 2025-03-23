@@ -1,18 +1,23 @@
 // src/components/pages/ResultatsPage.js
 import React from 'react';
 import ResultatsMain from '../Modules/ResultatsModule/ResultatsMain';
+import styles from './ResultatsPage.module.css';
 
 function ResultatsPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold text-red-700 mb-2">Résultats électoraux</h1>
-        <p className="text-lg text-gray-600">
+    <div>
+      <header className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Résultats électoraux</h1>
+        <p className={styles.pageSubtitle}>
           Analyse des élections professionnelles
         </p>
       </header>
 
-      <ResultatsMain />
+      <main className={styles.mainContent}>
+        <div className={styles.resultsContainer}>
+          <ResultatsMain />
+        </div>
+      </main>
     </div>
   );
 }
