@@ -4,6 +4,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 import styles from './ElectionResults.module.css';
 import ElectionResultForm from './ElectionResultForm';
 import ExcelImporter from './ExcelImporter';
+import ElectionDashboard from './ElectionDashboard';
 
 // Enregistrer les composants nécessaires pour Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -19,7 +20,8 @@ const ElectionResults = ({ results = [], onAddResult }) => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [showImporter, setShowImporter] = useState(false);
   const [localResults, setLocalResults] = useState([]);
-  
+  const [viewMode, setViewMode] = useState('list'); // 'list' ou 'dashboard'
+
   // Statistiques globales
   const [stats, setStats] = useState({
     totalResults: 0,
@@ -64,36 +66,35 @@ const ElectionResults = ({ results = [], onAddResult }) => {
 
     results.forEach(result => {
       // Calculer la participation
-      const participation = result.validVotes / result.registeredVoters * 100;
-      totalParticipation += !isNaN(participation) ? participation : 0;
+      const participation = result.registeredVoters > 0 
+        ? (result.validVotes / result.registeredVoters) * 100 
+        : 0;
+      totalParticipation += participation;
       
-      // Trouver les résultats CGT
+      // Compter les votes CGT
       const cgtResult = result.results.find(r => r.union === 'CGT');
       if (cgtResult) {
+        totalCgtVotes += cgtResult.votes;
+        totalCgtSeats += cgtResult.seats;
         cgtPresenceCount++;
-        totalCgtVotes += cgtResult.votes || 0;
-        totalCgtSeats += cgtResult.seats || 0;
       }
       
-      // Calculer le total des votes
-      result.results.forEach(r => {
-        totalVotes += r.votes || 0;
-      });
+      // Compter le total des votes
+      totalVotes += result.validVotes;
     });
 
-    const averageParticipation = totalParticipation / results.length;
-    const cgtPercentage = (totalCgtVotes / totalVotes) * 100;
-    const cgtPresencePercentage = (cgtPresenceCount / results.length) * 100;
+    const cgtPercentage = totalVotes > 0 ? (totalCgtVotes / totalVotes) * 100 : 0;
+    const cgtPresencePercentage = results.length > 0 ? (cgtPresenceCount / results.length) * 100 : 0;
 
     setStats({
       totalResults: results.length,
-      averageParticipation: isNaN(averageParticipation) ? 0 : averageParticipation,
+      averageParticipation: results.length > 0 ? totalParticipation / results.length : 0,
       totalCgtVotes,
       totalVotes,
       totalCgtSeats,
-      cgtPercentage: isNaN(cgtPercentage) ? 0 : cgtPercentage,
+      cgtPercentage,
       cgtPresence: cgtPresenceCount,
-      cgtPresencePercentage: isNaN(cgtPresencePercentage) ? 0 : cgtPresencePercentage
+      cgtPresencePercentage
     });
   };
 
@@ -218,14 +219,16 @@ const ElectionResults = ({ results = [], onAddResult }) => {
 
   // Fonction pour afficher un résultat d'élection
   const renderResult = (result, index) => {
-    const isExpanded = expandedResults[index];
-    const totalVotes = result.validVotes;
-    const totalSeats = result.results.reduce((acc, r) => acc + r.seats, 0);
-    const cgtResult = result.results.find(r => r.union === 'CGT') || { votes: 0, percentage: 0, seats: 0 };
+    const isExpanded = expandedResults[index] || false;
     
-    // Calculer le quorum
-    const quorum = result.registeredVoters / 2;
-    const quorumReached = result.validVotes > quorum;
+    // Vérifier si la CGT est présente dans cette entreprise
+    const cgtResult = result.results.find(r => r.union === 'CGT');
+    const cgtPresent = !!cgtResult;
+    
+    // Calculer la participation
+    const participation = result.registeredVoters > 0 
+      ? (result.validVotes / result.registeredVoters) * 100 
+      : 0;
     
     return (
       <div key={index} className={styles.resultCard}>
@@ -263,8 +266,14 @@ const ElectionResults = ({ results = [], onAddResult }) => {
           </div>
           <div className={styles.resultSummary}>
             <div className={styles.resultCGT}>
-              <div className={styles.resultValue}>{cgtResult.percentage.toFixed(1)}%</div>
-              <div className={styles.resultLabel}>CGT</div>
+              {cgtPresent ? (
+                <>
+                  <div className={styles.resultValue}>{cgtResult.percentage.toFixed(1)}%</div>
+                  <div className={styles.resultLabel}>CGT</div>
+                </>
+              ) : (
+                <span className={styles.cgtAbsent}>CGT non implantée</span>
+              )}
             </div>
             <button 
               className={styles.expandButton} 
@@ -326,7 +335,7 @@ const ElectionResults = ({ results = [], onAddResult }) => {
                   <div className={styles.infoRow}>
                     <div className={styles.infoLabel}>Quorum :</div>
                     <div className={styles.infoValue}>
-                      {quorumReached 
+                      {participation > 50 
                         ? <span className={styles.quorumReached}>Atteint</span> 
                         : <span className={styles.quorumNotReached}>Non atteint</span>}
                     </div>
@@ -343,70 +352,87 @@ const ElectionResults = ({ results = [], onAddResult }) => {
                     <div className={styles.resultTableCell}>%</div>
                     <div className={styles.resultTableCell}>Sièges</div>
                   </div>
-                  {result.results.sort((a, b) => b.votes - a.votes).map((unionResult, idx) => (
-                    <div 
-                      key={idx} 
-                      className={`${styles.resultTableRow} ${unionResult.union === 'CGT' ? styles.cgtRow : ''}`}
-                    >
-                      <div className={styles.resultTableCell}>{unionResult.union}</div>
-                      <div className={styles.resultTableCell}>{unionResult.votes}</div>
-                      <div className={styles.resultTableCell}>{unionResult.percentage.toFixed(1)}%</div>
-                      <div className={styles.resultTableCell}>{unionResult.seats}</div>
-                    </div>
-                  ))}
+                  <div className={styles.resultTableBody}>
+                    {/* Si la CGT n'est pas dans les résultats, ajouter une ligne indiquant qu'elle n'est pas implantée */}
+                    {!result.results.find(r => r.union === 'CGT') && (
+                      <div className={`${styles.resultTableRow} ${styles.cgtNotPresent}`}>
+                        <div className={styles.resultTableCell}>CGT</div>
+                        <div className={styles.resultTableCell}>-</div>
+                        <div className={styles.resultTableCell}>Non implantée</div>
+                        <div className={styles.resultTableCell}>-</div>
+                      </div>
+                    )}
+                    {result.results.map((unionResult, idx) => (
+                      <div 
+                        key={idx} 
+                        className={`${styles.resultTableRow} ${unionResult.union === 'CGT' ? styles.cgtRow : ''}`}
+                      >
+                        <div className={styles.resultTableCell}>{unionResult.union}</div>
+                        <div className={styles.resultTableCell}>{unionResult.votes}</div>
+                        <div className={styles.resultTableCell}>{unionResult.percentage.toFixed(1)}%</div>
+                        <div className={styles.resultTableCell}>{unionResult.seats}</div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
             
             {/* Graphique des résultats */}
             <div className={styles.chartContainer}>
-              <Bar
-                data={{
-                  labels: result.results.map(r => r.union),
-                  datasets: [
-                    {
-                      label: 'Pourcentage des voix',
-                      data: result.results.map(r => r.percentage),
-                      backgroundColor: result.results.map(r => 
-                        r.union === 'CGT' ? '#e30613' : 
-                        r.union === 'CFDT' ? '#ff5f00' :
-                        r.union === 'FO' ? '#ffcc00' :
-                        r.union === 'CFTC' ? '#00a1de' :
-                        r.union === 'CFE-CGC' ? '#0055a4' :
-                        r.union === 'UNSA' ? '#009ee0' :
-                        r.union === 'SOLIDAIRES' ? '#ff0000' :
-                        '#aaaaaa'
-                      ),
-                    }
-                  ]
-                }}
-                options={{
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  scales: {
-                    y: {
-                      beginAtZero: true,
-                      max: 100,
-                      title: {
-                        display: true,
-                        text: 'Pourcentage (%)'
+              {result.results.length > 0 ? (
+                <Bar
+                  data={{
+                    labels: result.results.map(r => r.union),
+                    datasets: [
+                      {
+                        label: 'Pourcentage des voix',
+                        data: result.results.map(r => r.percentage),
+                        backgroundColor: result.results.map(r => 
+                          r.union === 'CGT' ? '#e30613' : 
+                          r.union === 'CFDT' ? '#ff5f00' :
+                          r.union === 'FO' ? '#ffcc00' :
+                          r.union === 'CFTC' ? '#00a1de' :
+                          r.union === 'CFE-CGC' ? '#0055a4' :
+                          r.union === 'UNSA' ? '#009ee0' :
+                          r.union === 'SOLIDAIRES' ? '#ff0000' :
+                          '#aaaaaa'
+                        ),
                       }
-                    }
-                  },
-                  plugins: {
-                    legend: {
-                      display: false
+                    ]
+                  }}
+                  options={{
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                      y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                          display: true,
+                          text: 'Pourcentage (%)'
+                        }
+                      }
                     },
-                    tooltip: {
-                      callbacks: {
-                        label: function(context) {
-                          return `${context.dataset.label}: ${context.raw.toFixed(1)}%`;
+                    plugins: {
+                      legend: {
+                        display: false
+                      },
+                      tooltip: {
+                        callbacks: {
+                          label: function(context) {
+                            return `${context.dataset.label}: ${context.raw.toFixed(1)}%`;
+                          }
                         }
                       }
                     }
-                  }
-                }}
-              />
+                  }}
+                />
+              ) : (
+                <div className={styles.noResultsChart}>
+                  <p>Aucun syndicat présent dans cette entreprise</p>
+                </div>
+              )}
             </div>
             
             {/* Adresse complète si disponible */}
@@ -508,163 +534,196 @@ const ElectionResults = ({ results = [], onAddResult }) => {
   
   return (
     <div className={styles.resultsContainer}>
-      <div className={styles.filtersSection}>
-        <div className={styles.filterGroup}>
-          <label htmlFor="search">Rechercher une entreprise</label>
-          <input
-            id="search"
-            type="text"
-            placeholder="Nom de l'entreprise..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className={styles.searchInput}
-          />
-        </div>
-        
-        <div className={styles.filterGroup}>
-          <label htmlFor="sectorFilter">Secteur d'activité</label>
-          <select
-            id="sectorFilter"
-            value={sectorFilter}
-            onChange={(e) => setSectorFilter(e.target.value)}
-            className={styles.filterSelect}
-          >
-            <option value="">Tous les secteurs</option>
-            {sectors.map((sector, index) => (
-              <option key={index} value={sector}>{sector}</option>
-            ))}
-          </select>
-        </div>
-        
-        <div className={styles.filterGroup}>
-          <label htmlFor="federationFilter">Fédération</label>
-          <select
-            id="federationFilter"
-            value={federationFilter}
-            onChange={(e) => setFederationFilter(e.target.value)}
-            className={styles.filterSelect}
-          >
-            <option value="">Toutes les fédérations</option>
-            {federations.map((federation, index) => (
-              <option key={index} value={federation}>{federation}</option>
-            ))}
-          </select>
-        </div>
-        
-        <div className={styles.filterGroup}>
-          <label>Présence CGT</label>
-          <div className={styles.cgtPresenceFilter}>
-            <button 
-              className={`${styles.cgtPresenceButton} ${cgtPresenceFilter === 'all' ? styles.active : ''}`}
-              onClick={() => setCgtPresenceFilter('all')}
-            >
-              Tous
-            </button>
-            <button 
-              className={`${styles.cgtPresenceButton} ${styles.present} ${cgtPresenceFilter === 'present' ? styles.active : ''}`}
-              onClick={() => setCgtPresenceFilter('present')}
-            >
-              CGT présente
-            </button>
-            <button 
-              className={`${styles.cgtPresenceButton} ${styles.absent} ${cgtPresenceFilter === 'absent' ? styles.active : ''}`}
-              onClick={() => setCgtPresenceFilter('absent')}
-            >
-              CGT absente
-            </button>
-          </div>
-        </div>
-        
-        <div className={styles.filterGroup}>
-          <label htmlFor="sortOption">Trier par</label>
-          <select
-            id="sortOption"
-            value={sortOption}
-            onChange={(e) => setSortOption(e.target.value)}
-            className={styles.filterSelect}
-          >
-            <option value="date-desc">Date (récent → ancien)</option>
-            <option value="date-asc">Date (ancien → récent)</option>
-            <option value="company-asc">Entreprise (A → Z)</option>
-            <option value="company-desc">Entreprise (Z → A)</option>
-            <option value="cgt-desc">Score CGT (haut → bas)</option>
-            <option value="cgt-asc">Score CGT (bas → haut)</option>
-          </select>
-        </div>
-      </div>
-      
       <div className={styles.resultsHeader}>
-        <h3 className={styles.resultsTitle}>
-          Résultats des élections
-          <span className={styles.filterCount}>{filteredResults.length} résultats</span>
-        </h3>
-        <div className={styles.addButtonContainer}>
-          <button className={styles.addButton} onClick={() => setShowAddForm(true)}>
-            <i className="fas fa-plus"></i> Ajouter un résultat
-          </button>
-          <button className={styles.addButton} onClick={() => setShowImporter(true)} style={{ marginLeft: '1rem' }}>
-            <i className="fas fa-file-import"></i> Importer des résultats
-          </button>
-        </div>
+        <h2>Résultats des élections</h2>
+        <div className={styles.resultsCount}>{filteredResults.length} résultats</div>
       </div>
       
-      <div className={styles.statsSection}>
-        <h3 className={styles.statsTitle}>Statistiques globales</h3>
-        <div className={styles.statsGrid}>
-          <div className={styles.statItem}>
-            <h4>Total des résultats</h4>
-            <p>{stats.totalResults}</p>
-          </div>
-          <div className={styles.statItem}>
-            <h4>Participation moyenne</h4>
-            <p>{stats.averageParticipation.toFixed(1)}%</p>
-          </div>
-          <div className={styles.statItem}>
-            <h4>Total des voix CGT</h4>
-            <p>{stats.totalCgtVotes}</p>
-          </div>
-          <div className={styles.statItem}>
-            <h4>Total des sièges CGT</h4>
-            <p>{stats.totalCgtSeats}</p>
-          </div>
-          <div className={styles.statItem}>
-            <h4>Présence CGT</h4>
-            <p>{stats.cgtPresence} ({stats.cgtPresencePercentage.toFixed(1)}%)</p>
-          </div>
-        </div>
+      <div className={styles.viewToggle}>
+        <button 
+          className={`${styles.viewToggleButton} ${viewMode === 'list' ? styles.viewToggleActive : ''}`}
+          onClick={() => setViewMode('list')}
+        >
+          <i className="fas fa-list"></i> Vue détaillée
+        </button>
+        <button 
+          className={`${styles.viewToggleButton} ${viewMode === 'dashboard' ? styles.viewToggleActive : ''}`}
+          onClick={() => setViewMode('dashboard')}
+        >
+          <i className="fas fa-chart-pie"></i> Tableau de bord
+        </button>
       </div>
       
-      {showImporter && (
-        <div className={styles.importerContainer}>
-          <ExcelImporter onImportComplete={handleImportComplete} />
-          <button
-            className={styles.cancelButton}
-            onClick={() => setShowImporter(false)}
-          >
-            Annuler l'importation
-          </button>
+      {/* Statistiques globales */}
+      {viewMode === 'list' && (
+        <div className={styles.statsContainer}>
+          <div className={styles.statCard}>
+            <div className={styles.statTitle}>Total des résultats</div>
+            <div className={styles.statValue}>{stats.totalResults}</div>
+          </div>
+          <div className={styles.statCard}>
+            <div className={styles.statTitle}>Participation moyenne</div>
+            <div className={styles.statValue}>{stats.averageParticipation.toFixed(1)}%</div>
+          </div>
+          <div className={styles.statCard}>
+            <div className={styles.statTitle}>Total des voix CGT</div>
+            <div className={styles.statValue}>{stats.totalCgtVotes}</div>
+          </div>
+          <div className={styles.statCard}>
+            <div className={styles.statTitle}>Total des sièges CGT</div>
+            <div className={styles.statValue}>{stats.totalCgtSeats}</div>
+          </div>
+          <div className={styles.statCard}>
+            <div className={styles.statTitle}>Présence CGT</div>
+            <div className={styles.statValue}>{stats.cgtPresence} ({stats.cgtPresencePercentage.toFixed(1)}%)</div>
+          </div>
         </div>
       )}
       
-      {showAddForm && (
-        <div className={styles.formContainer}>
-          <ElectionResultForm
-            onSubmit={handleAddResult}
-            onCancel={() => setShowAddForm(false)}
-          />
-        </div>
-      )}
+      {/* Boutons d'action */}
+      <div className={styles.actionsContainer}>
+        <button 
+          className={styles.addButton} 
+          onClick={() => {
+            setShowAddForm(!showAddForm);
+            setShowImporter(false);
+          }}
+        >
+          {showAddForm ? 'Annuler' : 'Ajouter un résultat'}
+        </button>
+        <button 
+          className={styles.importButton} 
+          onClick={() => {
+            setShowImporter(!showImporter);
+            setShowAddForm(false);
+          }}
+        >
+          {showImporter ? 'Annuler' : 'Importer des résultats'}
+        </button>
+      </div>
       
-      <div className={styles.resultsList}>
-        {filteredResults.length > 0 ? (
-          filteredResults.map((result, index) => renderResult(result, index))
-        ) : (
-          <div className={styles.noResults}>
-            <p>Aucun résultat ne correspond à votre recherche.</p>
-            <p>Essayez de modifier vos critères de recherche ou d'ajouter de nouveaux résultats.</p>
+      {/* Formulaires */}
+      <div className={styles.formsContainer}>
+        {showAddForm && (
+          <div className={styles.formWrapper}>
+            <ElectionResultForm onSubmit={handleAddResult} />
+          </div>
+        )}
+        
+        {showImporter && (
+          <div className={styles.formWrapper}>
+            <ExcelImporter onImportComplete={handleImportComplete} />
           </div>
         )}
       </div>
+      
+      {/* Tableau de bord */}
+      {viewMode === 'dashboard' && (
+        <ElectionDashboard results={filteredResults.length > 0 ? filteredResults : localResults} />
+      )}
+      
+      {/* Vue détaillée des résultats */}
+      {viewMode === 'list' && (
+        <>
+          {/* Filtres */}
+          <div className={styles.filtersContainer}>
+            <div className={styles.filterGroup}>
+              <label htmlFor="search">Rechercher une entreprise</label>
+              <input
+                id="search"
+                type="text"
+                placeholder="Nom de l'entreprise..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className={styles.searchInput}
+              />
+            </div>
+            
+            <div className={styles.filterGroup}>
+              <label htmlFor="sectorFilter">Secteur d'activité</label>
+              <select
+                id="sectorFilter"
+                value={sectorFilter}
+                onChange={(e) => setSectorFilter(e.target.value)}
+                className={styles.filterSelect}
+              >
+                <option value="">Tous les secteurs</option>
+                {sectors.map((sector, index) => (
+                  <option key={index} value={sector}>{sector}</option>
+                ))}
+              </select>
+            </div>
+            
+            <div className={styles.filterGroup}>
+              <label htmlFor="federationFilter">Fédération</label>
+              <select
+                id="federationFilter"
+                value={federationFilter}
+                onChange={(e) => setFederationFilter(e.target.value)}
+                className={styles.filterSelect}
+              >
+                <option value="">Toutes les fédérations</option>
+                {federations.map((federation, index) => (
+                  <option key={index} value={federation}>{federation}</option>
+                ))}
+              </select>
+            </div>
+            
+            <div className={styles.filterGroup}>
+              <label>Présence CGT</label>
+              <div className={styles.cgtPresenceFilter}>
+                <button 
+                  className={`${styles.cgtPresenceButton} ${cgtPresenceFilter === 'all' ? styles.active : ''}`}
+                  onClick={() => setCgtPresenceFilter('all')}
+                >
+                  Tous
+                </button>
+                <button 
+                  className={`${styles.cgtPresenceButton} ${styles.present} ${cgtPresenceFilter === 'present' ? styles.active : ''}`}
+                  onClick={() => setCgtPresenceFilter('present')}
+                >
+                  CGT présente
+                </button>
+                <button 
+                  className={`${styles.cgtPresenceButton} ${styles.absent} ${cgtPresenceFilter === 'absent' ? styles.active : ''}`}
+                  onClick={() => setCgtPresenceFilter('absent')}
+                >
+                  CGT absente
+                </button>
+              </div>
+            </div>
+            
+            <div className={styles.filterGroup}>
+              <label htmlFor="sortOption">Trier par</label>
+              <select
+                id="sortOption"
+                value={sortOption}
+                onChange={(e) => setSortOption(e.target.value)}
+                className={styles.filterSelect}
+              >
+                <option value="date-desc">Date (récent → ancien)</option>
+                <option value="date-asc">Date (ancien → récent)</option>
+                <option value="company-asc">Entreprise (A → Z)</option>
+                <option value="company-desc">Entreprise (Z → A)</option>
+                <option value="cgt-desc">Score CGT (haut → bas)</option>
+                <option value="cgt-asc">Score CGT (bas → haut)</option>
+              </select>
+            </div>
+          </div>
+          
+          {/* Liste des résultats */}
+          <div className={styles.resultsList}>
+            {filteredResults.length > 0 ? (
+              filteredResults.map((result, index) => renderResult(result, index))
+            ) : (
+              <div className={styles.noResults}>
+                <p>Aucun résultat ne correspond à votre recherche.</p>
+                <p>Essayez de modifier vos critères de recherche ou d'ajouter de nouveaux résultats.</p>
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };
