@@ -2,3 +2,9 @@ venv/
 *.pyc
 __pycache__/
 frontend/node_modules/
+
+# Fichiers volumineux exclus
+frontend/public/ressource/electionressource/2023_KIT_ELECTIONS_CSE/2023_KIT_ELECTIONS_CSE/1 - Le ciblage/vidéo ciblage avec outils cgt.mp4
+frontend/public/ressource/electionressource/2023_KIT_ELECTIONS_CSE/2023_KIT_ELECTIONS_CSE/5 - Faire campagne/05_4 raisons de voter CGT - par Sophie BINET.mp4
+frontend/public/ressource/electionressource/2023_KIT_ELECTIONS_CSE/2023_KIT_ELECTIONS_CSE/5 - Faire campagne/07_Audio itv S BINET voter cgt/Expression-directe-CGT-Sophie-Binet-PAD.wav
+frontend/public/ressource/electionressource/Elections professionnelles #JevoteCGT.mp4
