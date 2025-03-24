@@ -1,0 +1,64 @@
+/* CategoryFilter.module.css */
+.filterContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.filterButton {
+  padding: 0.5rem 1rem;
+  border-radius: var(--cgt-border-radius-sm, 0.25rem);
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  color: var(--cgt-text-dark, #4b5563);
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: var(--cgt-transition, all 0.2s ease);
+}
+
+.filterButton:hover {
+  background-color: #e5e7eb;
+}
+
+.filterButton.active {
+  background-color: var(--cgt-red, #b71c1c);
+  color: white;
+  border-color: var(--cgt-red, #b71c1c);
+}
+
+.red.active {
+  background-color: var(--cgt-red, #b71c1c);
+  border-color: var(--cgt-red, #b71c1c);
+}
+
+.blue.active {
+  background-color: var(--cgt-blue, #1976d2);
+  border-color: var(--cgt-blue, #1976d2);
+}
+
+.green.active {
+  background-color: var(--cgt-green, #388e3c);
+  border-color: var(--cgt-green, #388e3c);
+}
+
+.orange.active {
+  background-color: var(--cgt-orange, #f57c00);
+  border-color: var(--cgt-orange, #f57c00);
+}
+
+/* Responsive design */
+@media screen and (max-width: 640px) {
+  .filterContainer {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .filterButton {
+    width: 100%;
+    padding: 0.75rem;
+    text-align: center;
+    font-size: 1rem;
+  }
+}

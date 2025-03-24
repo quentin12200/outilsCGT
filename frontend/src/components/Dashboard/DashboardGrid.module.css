@@ -1,0 +1,39 @@
+/* DashboardGrid.module.css */
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+  .gridContainer {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .gridContainer {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/* Animation pour les cartes */
+.gridContainer > div {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,211 @@
+/* ElectionsCSEPage.module.css */
+.pageContainer {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.pageHeader {
+  margin-bottom: 2rem;
+}
+
+.pageTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--cgt-text-dark, #1f2937);
+  margin-bottom: 0.75rem;
+  border-left: 5px solid var(--cgt-red, #b71c1c);
+  padding-left: 1rem;
+}
+
+.pageDescription {
+  font-size: 1.1rem;
+  color: var(--cgt-text-dark, #4b5563);
+  max-width: 800px;
+  line-height: 1.5;
+}
+
+.tabContent {
+  padding: 1.5rem 0;
+  min-height: 400px;
+}
+
+.comingSoonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 0;
+}
+
+.comingSoonContent {
+  text-align: center;
+  max-width: 600px;
+  padding: 2rem;
+  background-color: #f9fafb;
+  border-radius: var(--cgt-border-radius, 0.5rem);
+  border: 1px dashed #d1d5db;
+}
+
+.comingSoonIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.comingSoonTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--cgt-text-dark, #1f2937);
+  margin-bottom: 1rem;
+}
+
+.comingSoonDescription {
+  font-size: 1rem;
+  color: var(--cgt-text-dark, #4b5563);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.comingSoonBadge {
+  display: inline-block;
+  background-color: #f3f4f6;
+  color: #4b5563;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  border: 1px solid #e5e7eb;
+}
+
+.tipsSection {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.tipsTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--cgt-text-dark, #1f2937);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.tipsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.tipCard {
+  background-color: white;
+  border-radius: var(--cgt-border-radius, 0.5rem);
+  box-shadow: var(--cgt-box-shadow, 0 4px 6px rgba(0, 0, 0, 0.1));
+  padding: 1.5rem;
+  text-align: center;
+  transition: var(--cgt-transition, all 0.3s ease);
+}
+
+.tipCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--cgt-box-shadow-md, 0 10px 15px rgba(0, 0, 0, 0.1));
+}
+
+.tipIcon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.tipTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--cgt-text-dark, #1f2937);
+  margin-bottom: 0.75rem;
+}
+
+.tipDescription {
+  font-size: 0.95rem;
+  color: var(--cgt-text-dark, #4b5563);
+  line-height: 1.5;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+  .pageContainer {
+    padding: 0.75rem;
+  }
+  
+  .pageTitle {
+    font-size: 1.75rem;
+  }
+  
+  .pageDescription {
+    font-size: 1rem;
+  }
+  
+  .comingSoonContent {
+    padding: 1.5rem;
+  }
+  
+  .tipsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .pageTitle {
+    font-size: 1.5rem;
+  }
+  
+  .tipsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .comingSoonIcon {
+    font-size: 2.5rem;
+  }
+  
+  .comingSoonTitle {
+    font-size: 1.25rem;
+  }
+}
+
+/* Optimisations pour iPhone SE et petits écrans */
+@media screen and (max-width: 375px) {
+  .pageContainer {
+    padding: 0.5rem;
+  }
+  
+  .pageTitle {
+    font-size: 1.25rem;
+    padding-left: 0.75rem;
+  }
+  
+  .pageDescription {
+    font-size: 0.95rem;
+  }
+  
+  .comingSoonContent {
+    padding: 1rem;
+  }
+  
+  .comingSoonIcon {
+    font-size: 2rem;
+  }
+  
+  .comingSoonTitle {
+    font-size: 1.1rem;
+  }
+  
+  .tipCard {
+    padding: 1rem;
+  }
+  
+  .tipIcon {
+    font-size: 1.75rem;
+  }
+  
+  .tipTitle {
+    font-size: 1rem;
+  }
+}

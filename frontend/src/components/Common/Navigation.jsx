@@ -123,6 +123,11 @@ function Navigation() {
                       Rétro-planning
                     </Link>
                   </li>
+                  <li role="none">
+                    <Link to="/elections-cse" className={styles.dropdownItem} role="menuitem">
+                      Élections CSE
+                    </Link>
+                  </li>
                 </ul>
               )}
             </li>

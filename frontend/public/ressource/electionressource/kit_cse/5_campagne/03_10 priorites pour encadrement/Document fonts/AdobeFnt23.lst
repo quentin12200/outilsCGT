@@ -1,0 +1,238 @@
+%!Adobe-FontList 1.23
+%Locale:0x409
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:AbrilFatface-Regular
+FamilyName:Abril Fatface
+StyleName:Regular
+MenuName:Abril Fatface
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Abril Fatface
+WritingScript:Roman
+OutlineFileName:/Users/d.ramage/Nextcloud/Kit élection/Finalisé/5 - Faire campagne/Dossier 10 priorités encadrement/Document fonts/AbrilFatface-Regular.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:58448
+FileModTime:336434400
+NameArray:0,Win,1,Abril Fatface
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:/Users/d.ramage/Nextcloud/Kit élection/Finalisé/5 - Faire campagne/Dossier 10 priorités encadrement/Document fonts/AdobeFnt23.lst
+FileLength:5832
+FileModTime:713029304
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:FiraSans-Bold
+FamilyName:Fira Sans
+StyleName:Bold
+MenuName:Fira Sans
+StyleBits:2
+WeightClass:700
+WidthClass:5
+AngleClass:0
+FullName:Fira Sans Bold
+WritingScript:Roman
+OutlineFileName:/Users/d.ramage/Nextcloud/Kit élection/Finalisé/5 - Faire campagne/Dossier 10 priorités encadrement/Document fonts/FiraSans-Bold.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:473876
+FileModTime:424735200
+NameArray:0,Win,1,Fira Sans
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:FiraSans-SemiBold
+FamilyName:Fira Sans
+StyleName:SemiBold
+MenuName:Fira Sans SemiBold
+StyleBits:0
+WeightClass:600
+WidthClass:5
+AngleClass:0
+FullName:Fira Sans SemiBold
+WritingScript:Roman
+OutlineFileName:/Users/d.ramage/Nextcloud/Kit élection/Finalisé/5 - Faire campagne/Dossier 10 priorités encadrement/Document fonts/FiraSans-SemiBold.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:473160
+FileModTime:424735200
+NameArray:0,Win,1,Fira Sans SemiBold
+NameArray:0,Win,16,Fira Sans
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:GTAlpinaItalicVAR
+FamilyName:GT Alpina Italic VAR
+StyleName:Regular
+MenuName:GT Alpina Italic VAR
+FamilyPrefix:GTAlpinaItalicVAR
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:1
+FullName:GT Alpina Italic VAR
+WritingScript:Roman
+OutlineFileName:/Users/d.ramage/Nextcloud/Kit élection/Finalisé/5 - Faire campagne/Dossier 10 priorités encadrement/Document fonts/GT-Alpina-Italic-VAR.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:TrueTypeVariableFont
+FileLength:1499776
+FileModTime:668977139
+NameArray:0,Mac,4,GT Alpina Italic VAR
+NameArray:0,Win,1,GT Alpina Italic VAR
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:IBMPlexMono-Bold
+FamilyName:IBM Plex Mono
+StyleName:Bold
+MenuName:IBM Plex Mono
+StyleBits:2
+WeightClass:700
+WidthClass:5
+AngleClass:0
+FullName:IBM Plex Mono Bold
+WritingScript:Roman
+OutlineFileName:/Users/d.ramage/Nextcloud/Kit élection/Finalisé/5 - Faire campagne/Dossier 10 priorités encadrement/Document fonts/IBMPlexMono-Bold.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:112548
+FileModTime:542502000
+NameArray:0,Win,1,IBM Plex Mono
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:LibreCaslonText-Bold
+FamilyName:Libre Caslon Text
+StyleName:Bold
+MenuName:Libre Caslon Text
+StyleBits:2
+WeightClass:700
+WidthClass:5
+AngleClass:0
+FullName:Libre Caslon Text Bold
+WritingScript:Roman
+OutlineFileName:/Users/d.ramage/Nextcloud/Kit élection/Finalisé/5 - Faire campagne/Dossier 10 priorités encadrement/Document fonts/LibreCaslonText-Bold.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:91056
+FileModTime:384984000
+NameArray:0,Win,1,Libre Caslon Text
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:LibreCaslonText-Italic
+FamilyName:Libre Caslon Text
+StyleName:Italic
+MenuName:Libre Caslon Text
+StyleBits:1
+WeightClass:400
+WidthClass:5
+AngleClass:1
+FullName:Libre Caslon Text Italic
+WritingScript:Roman
+OutlineFileName:/Users/d.ramage/Nextcloud/Kit élection/Finalisé/5 - Faire campagne/Dossier 10 priorités encadrement/Document fonts/LibreCaslonText-Italic.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:100292
+FileModTime:384984000
+NameArray:0,Win,1,Libre Caslon Text
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:LibreCaslonText-Regular
+FamilyName:Libre Caslon Text
+StyleName:Regular
+MenuName:Libre Caslon Text
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Libre Caslon Text Regular
+WritingScript:Roman
+OutlineFileName:/Users/d.ramage/Nextcloud/Kit élection/Finalisé/5 - Faire campagne/Dossier 10 priorités encadrement/Document fonts/LibreCaslonText-Regular.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:91220
+FileModTime:384984000
+NameArray:0,Win,1,Libre Caslon Text
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Montserrat-Regular
+FamilyName:Montserrat
+StyleName:Regular
+MenuName:Montserrat
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Montserrat Regular
+WritingScript:Roman
+OutlineFileName:/Users/d.ramage/Nextcloud/Kit élection/Finalisé/5 - Faire campagne/Dossier 10 priorités encadrement/Document fonts/Montserrat-Regular.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:228620
+FileModTime:593780644
+NameArray:0,Mac,4,Montserrat Regular
+NameArray:0,Win,1,Montserrat
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:WorkSans-Regular
+FamilyName:Work Sans
+StyleName:Regular
+MenuName:Work Sans
+FamilyPrefix:WorkSans
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Work Sans Regular
+WritingScript:Roman
+OutlineFileName:/Users/d.ramage/Nextcloud/Kit élection/Finalisé/5 - Faire campagne/Dossier 10 priorités encadrement/Document fonts/WorkSans-VariableFont_wght.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:TrueTypeVariableFont
+FileLength:397124
+FileModTime:457999200
+NameArray:0,Win,1,Work Sans
+%EndFont
+

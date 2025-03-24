@@ -1,0 +1,117 @@
+/* VueEnsemblePage.module.css */
+.pageContainer {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.dashboardContainer {
+  padding: 1.5rem 0;
+}
+
+.pageTitle {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--cgt-text-dark, #1f2937);
+  margin-bottom: 1.5rem;
+  border-left: 5px solid var(--cgt-red, #b71c1c);
+  padding-left: 1rem;
+}
+
+.pageDescription {
+  font-size: 1rem;
+  color: var(--cgt-text-dark, #4b5563);
+  margin-bottom: 2rem;
+  max-width: 800px;
+  line-height: 1.5;
+}
+
+.statsSection, .toolsSection {
+  margin-bottom: 2.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--cgt-text-dark, #1f2937);
+  margin-bottom: 1rem;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Animation pour les transitions entre onglets */
+.pageContainer > div {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+  .pageContainer {
+    padding: 0.75rem;
+  }
+  
+  .pageTitle {
+    font-size: 1.5rem;
+  }
+  
+  .sectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .pageContainer {
+    padding: 0.5rem;
+  }
+  
+  .pageTitle {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  
+  .statsSection, .toolsSection {
+    margin-bottom: 1.5rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.1rem;
+  }
+}
+
+/* Optimisations pour iPhone SE et petits écrans */
+@media screen and (max-width: 375px) {
+  .pageContainer {
+    padding: 0.5rem 0.25rem;
+  }
+  
+  .dashboardContainer {
+    padding: 1rem 0;
+  }
+  
+  .pageTitle {
+    font-size: 1.2rem;
+    padding-left: 0.75rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1rem;
+  }
+}

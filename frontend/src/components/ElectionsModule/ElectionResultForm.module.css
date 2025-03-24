@@ -1,0 +1,352 @@
+/* ElectionResultForm.module.css */
+.formContainer {
+  background-color: white;
+  border-radius: var(--cgt-border-radius, 0.5rem);
+  box-shadow: var(--cgt-box-shadow, 0 4px 6px rgba(0, 0, 0, 0.1));
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.formTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cgt-text-dark, #1f2937);
+  margin-bottom: 1.5rem;
+  border-left: 5px solid var(--cgt-red, #b71c1c);
+  padding-left: 1rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.formSection {
+  margin-bottom: 2rem;
+  border: 1px solid #e5e7eb;
+  border-radius: var(--cgt-border-radius-md, 0.375rem);
+  padding: 1.5rem;
+  background-color: #fff;
+}
+
+.sectionTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--cgt-text-dark, #1f2937);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.sectionDescription {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.formRow {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.formGroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--cgt-text-dark, #4b5563);
+  margin-bottom: 0.5rem;
+}
+
+.required {
+  color: var(--cgt-red, #b71c1c);
+  margin-left: 0.25rem;
+}
+
+.input, .select {
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: var(--cgt-border-radius-sm, 0.25rem);
+  font-size: 1rem;
+  color: var(--cgt-text-dark, #1f2937);
+  width: 100%;
+}
+
+.input:focus, .select:focus {
+  outline: none;
+  border-color: var(--cgt-red, #b71c1c);
+  box-shadow: 0 0 0 2px rgba(183, 28, 28, 0.2);
+}
+
+.select {
+  background-color: white;
+  cursor: pointer;
+}
+
+/* Styles pour la liste des syndicats */
+.unionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.unionsHeader {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr;
+  gap: 0.75rem;
+  font-weight: 600;
+  color: var(--cgt-text-dark, #4b5563);
+  font-size: 0.9rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.unionRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr auto;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed #e5e7eb;
+  align-items: flex-end;
+}
+
+.unionRow:last-child {
+  border-bottom: none;
+}
+
+.unionName, .unionVotes, .unionPercentage, .unionSeats, .unionActions {
+  display: flex;
+  align-items: center;
+}
+
+.removeButton {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 50%;
+  color: #6b7280;
+  cursor: pointer;
+  transition: var(--cgt-transition, all 0.2s ease);
+}
+
+.removeButton:hover:not(:disabled) {
+  background-color: #fee2e2;
+  color: #b71c1c;
+  border-color: #fecaca;
+}
+
+.removeButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.addUnionRow {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.addButton, .calculateButton {
+  padding: 0.5rem 1rem;
+  border-radius: var(--cgt-border-radius-sm, 0.25rem);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.addButton {
+  background-color: #e5e7eb;
+  color: var(--cgt-text-dark, #1f2937);
+  border: 1px solid #d1d5db;
+  margin-top: 0.5rem;
+  width: fit-content;
+}
+
+.addButton:hover {
+  background-color: #d1d5db;
+}
+
+.calculateButton {
+  background-color: #dbeafe;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+  width: fit-content;
+}
+
+.calculateButton:hover {
+  background-color: #bfdbfe;
+}
+
+/* Styles pour les collèges électoraux */
+.collegeRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed #e5e7eb;
+}
+
+.collegeRow:last-child {
+  border-bottom: none;
+}
+
+.collegeRow .formGroup {
+  flex: 1;
+}
+
+/* Boutons d'action */
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.cancelButton, .submitButton {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--cgt-border-radius-sm, 0.25rem);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--cgt-transition, all 0.2s ease);
+}
+
+.cancelButton {
+  background-color: white;
+  border: 1px solid #d1d5db;
+  color: #4b5563;
+}
+
+.cancelButton:hover {
+  background-color: #f3f4f6;
+}
+
+.submitButton {
+  background-color: var(--cgt-red, #b71c1c);
+  border: 1px solid var(--cgt-red, #b71c1c);
+  color: white;
+}
+
+.submitButton:hover {
+  background-color: #991b1b;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+  .formContainer {
+    padding: 1.25rem;
+  }
+  
+  .formRow {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .unionsHeader {
+    display: none;
+  }
+  
+  .unionRow {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: var(--cgt-border-radius-sm, 0.25rem);
+    padding: 1rem;
+    position: relative;
+  }
+  
+  .unionName, .unionVotes, .unionPercentage, .unionSeats {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
+  }
+  
+  .unionName::before {
+    content: "Organisation";
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #4b5563;
+  }
+  
+  .unionVotes::before {
+    content: "Voix";
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #4b5563;
+  }
+  
+  .unionPercentage::before {
+    content: "Pourcentage";
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #4b5563;
+  }
+  
+  .unionSeats::before {
+    content: "Sièges";
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #4b5563;
+  }
+  
+  .unionActions {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+  
+  .addUnionRow {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .addButton, .calculateButton {
+    width: 100%;
+  }
+  
+  .formActions {
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+  }
+  
+  .cancelButton, .submitButton {
+    width: 100%;
+  }
+}
+
+/* Optimisations pour iPhone SE et petits écrans */
+@media screen and (max-width: 375px) {
+  .formContainer {
+    padding: 1rem;
+  }
+  
+  .formTitle {
+    font-size: 1.25rem;
+    padding-left: 0.75rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.1rem;
+  }
+  
+  .formSection {
+    padding: 1rem;
+  }
+  
+  .input, .select {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+}

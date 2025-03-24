@@ -19,6 +19,8 @@ import PlanImplanterPage from './components/pages/PlanImplanterPage';
 import PlanOutilsPage from './components/pages/PlanOutilsPage';
 // Nouveau composant fusionné
 import CartoSyndicalisationPage from './components/pages/CartoSyndicalisationPage';
+// Page des élections CSE
+import ElectionsCSEPage from './components/pages/ElectionsCSEPage';
 
 // Outils spécifiques
 import CahierRevendicatifTool from './components/pages/CahierRevendicatifTool';
@@ -51,6 +53,8 @@ function App() {
           <Route path="/plan-implanter" element={<PlanImplanterPage />} />
           <Route path="/plan-outils" element={<PlanOutilsPage />} />
           <Route path="/campagne-elections" element={<CampagneElectionsPage />} />
+          {/* Élections CSE */}
+          <Route path="/elections-cse" element={<ElectionsCSEPage />} />
           {/* Outils spécifiques */}
           <Route path="/cahier-revendicatif" element={<CahierRevendicatifTool />} />
           <Route path="/questionnaire" element={<QuestionnaireTool />} />

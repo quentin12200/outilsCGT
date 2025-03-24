@@ -1,0 +1,158 @@
+/* DashboardCard.module.css */
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--cgt-border-radius, 0.5rem);
+  box-shadow: var(--cgt-box-shadow, 0 4px 6px rgba(0, 0, 0, 0.1));
+  padding: 1.5rem;
+  background-color: white;
+  transition: var(--cgt-transition, all 0.3s ease);
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--cgt-box-shadow-md, 0 10px 15px rgba(0, 0, 0, 0.1));
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background-color: var(--cgt-red, #b71c1c);
+}
+
+.red::before {
+  background-color: var(--cgt-red, #b71c1c);
+}
+
+.blue::before {
+  background-color: var(--cgt-blue, #1976d2);
+}
+
+.green::before {
+  background-color: var(--cgt-green, #388e3c);
+}
+
+.orange::before {
+  background-color: var(--cgt-orange, #f57c00);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.iconContainer {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(183, 28, 28, 0.1);
+  color: var(--cgt-red, #b71c1c);
+}
+
+.pinButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  color: #9ca3af;
+  transition: var(--cgt-transition, all 0.2s ease);
+}
+
+.pinButton:hover {
+  color: var(--cgt-red, #b71c1c);
+}
+
+.pinButton.pinned {
+  color: var(--cgt-red, #b71c1c);
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--cgt-text-dark, #1f2937);
+}
+
+.cardDescription {
+  font-size: 0.95rem;
+  color: var(--cgt-text-dark, #4b5563);
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.cardLink {
+  display: inline-block;
+  background-color: var(--cgt-red, #b71c1c);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: var(--cgt-border-radius-sm, 0.25rem);
+  text-decoration: none;
+  font-weight: 500;
+  align-self: flex-start;
+  transition: var(--cgt-transition, background-color 0.2s ease);
+}
+
+.cardLink:hover {
+  background-color: #991b1b;
+  text-decoration: none;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+  .card {
+    padding: 1.25rem;
+  }
+  
+  .iconContainer {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .cardTitle {
+    font-size: 1.1rem;
+  }
+  
+  .cardDescription {
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .card {
+    padding: 1rem;
+  }
+  
+  .iconContainer {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .cardTitle {
+    font-size: 1rem;
+  }
+  
+  .cardDescription {
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+  
+  .cardLink {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem;
+  }
+}

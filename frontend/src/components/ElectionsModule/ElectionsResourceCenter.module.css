@@ -1,0 +1,343 @@
+/* ElectionsResourceCenter.module.css */
+.resourceCenter {
+  background-color: white;
+  border-radius: var(--cgt-border-radius, 0.5rem);
+  box-shadow: var(--cgt-box-shadow, 0 4px 6px rgba(0, 0, 0, 0.1));
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cgt-text-dark, #1f2937);
+  margin-bottom: 1.5rem;
+  border-left: 5px solid var(--cgt-red, #b71c1c);
+  padding-left: 1rem;
+}
+
+.categoryTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 1rem;
+}
+
+.categoryTab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: var(--cgt-border-radius-sm, 0.25rem);
+  color: var(--cgt-text-dark, #4b5563);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--cgt-transition, all 0.2s ease);
+}
+
+.categoryTab:hover {
+  background-color: #e5e7eb;
+}
+
+.categoryTab.active {
+  background-color: var(--cgt-red, #b71c1c);
+  color: white;
+  border-color: var(--cgt-red, #b71c1c);
+}
+
+.categoryIcon {
+  font-size: 1.25rem;
+}
+
+.resourcesContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.resourceCard {
+  display: flex;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: var(--cgt-border-radius-sm, 0.25rem);
+  padding: 1rem;
+  cursor: pointer;
+  transition: var(--cgt-transition, all 0.2s ease);
+  position: relative;
+}
+
+.resourceCard:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--cgt-box-shadow, 0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+.resourceCard.featured {
+  border-left: 4px solid var(--cgt-red, #b71c1c);
+  background-color: #fff1f1;
+}
+
+.resourceCard.comingSoon {
+  opacity: 0.7;
+  background-color: #f3f4f6;
+}
+
+.resourceIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.pdfIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #b71c1c;
+  color: white;
+  font-weight: bold;
+  font-size: 0.8rem;
+  border-radius: 4px;
+}
+
+.videoIcon {
+  font-size: 2rem;
+  color: var(--cgt-red, #b71c1c);
+}
+
+.excelIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #1e7e34;
+  color: white;
+  font-weight: bold;
+  font-size: 0.8rem;
+  border-radius: 4px;
+}
+
+.docxIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #2563eb;
+  color: white;
+  font-weight: bold;
+  font-size: 0.8rem;
+  border-radius: 4px;
+}
+
+.pptxIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #ea580c;
+  color: white;
+  font-weight: bold;
+  font-size: 0.8rem;
+  border-radius: 4px;
+}
+
+.componentIcon {
+  font-size: 2rem;
+  color: var(--cgt-blue, #1976d2);
+}
+
+.folderIcon {
+  font-size: 2rem;
+  color: #f59e0b;
+}
+
+.fileIcon {
+  font-size: 2rem;
+  color: #6b7280;
+}
+
+.resourceInfo {
+  flex: 1;
+}
+
+.resourceTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--cgt-text-dark, #1f2937);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.comingSoonBadge {
+  font-size: 0.7rem;
+  font-weight: 500;
+  background-color: #9ca3af;
+  color: white;
+  padding: 0.2rem 0.4rem;
+  border-radius: 9999px;
+}
+
+.resourceDescription {
+  font-size: 0.9rem;
+  color: var(--cgt-text-dark, #4b5563);
+  margin: 0;
+}
+
+/* Styles pour les dossiers et sous-ressources */
+.folderToggle {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+.subResourcesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+  border-left: 2px dashed #e5e7eb;
+  margin-left: 1.5rem;
+}
+
+.subResourceCard {
+  display: flex;
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: var(--cgt-border-radius-sm, 0.25rem);
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: var(--cgt-transition, all 0.2s ease);
+}
+
+.subResourceCard:hover {
+  background-color: #e5e7eb;
+  transform: translateX(3px);
+}
+
+.subResourceIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+.subResourceInfo {
+  flex: 1;
+}
+
+.subResourceTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+  color: var(--cgt-text-dark, #1f2937);
+}
+
+.subResourceDescription {
+  font-size: 0.8rem;
+  color: var(--cgt-text-dark, #4b5563);
+  margin: 0;
+}
+
+.resourceTip {
+  background-color: #f0f9ff;
+  border-left: 4px solid #0ea5e9;
+  padding: 1rem;
+  border-radius: var(--cgt-border-radius-sm, 0.25rem);
+  margin-top: 1rem;
+}
+
+.resourceTip p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #0c4a6e;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+  .resourceCenter {
+    padding: 1.25rem;
+  }
+  
+  .categoryTabs {
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .resourcesContainer {
+    grid-template-columns: 1fr;
+  }
+  
+  .subResourcesContainer {
+    margin-left: 0.75rem;
+    padding-left: 0.75rem;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .resourcesContainer {
+    grid-template-columns: 1fr;
+  }
+  
+  .categoryTab {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .categoryLabel {
+    font-size: 0.85rem;
+  }
+  
+  .resourceCard {
+    padding: 0.75rem;
+  }
+  
+  .resourceIcon, .subResourceIcon {
+    width: 36px;
+    height: 36px;
+    margin-right: 0.75rem;
+  }
+  
+  .pdfIcon, .excelIcon, .docxIcon, .pptxIcon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.7rem;
+  }
+  
+  .resourceTitle {
+    font-size: 1rem;
+  }
+  
+  .resourceDescription {
+    font-size: 0.85rem;
+  }
+  
+  .subResourceTitle {
+    font-size: 0.9rem;
+  }
+  
+  .subResourceDescription {
+    font-size: 0.75rem;
+  }
+}
