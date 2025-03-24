@@ -1,0 +1,169 @@
+/* frontend/src/components/pages/Public/TabNav.module.css */
+
+.tabContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.tabList {
+  display: flex;
+  border-bottom: 2px solid #e2e8f0;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 #f7fafc;
+}
+
+.tabList::-webkit-scrollbar {
+  height: 6px;
+}
+
+.tabList::-webkit-scrollbar-track {
+  background: #f7fafc;
+}
+
+.tabList::-webkit-scrollbar-thumb {
+  background-color: #cbd5e0;
+  border-radius: 3px;
+}
+
+.tabItem {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #4a5568;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s ease-in-out;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tabItem:hover {
+  color: #ED1C24;
+  border-bottom-color: #ED1C24;
+}
+
+.activeTab {
+  color: #ED1C24;
+  border-bottom-color: #ED1C24;
+  font-weight: 600;
+}
+
+.tabIcon {
+  font-size: 1.25rem;
+}
+
+.tabContent {
+  padding: 1rem 0;
+}
+
+/* Styles pour les écrans plus petits */
+@media (max-width: 768px) {
+  .tabList {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
+  
+  .tabItem {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .tabIcon {
+    font-size: 1rem;
+  }
+}
+
+/* Styles pour les très petits écrans */
+@media (max-width: 480px) {
+  .tabItem {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* Animation pour le changement d'onglet */
+.tabContent {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Style spécifique pour les onglets du module élections */
+.electionTabs .tabItem {
+  color: #333;
+  border-bottom: 3px solid transparent;
+}
+
+.electionTabs .tabItem:hover {
+  color: #ED1C24;
+  border-bottom-color: #ED1C24;
+}
+
+.electionTabs .activeTab {
+  color: #ED1C24;
+  border-bottom-color: #ED1C24;
+}
+
+/* Style pour les badges de notification */
+.tabBadge {
+  background-color: #ED1C24;
+  color: white;
+  border-radius: 50%;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.7rem;
+  margin-left: 0.3rem;
+}
+
+/* Style pour les onglets désactivés */
+.disabledTab {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.disabledTab:hover {
+  color: #4a5568;
+  border-bottom-color: transparent;
+}
+
+/* Style pour les sous-onglets */
+.subTabList {
+  display: flex;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.subTabItem {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: #4a5568;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.subTabItem:hover {
+  color: #ED1C24;
+}
+
+.activeSubTab {
+  color: #ED1C24;
+  border-bottom-color: #ED1C24;
+  font-weight: 500;
+}
