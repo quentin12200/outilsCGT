@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import TabNav from '../Modules/Demarche/TabNav';
-import ElectionsResourceCenter from '../ElectionsModule/ElectionsResourceCenter';
-import RepresentativityCalculator from '../ElectionsModule/RepresentativityCalculator';
-import ElectionResults from '../ElectionsModule/ElectionResults';
+import TabNav from './Public/TabNav';
+import ElectionsResourceCenter from './Public/ElectionsModule/ElectionsResourceCenter';
+import RepresentativityCalculator from './Public/ElectionsModule/RepresentativityCalculator';
+import ElectionResults from './Public/ElectionsModule/ElectionResults';
 import styles from './ElectionsCSEPage.module.css';
 
 function ElectionsCSEPage() {

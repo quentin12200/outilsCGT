@@ -1,0 +1,389 @@
+/* RepresentativityCalculator.module.css */
+.calculator {
+  background-color: white;
+  border-radius: var(--cgt-border-radius, 0.5rem);
+  box-shadow: var(--cgt-box-shadow, 0 4px 6px rgba(0, 0, 0, 0.1));
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cgt-text-dark, #1f2937);
+  margin-bottom: 1.5rem;
+  border-left: 5px solid var(--cgt-red, #b71c1c);
+  padding-left: 1rem;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--cgt-text-dark, #1f2937);
+  margin: 1.5rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.formSection {
+  margin-bottom: 2rem;
+}
+
+.formRow {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.formGroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--cgt-text-dark, #4b5563);
+  margin-bottom: 0.5rem;
+}
+
+.input {
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: var(--cgt-border-radius-sm, 0.25rem);
+  font-size: 1rem;
+  color: var(--cgt-text-dark, #1f2937);
+  width: 100%;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--cgt-red, #b71c1c);
+  box-shadow: 0 0 0 2px rgba(183, 28, 28, 0.2);
+}
+
+.unionRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.unionColor {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.unionNameField {
+  flex: 3;
+}
+
+.unionVotesField {
+  flex: 1;
+}
+
+.removeButton {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 50%;
+  color: #6b7280;
+  cursor: pointer;
+  transition: var(--cgt-transition, all 0.2s ease);
+}
+
+.removeButton:hover:not(:disabled) {
+  background-color: #fee2e2;
+  color: #b71c1c;
+  border-color: #fecaca;
+}
+
+.removeButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.addButton, .resetButton {
+  padding: 0.75rem 1rem;
+  border-radius: var(--cgt-border-radius-sm, 0.25rem);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--cgt-transition, all 0.2s ease);
+}
+
+.addButton {
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  color: #4b5563;
+}
+
+.addButton:hover {
+  background-color: #e5e7eb;
+}
+
+.resetButton {
+  background-color: transparent;
+  border: 1px solid #d1d5db;
+  color: #4b5563;
+}
+
+.resetButton:hover {
+  background-color: #f3f4f6;
+}
+
+.resultsSection {
+  background-color: #f9fafb;
+  border-radius: var(--cgt-border-radius, 0.5rem);
+  padding: 1.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.summaryCard {
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: var(--cgt-border-radius-sm, 0.25rem);
+  padding: 1rem;
+  text-align: center;
+}
+
+.summaryValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cgt-text-dark, #1f2937);
+  margin-bottom: 0.5rem;
+}
+
+.summaryLabel {
+  font-size: 0.9rem;
+  color: var(--cgt-text-dark, #4b5563);
+}
+
+.quorumReached {
+  border-color: #10b981;
+}
+
+.quorumReached .summaryValue {
+  color: #059669;
+}
+
+.quorumNotReached {
+  border-color: #ef4444;
+}
+
+.quorumNotReached .summaryValue {
+  color: #dc2626;
+}
+
+.chartContainer {
+  margin-bottom: 1.5rem;
+}
+
+.chart {
+  height: 40px;
+  display: flex;
+  border-radius: var(--cgt-border-radius-sm, 0.25rem);
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.chartBar {
+  height: 100%;
+  transition: width 0.5s ease;
+}
+
+.chartLabels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.chartLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.labelColor {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+.labelName {
+  color: var(--cgt-text-dark, #4b5563);
+}
+
+.labelValue {
+  font-weight: 600;
+  color: var(--cgt-text-dark, #1f2937);
+}
+
+.representativityTable {
+  margin-bottom: 1.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: var(--cgt-border-radius-sm, 0.25rem);
+  overflow: hidden;
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  background-color: #f3f4f6;
+  font-weight: 600;
+  color: var(--cgt-text-dark, #1f2937);
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  border-top: 1px solid #e5e7eb;
+}
+
+.tableCell {
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.unionLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.representativityBadge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.isRepresentative {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.notRepresentative {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.infoBox {
+  background-color: #eff6ff;
+  border-left: 4px solid #3b82f6;
+  padding: 1rem;
+  border-radius: var(--cgt-border-radius-sm, 0.25rem);
+}
+
+.infoBox h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e40af;
+  margin: 0 0 0.5rem 0;
+}
+
+.infoBox ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.infoBox li {
+  font-size: 0.9rem;
+  color: #1e3a8a;
+  margin-bottom: 0.25rem;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+  .calculator {
+    padding: 1.25rem;
+  }
+  
+  .formRow {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .tableHeader, .tableRow {
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    font-size: 0.9rem;
+  }
+  
+  .tableCell {
+    padding: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .tableHeader, .tableRow {
+    grid-template-columns: 1.5fr 0.75fr 0.75fr 1fr;
+    font-size: 0.8rem;
+  }
+  
+  .representativityBadge {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+  }
+}
+
+/* Optimisations pour iPhone SE et petits écrans */
+@media screen and (max-width: 375px) {
+  .calculator {
+    padding: 1rem;
+  }
+  
+  .title {
+    font-size: 1.25rem;
+    padding-left: 0.75rem;
+  }
+  
+  .subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .tableHeader, .tableRow {
+    grid-template-columns: 1fr 0.5fr 0.5fr 1fr;
+    font-size: 0.75rem;
+  }
+  
+  .tableCell {
+    padding: 0.5rem 0.25rem;
+  }
+  
+  .unionLabel {
+    gap: 0.25rem;
+  }
+  
+  .unionColor {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .representativityBadge {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+}
