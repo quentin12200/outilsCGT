@@ -3,7 +3,7 @@ import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import styles from './ElectionResults.module.css';
 import ElectionResultForm from './ElectionResultForm';
-import ExcelImporter from './ExcelImporter';
+import SimpleExcelImporter from '../../../ElectionsModule/SimpleExcelImporter';
 import ElectionDashboard from './ElectionDashboard';
 
 // Enregistrer les composants nécessaires pour Chart.js
@@ -185,7 +185,22 @@ const ElectionResults = ({ results = [], onAddResult }) => {
         }
       }
       
-      setLocalResults(dataToUse);
+      // Si aucune donnée n'a été trouvée, essayer de charger depuis le fichier JSON importé
+      if (dataToUse.length === 0) {
+        fetch('/ressource/electionressource/resultats_traites.json')
+          .then(response => response.json())
+          .then(data => {
+            if (Array.isArray(data) && data.length > 0) {
+              setLocalResults(data);
+              console.log('Données chargées depuis le fichier JSON importé:', data.length, 'résultats');
+              // Sauvegarder dans localStorage pour les prochaines visites
+              localStorage.setItem('importedElectionResults', JSON.stringify(data));
+            }
+          })
+          .catch(error => console.error('Erreur lors du chargement des données importées:', error));
+      } else {
+        setLocalResults(dataToUse);
+      }
     };
     
     loadData();
@@ -592,13 +607,29 @@ const ElectionResults = ({ results = [], onAddResult }) => {
           {showAddForm ? 'Annuler' : 'Ajouter un résultat'}
         </button>
         <button 
-          className={styles.importButton} 
+          className={`${styles.importButton} ${styles.highlightedButton}`}
+          style={{
+            backgroundColor: '#e30613',
+            color: 'white',
+            fontWeight: 'bold',
+            padding: '10px 20px',
+            fontSize: '16px',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            margin: '0 10px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
           onClick={() => {
             setShowImporter(!showImporter);
             setShowAddForm(false);
           }}
         >
-          {showImporter ? 'Annuler' : 'Importer des résultats'}
+          <i className="fas fa-file-import" style={{ marginRight: '8px' }}></i>
+          {showImporter ? 'Annuler l\'import' : 'IMPORTER DES RÉSULTATS'}
         </button>
       </div>
       
@@ -612,7 +643,7 @@ const ElectionResults = ({ results = [], onAddResult }) => {
         
         {showImporter && (
           <div className={styles.formWrapper}>
-            <ExcelImporter onImportComplete={handleImportComplete} />
+            <SimpleExcelImporter onImportComplete={handleImportComplete} />
           </div>
         )}
       </div>

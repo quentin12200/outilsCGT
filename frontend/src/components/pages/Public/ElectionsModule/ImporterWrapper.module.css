@@ -1,0 +1,33 @@
+.importerWrapper {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.instructions {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #fff;
+  border-left: 4px solid #e30613;
+  border-radius: 4px;
+}
+
+.instructions h4 {
+  color: #e30613;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.instructions ul {
+  padding-left: 20px;
+}
+
+.instructions li {
+  margin-bottom: 8px;
+}
+
+.instructions ul ul {
+  margin-top: 8px;
+}
