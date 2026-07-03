@@ -63,7 +63,7 @@ const PresentationTab = ({ activeSubTab, setActiveSubTab, setActiveTab }) => {
         </button>
         <div className="schema-container">
   <img 
-    src="/assets/images/schema-demarche-syndicale.svg" 
+    src="/schema-demarche-syndicale.svg"
     alt="Schéma global de la démarche syndicale CGT" 
     className="schema-image"
   />

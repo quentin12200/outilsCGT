@@ -21,9 +21,9 @@ function FooterFooter() {
               <h4 className={styles.linkTitle}>Navigation</h4>
               <ul className={styles.linkList}>
                 <li><Link to="/" className={styles.footerLink}>Accueil</Link></li>
-                <li><Link to="/cartographie" className={styles.footerLink}>Cartographie</Link></li>
+                <li><Link to="/carto-syndicalisation?tab=cartographie" className={styles.footerLink}>Cartographie</Link></li>
                 <li><Link to="/retro-planning" className={styles.footerLink}>Rétro-planning</Link></li>
-                <li><Link to="/ecole-de-la-democratie" className={styles.footerLink}>École de la Démocratie</Link></li>
+                <li><Link to="/demarche?tab=ecole-democratie" className={styles.footerLink}>École de la Démocratie</Link></li>
               </ul>
             </div>
             
@@ -31,18 +31,19 @@ function FooterFooter() {
               <h4 className={styles.linkTitle}>Outils</h4>
               <ul className={styles.linkList}>
                 <li><Link to="/assemblees" className={styles.footerLink}>Assemblées</Link></li>
-                <li><Link to="/syndicalisation" className={styles.footerLink}>Syndicalisation</Link></li>
+                <li><Link to="/carto-syndicalisation?tab=syndicalisation" className={styles.footerLink}>Syndicalisation</Link></li>
                 <li><Link to="/resultats" className={styles.footerLink}>Résultats</Link></li>
                 <li><Link to="/demarche" className={styles.footerLink}>Démarche</Link></li>
               </ul>
             </div>
             
             <div className={styles.linkColumn}>
-              <h4 className={styles.linkTitle}>Informations</h4>
+              <h4 className={styles.linkTitle}>Campagne</h4>
               <ul className={styles.linkList}>
-                <li><Link to="/mentions-legales" className={styles.footerLink}>Mentions légales</Link></li>
-                <li><Link to="/contact" className={styles.footerLink}>Contact</Link></li>
-                <li><Link to="/aide" className={styles.footerLink}>Aide</Link></li>
+                <li><Link to="/elections-cse" className={styles.footerLink}>Élections CSE</Link></li>
+                <li><Link to="/campagne-elections" className={styles.footerLink}>Campagne élections</Link></li>
+                <li><Link to="/cahier-revendicatif" className={styles.footerLink}>Cahier revendicatif</Link></li>
+                <li><Link to="/questionnaire" className={styles.footerLink}>Questionnaire</Link></li>
               </ul>
             </div>
           </div>

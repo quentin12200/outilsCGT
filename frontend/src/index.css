@@ -3,6 +3,13 @@
 @import url('./styles/styles.css');
 /* Styles responsives optimisés */
 @import url('./styles/responsive.css');
+/* Classes utilitaires Tailwind : utilisées par les schémas (SchemaGlobal, ProcessusGlobal),
+   les tableaux de bord et les modules Résultats/Syndicalisation. Déclarées avant les
+   classes manuelles ci-dessous pour que celles-ci gardent la priorité.
+   Le reset "preflight" étant désactivé (tailwind.config.js), la couche base ne
+   contient que les variables CSS requises par transform/rotate/shadow. */
+@tailwind base;
+@tailwind utilities;
 * {
   margin: 0;
   padding: 0;
