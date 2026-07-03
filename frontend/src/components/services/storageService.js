@@ -28,7 +28,10 @@ const storageService = {
         },
         body: JSON.stringify(data)
       });
-      return response.ok;
+      // Sur un hébergement statique, la redirection SPA renvoie index.html avec un
+      // statut 200 : une réponse HTML signifie que l'API n'existe pas réellement.
+      const contentType = response.headers.get('content-type') || '';
+      return response.ok && !contentType.includes('text/html');
     } catch (error) {
       console.error("Erreur lors de la sauvegarde sur le serveur:", error);
       return false;
@@ -39,6 +42,12 @@ const storageService = {
     try {
       const response = await fetch(`/api/load/${key}`);
       if (response.ok) {
+        // Sur un hébergement statique, /api/* renvoie index.html (HTML, pas du JSON) :
+        // on considère alors qu'aucune donnée serveur n'est disponible.
+        const contentType = response.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) {
+          return null;
+        }
         return await response.json();
       } else {
         console.error("Erreur lors du chargement des données depuis le serveur:", response.statusText);

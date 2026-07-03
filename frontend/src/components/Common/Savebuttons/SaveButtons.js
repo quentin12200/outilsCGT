@@ -16,8 +16,11 @@ const SaveButtons = ({ onSaveLocal, onSaveServer, moduleName }) => {
   const handleSaveLocal = async () => {
     try {
       setIsLoading(true);
-      await onSaveLocal();
-      setSavedMessage('Données sauvegardées localement');
+      // Les services de sauvegarde renvoient false en cas d'échec (sans lever d'exception)
+      const success = await onSaveLocal();
+      setSavedMessage(success !== false
+        ? 'Données sauvegardées localement'
+        : 'Erreur lors de la sauvegarde locale');
       setTimeout(() => setSavedMessage(''), 3000);
     } catch (error) {
       console.error('Erreur lors de la sauvegarde locale:', error);
@@ -31,8 +34,10 @@ const SaveButtons = ({ onSaveLocal, onSaveServer, moduleName }) => {
   const handleSaveServer = async () => {
     try {
       setIsLoading(true);
-      await onSaveServer();
-      setSavedMessage('Données envoyées au serveur');
+      const success = await onSaveServer();
+      setSavedMessage(success !== false
+        ? 'Données envoyées au serveur'
+        : 'Sauvegarde serveur indisponible — utilisez la sauvegarde locale');
       setTimeout(() => setSavedMessage(''), 3000);
     } catch (error) {
       console.error('Erreur lors de la sauvegarde sur le serveur:', error);

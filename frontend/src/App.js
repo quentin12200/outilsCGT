@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navigation from './components/Common/Navigation';
 import FooterFooter from './components/Layout/FooterFooter';
 import VueEnsemblePage from './components/pages/VueEnsemblePage';
@@ -26,6 +26,12 @@ import ElectionsCSEPage from './components/pages/ElectionsCSEPage';
 import CahierRevendicatifTool from './components/pages/CahierRevendicatifTool';
 import QuestionnaireTool from './components/pages/QuestionnaireTool';
 
+// Redirection qui conserve les paramètres d'URL (ex: ?tab=syndicalisation)
+function RedirectWithSearch({ to, defaultSearch = '' }) {
+  const location = useLocation();
+  return <Navigate to={{ pathname: to, search: location.search || defaultSearch }} replace />;
+}
+
 function App() {
   return (
     <div className="app">
@@ -35,8 +41,8 @@ function App() {
           {/* Routes principales */}
           <Route path="/" element={<HomePage />} />
           {/* Redirection des anciennes routes vers la nouvelle page fusionnée */}
-          <Route path="/cartographie" element={<Navigate to="/carto-syndicalisation" replace />} />
-          <Route path="/syndicalisation" element={<Navigate to="/carto-syndicalisation" replace />} />
+          <Route path="/cartographie" element={<RedirectWithSearch to="/carto-syndicalisation" defaultSearch="?tab=cartographie" />} />
+          <Route path="/syndicalisation" element={<RedirectWithSearch to="/carto-syndicalisation" defaultSearch="?tab=syndicalisation" />} />
           <Route path="/retro-planning" element={<RetroplanningPage />} />
           <Route path="/ecole-de-la-democratie" element={<Navigate to="/demarche?tab=ecole-democratie" replace />} />
           <Route path="/assemblees" element={<AssembleePage />} />

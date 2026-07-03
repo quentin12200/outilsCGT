@@ -70,7 +70,7 @@ export const tools = [
     title: 'Cartographie stratégique',
     description: 'Analysez et visualisez la répartition des syndiqués par service pour identifier les zones prioritaires d\'intervention.',
     icon: <MapIcon />,
-    path: '/cartographie',
+    path: '/carto-syndicalisation?tab=cartographie',
     color: 'orange',
     category: 'analyse'
   },
@@ -78,7 +78,7 @@ export const tools = [
     title: 'Rétro-planning',
     description: 'Planifiez les étapes clés de votre campagne syndicale avec un calendrier interactif.',
     icon: <CalendarIcon />,
-    path: '/retroplanning',
+    path: '/retro-planning',
     color: 'green',
     category: 'planification'
   },
@@ -94,7 +94,7 @@ export const tools = [
     title: 'Campagne électorale',
     description: 'Outils pour préparer et mener efficacement votre campagne pour les élections professionnelles.',
     icon: <UsersIcon />,
-    path: '/campagne',
+    path: '/campagne-elections',
     color: 'blue',
     category: 'elections'
   },

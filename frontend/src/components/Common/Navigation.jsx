@@ -104,12 +104,12 @@ function Navigation() {
               {toolsDropdownOpen && (
                 <ul className={styles.dropdownMenu} role="menu">
                   <li role="none">
-                    <Link to="/cartographie" className={styles.dropdownItem} role="menuitem">
+                    <Link to="/carto-syndicalisation?tab=cartographie" className={styles.dropdownItem} role="menuitem">
                       Cartographie
                     </Link>
                   </li>
                   <li role="none">
-                    <Link to="/syndicalisation?tab=syndicalisation" className={styles.dropdownItem} role="menuitem">
+                    <Link to="/carto-syndicalisation?tab=syndicalisation" className={styles.dropdownItem} role="menuitem">
                       Syndicalisation
                     </Link>
                   </li>
@@ -124,8 +124,18 @@ function Navigation() {
                     </Link>
                   </li>
                   <li role="none">
+                    <Link to="/assemblees" className={styles.dropdownItem} role="menuitem">
+                      Assemblées
+                    </Link>
+                  </li>
+                  <li role="none">
                     <Link to="/elections-cse" className={styles.dropdownItem} role="menuitem">
                       Élections CSE
+                    </Link>
+                  </li>
+                  <li role="none">
+                    <Link to="/vue-ensemble" className={styles.dropdownItem} role="menuitem">
+                      Vue d'ensemble
                     </Link>
                   </li>
                 </ul>
@@ -153,6 +163,16 @@ function Navigation() {
               </button>
               {campagneDropdownOpen && (
                 <ul className={styles.dropdownMenu} role="menu">
+                  <li role="none">
+                    <Link to="/campagne-elections" className={styles.dropdownItem} role="menuitem">
+                      Campagne élections
+                    </Link>
+                  </li>
+                  <li role="none">
+                    <Link to="/plan-actions" className={styles.dropdownItem} role="menuitem">
+                      Plan d'actions
+                    </Link>
+                  </li>
                   <li role="none">
                     <Link to="/plan-implanter" className={styles.dropdownItem} role="menuitem">
                       Plan implanter
