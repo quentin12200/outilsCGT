@@ -25,6 +25,10 @@ import ElectionsCSEPage from './components/pages/ElectionsCSEPage';
 // Outils spécifiques
 import CahierRevendicatifTool from './components/pages/CahierRevendicatifTool';
 import QuestionnaireTool from './components/pages/QuestionnaireTool';
+// Parcours guidé du syndicat et compte militant
+import ParcoursPage from './components/pages/ParcoursPage';
+import ComptePage from './components/pages/ComptePage';
+import { AuthProvider } from './context/AuthContext';
 
 // Redirection qui conserve les paramètres d'URL (ex: ?tab=syndicalisation)
 function RedirectWithSearch({ to, defaultSearch = '' }) {
@@ -34,12 +38,15 @@ function RedirectWithSearch({ to, defaultSearch = '' }) {
 
 function App() {
   return (
+    <AuthProvider>
     <div className="app">
       <Navigation />
       <main>
         <Routes>
           {/* Routes principales */}
           <Route path="/" element={<HomePage />} />
+          <Route path="/parcours" element={<ParcoursPage />} />
+          <Route path="/compte" element={<ComptePage />} />
           {/* Redirection des anciennes routes vers la nouvelle page fusionnée */}
           <Route path="/cartographie" element={<RedirectWithSearch to="/carto-syndicalisation" defaultSearch="?tab=cartographie" />} />
           <Route path="/syndicalisation" element={<RedirectWithSearch to="/carto-syndicalisation" defaultSearch="?tab=syndicalisation" />} />
@@ -76,6 +83,7 @@ function App() {
       </main>
       <FooterFooter />
     </div>
+    </AuthProvider>
   );
 }
 

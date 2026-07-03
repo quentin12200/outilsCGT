@@ -7,6 +7,13 @@ import ModuleCard from './ModuleCard';
 
 const modules = [
   {
+    id: 'parcours',
+    title: 'Le chemin du syndicat',
+    description: 'Suivez la démarche CGT étape par étape : forces, besoins, revendications, mobilisation, élections, bilan. Votre progression est sauvegardée.',
+    icon: '🧭',
+    color: styles.redModule
+  },
+  {
     id: 'cartographie',
     title: 'Cartographie Stratégique',
     description: 'Visualisez le taux de syndicalisation par service et identifiez les zones prioritaires pour vos actions de développement.',
@@ -107,8 +114,8 @@ function HomePage() {
           <p className={styles.heroSubtitle}>
             Application de suivi et d'organisation de la syndicalisation CGT
           </p>
-          <Link to="/cartographie" className={styles.heroButton}>
-            Commencer maintenant
+          <Link to="/parcours" className={styles.heroButton}>
+            Commencer le parcours
           </Link>
         </div>
         <div className={styles.manifestoContent}>

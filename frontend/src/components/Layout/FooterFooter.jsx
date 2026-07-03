@@ -21,6 +21,7 @@ function FooterFooter() {
               <h4 className={styles.linkTitle}>Navigation</h4>
               <ul className={styles.linkList}>
                 <li><Link to="/" className={styles.footerLink}>Accueil</Link></li>
+                <li><Link to="/parcours" className={styles.footerLink}>Mon parcours</Link></li>
                 <li><Link to="/carto-syndicalisation?tab=cartographie" className={styles.footerLink}>Cartographie</Link></li>
                 <li><Link to="/retro-planning" className={styles.footerLink}>Rétro-planning</Link></li>
                 <li><Link to="/demarche?tab=ecole-democratie" className={styles.footerLink}>École de la Démocratie</Link></li>

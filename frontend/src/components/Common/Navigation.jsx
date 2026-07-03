@@ -90,6 +90,14 @@ function Navigation() {
               </Link>
             </li>
 
+            {/* Le chemin du syndicat */}
+            <li>
+              <Link to="/parcours" className={styles.navItem}>
+                <i className={`${styles.icon} ${styles.documentIcon}`}></i>
+                Mon parcours
+              </Link>
+            </li>
+
             {/* Dropdown Outils */}
             <li className={styles.dropdown}>
               <button 
@@ -195,6 +203,14 @@ function Navigation() {
                   </li>
                 </ul>
               )}
+            </li>
+
+            {/* Compte militant / espace syndicat */}
+            <li>
+              <Link to="/compte" className={styles.navItem}>
+                <i className={`${styles.icon} ${styles.campagneIcon}`}></i>
+                Compte
+              </Link>
             </li>
           </ul>
         </div>
