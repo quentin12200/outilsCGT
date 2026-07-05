@@ -1,10 +1,33 @@
 // src/components/CartoModule/CartoMain.js
-import React, { useState, forwardRef, useImperativeHandle } from 'react';
+import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import styles from './CartoMain.module.css';
 import ServiceForm from './ServiceForm';
 import ServiceCard from './ServiceCard';
 import GlobalSummary from './GlobalSummary';
 import ActionPlan from './ActionPlan';
+import storageService from '../services/storageService';
+
+const CARTO_KEY = 'cartographieSimple';
+
+// Statistiques globales calculées à partir de la liste des services
+function calculerStats(services) {
+  let totalSalaries = 0;
+  let totalSyndiques = 0;
+  const above50 = [];
+  const below25 = [];
+  services.forEach((service) => {
+    totalSalaries += service.salaries;
+    totalSyndiques += service.syndiques;
+    const ratio = service.salaries > 0 ? (service.syndiques / service.salaries) * 100 : 0;
+    if (ratio >= 50) {
+      above50.push(service);
+    } else if (ratio < 25) {
+      below25.push(service);
+    }
+  });
+  const globalRatio = totalSalaries > 0 ? (totalSyndiques / totalSalaries) * 100 : 0;
+  return { totalSalaries, totalSyndiques, globalRatio, above50, below25 };
+}
 
 const CartoMain = forwardRef((props, ref) => {
   const [services, setServices] = useState([
@@ -18,6 +41,33 @@ const CartoMain = forwardRef((props, ref) => {
     above50: [],
     below25: []
   });
+  const chargeRef = useRef(false);
+
+  // Chargement des données sauvegardées (locales puis partagées)
+  useEffect(() => {
+    const charger = async () => {
+      const restaurer = (donnees) => {
+        if (!donnees?.services?.length) return;
+        setServices(donnees.services);
+        if (donnees.submitted) {
+          setStats(calculerStats(donnees.services));
+          setSubmitted(true);
+        }
+      };
+      restaurer(storageService.loadFromLocal(CARTO_KEY));
+      restaurer(await storageService.loadFromServer(CARTO_KEY));
+      chargeRef.current = true;
+    };
+    charger();
+  }, []);
+
+  // Sauvegarde automatique à chaque modification
+  useEffect(() => {
+    if (!chargeRef.current) return;
+    const donnees = { services, submitted, majLe: new Date().toISOString() };
+    storageService.saveLocally(CARTO_KEY, donnees);
+    storageService.saveToServer(CARTO_KEY, donnees);
+  }, [services, submitted]);
   
   // Expose les références pour le parent
   useImperativeHandle(ref, () => ({
@@ -73,28 +123,7 @@ const CartoMain = forwardRef((props, ref) => {
     }
 
     // Calculer les statistiques globales
-    let totalSalaries = 0;
-    let totalSyndiques = 0;
-    const above50 = [];
-    const below25 = [];
-
-    services.forEach(service => {
-      totalSalaries += service.salaries;
-      totalSyndiques += service.syndiques;
-      
-      // Calculer le taux de syndicalisation pour ce service
-      const ratio = service.salaries > 0 ? (service.syndiques / service.salaries) * 100 : 0;
-      
-      // Classer le service selon son taux
-      if (ratio >= 50) {
-        above50.push(service);
-      } else if (ratio < 25) {
-        below25.push(service);
-      }
-    });
-
-    const globalRatio = totalSalaries > 0 ? (totalSyndiques / totalSalaries) * 100 : 0;
-    setStats({ totalSalaries, totalSyndiques, globalRatio, above50, below25 });
+    setStats(calculerStats(services));
     setSubmitted(true);
   };
 

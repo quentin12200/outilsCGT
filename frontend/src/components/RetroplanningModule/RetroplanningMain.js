@@ -1,11 +1,14 @@
 // src/components/RetroplanningModule/RetroplanningMain.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Timeline from './Timeline';
 import PhasePlanning from './PhasePlanning';
 import styles from './RetroplanningMain.module.css';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import 'jspdf-autotable';
+import storageService from '../services/storageService';
+
+const RETRO_KEY = 'retroplanning';
 
 function RetroplanningMain({ retroplanningType = 'elections' }) {
   const [selectedPhase, setSelectedPhase] = useState(null);
@@ -15,6 +18,9 @@ function RetroplanningMain({ retroplanningType = 'elections' }) {
   const [customPhases, setCustomPhases] = useState({});
   const [isAddingPhase, setIsAddingPhase] = useState(false);
   const [phases, setPhases] = useState([]);
+  // Phases ajoutées par l'utilisateur, conservées par type de rétro-planning
+  const [phasesAjoutees, setPhasesAjoutees] = useState({});
+  const chargeRef = useRef(false);
   const [newPhase, setNewPhase] = useState({
     id: '',
     title: '',
@@ -23,6 +29,30 @@ function RetroplanningMain({ retroplanningType = 'elections' }) {
     joursAvant: 30,
     joursApres: 0
   });
+
+  // Chargement des données sauvegardées (locales puis partagées)
+  useEffect(() => {
+    const charger = async () => {
+      const restaurer = (donnees) => {
+        if (!donnees) return;
+        if (donnees.dateEvenement) setDateEvenement(donnees.dateEvenement);
+        if (donnees.customPhases) setCustomPhases(donnees.customPhases);
+        if (donnees.phasesAjoutees) setPhasesAjoutees(donnees.phasesAjoutees);
+      };
+      restaurer(storageService.loadFromLocal(RETRO_KEY));
+      restaurer(await storageService.loadFromServer(RETRO_KEY));
+      chargeRef.current = true;
+    };
+    charger();
+  }, []);
+
+  // Sauvegarde automatique à chaque modification
+  useEffect(() => {
+    if (!chargeRef.current) return;
+    const donnees = { dateEvenement, customPhases, phasesAjoutees, majLe: new Date().toISOString() };
+    storageService.saveLocally(RETRO_KEY, donnees);
+    storageService.saveToServer(RETRO_KEY, donnees);
+  }, [dateEvenement, customPhases, phasesAjoutees]);
 
   // Fonction pour mettre à jour les phases personnalisées
   const handleUpdatePhase = (type, phaseId, updates) => {
@@ -42,19 +72,19 @@ function RetroplanningMain({ retroplanningType = 'elections' }) {
       return;
     }
 
-    // Vérifier que l'ID n'existe pas déjà
-    const phaseExists = phasesConfig[retroplanningType].phases.some(p => p.id === newPhase.id);
+    // Vérifier que l'ID n'existe pas déjà (phases de base + phases ajoutées)
+    const phaseExists = phases.some(p => p.id === newPhase.id);
     if (phaseExists) {
       alert("Une phase avec cet identifiant existe déjà. Veuillez choisir un autre identifiant.");
       return;
     }
 
-    // Ajouter la nouvelle phase
-    const updatedPhases = [...phasesConfig[retroplanningType].phases, newPhase];
-    
-    // Mettre à jour la configuration des phases
-    phasesConfig[retroplanningType].phases = updatedPhases;
-    
+    // Conserver la phase ajoutée dans l'état persistant (par type de rétro-planning)
+    setPhasesAjoutees(prev => ({
+      ...prev,
+      [retroplanningType]: [...(prev[retroplanningType] || []), newPhase]
+    }));
+
     // Réinitialiser le formulaire
     setNewPhase({
       id: '',
@@ -64,12 +94,9 @@ function RetroplanningMain({ retroplanningType = 'elections' }) {
       joursAvant: 30,
       joursApres: 0
     });
-    
+
     // Fermer le modal
     setIsAddingPhase(false);
-    
-    // Mettre à jour les phases
-    setPhases(updatedPhases);
   };
 
   // Fonction pour ouvrir le modal d'ajout de phase
@@ -448,9 +475,12 @@ function RetroplanningMain({ retroplanningType = 'elections' }) {
   };
 
   // Sélection des phases en fonction du type de rétro-planning
+  // (phases de base + phases ajoutées par l'utilisateur)
   useEffect(() => {
-    setPhases(phasesConfig[retroplanningType]?.phases || phasesConfig.elections.phases);
-  }, [retroplanningType]);
+    const phasesDeBase = phasesConfig[retroplanningType]?.phases || phasesConfig.elections.phases;
+    setPhases([...phasesDeBase, ...(phasesAjoutees[retroplanningType] || [])]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [retroplanningType, phasesAjoutees]);
 
   // Calcul des jours restants et détermination de la phase actuelle
   useEffect(() => {

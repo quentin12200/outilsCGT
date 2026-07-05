@@ -282,3 +282,132 @@
     background-color: #8f0000;
   }
   
+/* --- Registre des AG --- */
+.registreFormulaire {
+  background: #f9f9f9;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin: 1rem 0;
+}
+
+.registreLigne {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.registreChamp {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.9rem;
+  font-size: 0.92rem;
+}
+
+.registreChamp input,
+.registreChamp select,
+.registreChamp textarea {
+  display: block;
+  width: 100%;
+  margin-top: 0.3rem;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  font-weight: 400;
+}
+
+.registreActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.registreBouton {
+  background: #b71c1c;
+  color: white;
+  border: none;
+  padding: 0.55rem 1.1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.registreBoutonSecondaire {
+  background: white;
+  color: #b71c1c;
+  border: 1px solid #b71c1c;
+  padding: 0.35rem 0.7rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.registreListe {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.registreCarte {
+  background: white;
+  border: 1px solid #eee;
+  border-left: 4px solid #b71c1c;
+  border-radius: 8px;
+  padding: 0.9rem 1.1rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.registreCarteHaut {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
+}
+
+.badgeSyndiques,
+.badgeSalaries {
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  color: white;
+}
+
+.badgeSyndiques {
+  background: #b71c1c;
+}
+
+.badgeSalaries {
+  background: #1d4ed8;
+}
+
+.registreMeta {
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.registreObjet {
+  font-weight: 600;
+  color: #222;
+  margin: 0 0 0.25rem;
+}
+
+.registreDecisions {
+  color: #555;
+  font-size: 0.9rem;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 600px) {
+  .registreLigne {
+    grid-template-columns: 1fr;
+  }
+}

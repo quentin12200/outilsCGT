@@ -177,6 +177,21 @@ function Navigation() {
                     </Link>
                   </li>
                   <li role="none">
+                    <Link to="/plan-avant" className={styles.dropdownItem} role="menuitem">
+                      Avant : préparer
+                    </Link>
+                  </li>
+                  <li role="none">
+                    <Link to="/plan-pendant" className={styles.dropdownItem} role="menuitem">
+                      Pendant : gagner
+                    </Link>
+                  </li>
+                  <li role="none">
+                    <Link to="/plan-apres" className={styles.dropdownItem} role="menuitem">
+                      Après : le bilan
+                    </Link>
+                  </li>
+                  <li role="none">
                     <Link to="/plan-actions" className={styles.dropdownItem} role="menuitem">
                       Plan d'actions
                     </Link>
