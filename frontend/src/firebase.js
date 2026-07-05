@@ -10,13 +10,17 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
+// Configuration du projet « outilsdemarche » (clés web publiques : la
+// sécurité repose sur les règles Firestore, pas sur ces valeurs).
+// Des variables d'environnement REACT_APP_FIREBASE_* peuvent les remplacer
+// pour pointer vers un autre projet sans toucher au code.
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY || 'AIzaSyDHMoRY7pSUw-e-UNNO5qqRWeiiGF-5PGA',
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN || 'outilsdemarche-e9671.firebaseapp.com',
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID || 'outilsdemarche-e9671',
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET || 'outilsdemarche-e9671.firebasestorage.app',
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID || '598409161770',
+  appId: process.env.REACT_APP_FIREBASE_APP_ID || '1:598409161770:web:66af9f1802f0435b1c6753'
 };
 
 // Firebase est considéré configuré si les deux clés essentielles sont là
