@@ -6,6 +6,8 @@
 
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { estAdmin } from '../../config/admin';
+import AdminPanel from './AdminPanel';
 import styles from './ComptePage.module.css';
 
 // Traduit les codes d'erreur Firebase en messages compréhensibles
@@ -96,11 +98,16 @@ function ComptePage() {
         <h1 className={styles.titre}>Mon compte</h1>
 
         <div className={styles.carte}>
-          <p>Connecté en tant que <strong>{user.email}</strong></p>
+          <p>
+            Connecté en tant que <strong>{user.email}</strong>
+            {estAdmin(user) && <span className={styles.badgeAdmin}> 🛡️ Administrateur</span>}
+          </p>
           <button className={styles.boutonSecondaire} onClick={() => soumettre(logout)} disabled={enCours}>
             Se déconnecter
           </button>
         </div>
+
+        {estAdmin(user) && <AdminPanel />}
 
         {syndicat ? (
           <div className={styles.carte}>
