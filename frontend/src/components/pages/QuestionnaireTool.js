@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import { jsPDF } from 'jspdf';
 import storageService from '../services/storageService';
 import { useAuth } from '../../context/AuthContext';
+import useSyncTempsReel from '../../hooks/useSyncTempsReel';
 import { themesRevendicatifs, themeParId } from '../../data/themesRevendicatifs';
 import styles from './QuestionnaireTool.module.css';
 
@@ -61,6 +62,11 @@ function QuestionnaireTool() {
     };
     charger();
   }, [syndicat?.id]);
+
+  // Temps réel : les réponses saisies par les camarades arrivent en direct
+  useSyncTempsReel(REPONSES_KEY, (donnees) => {
+    if (donnees?.reponses) setReponses(donnees.reponses);
+  });
 
   const sauvegarder = (nouvellesReponses) => {
     const donnees = { reponses: nouvellesReponses, majLe: new Date().toISOString() };

@@ -1,6 +1,7 @@
 // src/components/pages/AssembleePage.js
 import React, { useState, useEffect, useRef } from 'react';
 import storageService from '../services/storageService';
+import useSyncTempsReel from '../../hooks/useSyncTempsReel';
 import styles from './AssembleePage.module.css';
 
 const ASSEMBLEES_KEY = 'assemblees';
@@ -40,6 +41,11 @@ function AssembleePage() {
     };
     charger();
   }, []);
+
+  // Temps réel : le registre des AG se met à jour en direct
+  useSyncTempsReel(ASSEMBLEES_KEY, (donnees) => {
+    if (donnees?.assemblees) setAssemblees(donnees.assemblees);
+  });
 
   const majListe = (liste) => {
     // Les plus récentes en premier
