@@ -86,7 +86,7 @@ function PhaseMobilisation({ onAddTool }) {
                     onClick={() => onAddTool(tool)}
                     className={styles.addButton}
                   >
-                    + Ajouter à ma boîte
+                    Ouvrir →
                   </button>
                 </div>
               ))}

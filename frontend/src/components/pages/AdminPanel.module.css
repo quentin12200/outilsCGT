@@ -1,0 +1,106 @@
+.panneau {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1rem;
+  border-top: 4px solid #b71c1c;
+}
+
+.entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.titre {
+  font-size: 1.25rem;
+  color: #b71c1c;
+  margin: 0;
+}
+
+.boutonRafraichir {
+  background: white;
+  color: #b71c1c;
+  border: 1px solid #b71c1c;
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.boutonRafraichir:disabled {
+  opacity: 0.5;
+}
+
+.sousTitre {
+  font-size: 1.05rem;
+  color: #333;
+  margin: 1.25rem 0 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.compteur {
+  background: #b71c1c;
+  color: white;
+  font-size: 0.8rem;
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
+}
+
+.tableauScroll {
+  overflow-x: auto;
+}
+
+.tableau {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.tableau th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  background: #f7f7f7;
+  color: #555;
+  border-bottom: 2px solid #e5e5e5;
+  white-space: nowrap;
+}
+
+.tableau td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #f0f0f0;
+  color: #333;
+}
+
+.code {
+  background: #f5f5f5;
+  color: #b71c1c;
+  font-weight: 700;
+  padding: 0.1rem 0.5rem;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+}
+
+.vide {
+  color: #777;
+  font-size: 0.92rem;
+}
+
+.erreur {
+  color: #b71c1c;
+  background: #fdecea;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+.note {
+  margin-top: 1rem;
+  font-size: 0.82rem;
+  color: #888;
+}

@@ -131,3 +131,15 @@
   color: #777;
   padding: 2rem;
 }
+
+.badgeAdmin {
+  display: inline-block;
+  background: #b71c1c;
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}

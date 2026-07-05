@@ -1,22 +1,41 @@
 // src/components/pages/DemarcheSyndicalePage.js
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import styles from './DemarchePage.module.css';
 import TabNav from '../Modules/Demarche/TabNav';
 import PhaseBesoins from '../DemarcheModule/PhaseBesoins';
 import PhaseRevendications from '../DemarcheModule/PhaseRevendications';
 import SchemaGlobal from '../Modules/Demarche/SchemaGlobal';
 
+// Chaque « outil recommandé » de la démarche ouvre le vrai outil
+// de l'application qui lui correspond.
+function routePourOutil(nomOutil) {
+  const nom = nomOutil.toLowerCase();
+  if (nom.includes('questionnaire') || nom.includes('besoins') || nom.includes('consultation')) {
+    return '/questionnaire';
+  }
+  if (nom.includes('cahier') || nom.includes('revendica') || nom.includes('priorisation') || nom.includes('argument')) {
+    return '/cahier-revendicatif';
+  }
+  if (nom.includes('ag') || nom.includes('animation') || nom.includes('bilan participatif') || nom.includes('démocrat')) {
+    return '/assemblees';
+  }
+  if (nom.includes('communication') || nom.includes('mobilisation') || nom.includes('rapport de force') || nom.includes('action')) {
+    return '/plan-actions';
+  }
+  return '/parcours';
+}
+
 function DemarcheSyndicalePage() {
   // Récupérer les paramètres d'URL
   const location = useLocation();
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const tabParam = queryParams.get('tab');
 
-  // États pour gérer les onglets, les sous-onglets et la sélection d'outils
+  // États pour gérer les onglets et les sous-onglets
   const [activeTab, setActiveTab] = useState(tabParam || 'ecole-democratie');
   const [activeSubTab, setActiveSubTab] = useState(null);
-  const [selectedTools, setSelectedTools] = useState([]);
 
   // Définition des onglets principaux avec leurs couleurs
   const tabs = [
@@ -47,7 +66,9 @@ function DemarcheSyndicalePage() {
         setActiveSubTab('types');
         break;
       case 'ecole-democratie':
-        setActiveSubTab('concept');
+        // La démarche s'ouvre directement sur le schéma global :
+        // c'est lui qui explique l'école de la démocratie d'un coup d'œil
+        setActiveSubTab('schema');
         break;
       default:
         setActiveSubTab(null);
@@ -63,15 +84,9 @@ function DemarcheSyndicalePage() {
     setActiveSubTab(subTabId);
   };
 
+  // Ouvre le vrai outil de l'application correspondant à l'outil recommandé
   const handleAddTool = (tool) => {
-    if (!selectedTools.includes(tool)) {
-      setSelectedTools([...selectedTools, tool]);
-      alert(`Outil "${tool}" ajouté à votre boîte à outils`);
-    }
-  };
-
-  const handleExportTools = () => {
-    alert("Fonctionnalité d'exportation à venir");
+    navigate(routePourOutil(tool));
   };
 
   return (
@@ -109,29 +124,30 @@ function DemarcheSyndicalePage() {
                 </blockquote>
               </div>
               <div className={styles.outilsBox}>
-                <h3 className={styles.outilsTitle}>Boîte à outils</h3>
+                <h3 className={styles.outilsTitle}>Les outils de la démarche</h3>
                 <p className={styles.outilsIntro}>
-                  Sélectionnez et exportez les outils qui vous aideront dans chaque phase.
+                  Chaque phase de la démarche s'appuie sur un outil concret de l'application :
                 </p>
-                <div className={styles.selectedTools}>
-                  <h4>Vos outils sélectionnés ({selectedTools.length})</h4>
-                  {selectedTools.length > 0 ? (
-                    <>
-                      <ul className={styles.toolsList}>
-                        {selectedTools.map((tool, index) => (
-                          <li key={index} className={styles.toolItem}>{tool}</li>
-                        ))}
-                      </ul>
-                      <button className={styles.exportButton} onClick={handleExportTools}>
-                        Exporter ma boîte à outils
-                      </button>
-                    </>
-                  ) : (
-                    <p className={styles.emptyTools}>
-                      Aucun outil sélectionné. Explorez les différentes phases pour ajouter des outils.
-                    </p>
-                  )}
-                </div>
+                <ul className={styles.toolsList}>
+                  <li className={styles.toolItem}>
+                    <Link to="/carto-syndicalisation?tab=cartographie">🗺️ Cartographie — connaître ses forces</Link>
+                  </li>
+                  <li className={styles.toolItem}>
+                    <Link to="/questionnaire">🗣️ Questionnaire — recueillir les besoins</Link>
+                  </li>
+                  <li className={styles.toolItem}>
+                    <Link to="/cahier-revendicatif">📖 Cahier revendicatif — construire les revendications</Link>
+                  </li>
+                  <li className={styles.toolItem}>
+                    <Link to="/assemblees">👥 Assemblées — faire vivre la démocratie</Link>
+                  </li>
+                  <li className={styles.toolItem}>
+                    <Link to="/retro-planning">📅 Rétro-planning — organiser l'action</Link>
+                  </li>
+                  <li className={styles.toolItem}>
+                    <Link to="/parcours">🧭 Mon parcours — suivre la démarche pas à pas</Link>
+                  </li>
+                </ul>
               </div>
             </div>
           )}
@@ -187,7 +203,7 @@ function DemarcheSyndicalePage() {
                         <strong>Outil recommandé :</strong> Guide d'organisation et de suivi d'une action
                       </p>
                       <button className={styles.addToolButton} onClick={() => handleAddTool("Guide d'organisation et de suivi d'une action")}>
-                        Ajouter à ma boîte à outils
+                        Ouvrir l'outil →
                       </button>
                     </div>
                   </div>
@@ -203,7 +219,7 @@ function DemarcheSyndicalePage() {
                         <strong>Outil recommandé :</strong> Modèle de cahier revendicatif
                       </p>
                       <button className={styles.addToolButton} onClick={() => handleAddTool("Modèle de cahier revendicatif")}>
-                        Ajouter à ma boîte à outils
+                        Ouvrir l'outil →
                       </button>
                     </div>
                   </div>
@@ -228,7 +244,7 @@ function DemarcheSyndicalePage() {
                         <strong>Outil recommandé :</strong> Guide d'organisation d'une AG de validation
                       </p>
                       <button className={styles.addToolButton} onClick={() => handleAddTool("Guide d'organisation d'une AG de validation")}>
-                        Ajouter à ma boîte à outils
+                        Ouvrir l'outil →
                       </button>
                     </div>
                   </div>
@@ -244,7 +260,7 @@ function DemarcheSyndicalePage() {
                           Hiérarchisez les revendications selon leur impact.
                         </p>
                         <button className={styles.addToolButton} onClick={() => handleAddTool("Matrice de priorisation des revendications")}>
-                          Ajouter à ma boîte à outils
+                          Ouvrir l'outil →
                         </button>
                       </div>
                       <div className={styles.outilCard}>
@@ -254,7 +270,7 @@ function DemarcheSyndicalePage() {
                           Synthétisez et analysez les besoins exprimés.
                         </p>
                         <button className={styles.addToolButton} onClick={() => handleAddTool("Guide d'analyse des besoins")}>
-                          Ajouter à ma boîte à outils
+                          Ouvrir l'outil →
                         </button>
                       </div>
                       <div className={styles.outilCard}>
@@ -264,7 +280,7 @@ function DemarcheSyndicalePage() {
                           Exemples d'argumentaires pour soutenir les revendications.
                         </p>
                         <button className={styles.addToolButton} onClick={() => handleAddTool("Fiches argumentaires types")}>
-                          Ajouter à ma boîte à outils
+                          Ouvrir l'outil →
                         </button>
                       </div>
                     </div>
@@ -323,7 +339,7 @@ function DemarcheSyndicalePage() {
                         <strong>Outil recommandé :</strong> Guide de communication de mobilisation
                       </p>
                       <button className={styles.addToolButton} onClick={() => handleAddTool("Guide de communication de mobilisation")}>
-                        Ajouter à ma boîte à outils
+                        Ouvrir l'outil →
                       </button>
                     </div>
                   </div>
@@ -339,7 +355,7 @@ function DemarcheSyndicalePage() {
                         <strong>Outil recommandé :</strong> Kit d'argumentation persuasive
                       </p>
                       <button className={styles.addToolButton} onClick={() => handleAddTool("Kit d'argumentation persuasive")}>
-                        Ajouter à ma boîte à outils
+                        Ouvrir l'outil →
                       </button>
                     </div>
                   </div>
@@ -355,7 +371,7 @@ function DemarcheSyndicalePage() {
                         <strong>Outil recommandé :</strong> Méthode de consolidation du rapport de force
                       </p>
                       <button className={styles.addToolButton} onClick={() => handleAddTool("Méthode de consolidation du rapport de force")}>
-                        Ajouter à ma boîte à outils
+                        Ouvrir l'outil →
                       </button>
                     </div>
                   </div>
@@ -371,7 +387,7 @@ function DemarcheSyndicalePage() {
                           Pour gérer la communication en période de crise.
                         </p>
                         <button className={styles.addToolButton} onClick={() => handleAddTool("Kit de communication de crise")}>
-                          Ajouter à ma boîte à outils
+                          Ouvrir l'outil →
                         </button>
                       </div>
                       <div className={styles.outilCard}>
@@ -381,7 +397,7 @@ function DemarcheSyndicalePage() {
                           Organisez des sessions de mobilisation efficaces.
                         </p>
                         <button className={styles.addToolButton} onClick={() => handleAddTool("Fiches de mobilisation")}>
-                          Ajouter à ma boîte à outils
+                          Ouvrir l'outil →
                         </button>
                       </div>
                     </div>
@@ -453,7 +469,7 @@ function DemarcheSyndicalePage() {
                         <strong>Outil recommandé :</strong> Guide des principes démocratiques
                       </p>
                       <button className={styles.addToolButton} onClick={() => handleAddTool("Guide des principes démocratiques")}>
-                        Ajouter à ma boîte à outils
+                        Ouvrir l'outil →
                       </button>
                     </div>
                   </div>
@@ -509,7 +525,7 @@ function DemarcheSyndicalePage() {
                         <strong>Outil recommandé :</strong> Kit d'animation démocratique
                       </p>
                       <button className={styles.addToolButton} onClick={() => handleAddTool("Kit d'animation démocratique")}>
-                        Ajouter à ma boîte à outils
+                        Ouvrir l'outil →
                       </button>
                     </div>
                   </div>
@@ -551,7 +567,7 @@ function DemarcheSyndicalePage() {
                           Méthodes et conseils pour organiser des assemblées générales efficaces et démocratiques.
                         </p>
                         <button className={styles.addToolButton} onClick={() => handleAddTool("Guide d'organisation d'AG")}>
-                          Ajouter à ma boîte à outils
+                          Ouvrir l'outil →
                         </button>
                       </div>
                       
@@ -562,7 +578,7 @@ function DemarcheSyndicalePage() {
                           Questionnaires et formulaires pour recueillir efficacement les besoins des salariés.
                         </p>
                         <button className={styles.addToolButton} onClick={() => handleAddTool("Modèles de consultation")}>
-                          Ajouter à ma boîte à outils
+                          Ouvrir l'outil →
                         </button>
                       </div>
                       
@@ -573,7 +589,7 @@ function DemarcheSyndicalePage() {
                           Techniques pour évaluer collectivement les actions et en tirer des enseignements.
                         </p>
                         <button className={styles.addToolButton} onClick={() => handleAddTool("Méthode de bilan participatif")}>
-                          Ajouter à ma boîte à outils
+                          Ouvrir l'outil →
                         </button>
                       </div>
                     </div>

@@ -34,32 +34,46 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Profil de l'utilisateur : lisible/modifiable par lui seul
+    // Comptes administrateurs (doit correspondre à src/config/admin.js)
+    function estAdmin() {
+      return request.auth != null &&
+        request.auth.token.email in ['leyrat.quentin@gmail.com'];
+    }
+
+    // Profil de l'utilisateur : lisible/modifiable par lui seul (+ admin)
     match /utilisateurs/{uid} {
-      allow read, write: if request.auth != null && request.auth.uid == uid;
+      allow read, write: if (request.auth != null && request.auth.uid == uid) || estAdmin();
     }
 
     match /syndicats/{syndicatId} {
       // Tout utilisateur connecté peut lire une fiche syndicat
       // (nécessaire pour rejoindre avec un code) et en créer une.
+      // Seul l'admin peut modifier ou supprimer un espace.
       allow read: if request.auth != null;
       allow create: if request.auth != null;
+      allow update, delete: if estAdmin();
 
       // Membres : chacun peut s'ajouter lui-même, les membres se lisent
       match /membres/{uid} {
         allow read: if request.auth != null;
-        allow write: if request.auth != null && request.auth.uid == uid;
+        allow write: if (request.auth != null && request.auth.uid == uid) || estAdmin();
       }
 
-      // Données des outils : réservées aux membres de l'espace
+      // Données des outils : réservées aux membres de l'espace (+ admin)
       match /donnees/{document} {
-        allow read, write: if request.auth != null &&
-          exists(/databases/$(database)/documents/syndicats/$(syndicatId)/membres/$(request.auth.uid));
+        allow read, write: if (request.auth != null &&
+          exists(/databases/$(database)/documents/syndicats/$(syndicatId)/membres/$(request.auth.uid)))
+          || estAdmin();
       }
     }
   }
 }
 ```
+
+> **Compte administrateur** : `leyrat.quentin@gmail.com` voit sur la page
+> Compte un panneau listant tous les espaces syndicats (nom, code, membres)
+> et tous les comptes rattachés. Pour changer d'admin, modifiez l'adresse
+> dans `frontend/src/config/admin.js` **et** dans les règles ci-dessus.
 
 Cliquez sur **Publier**.
 
