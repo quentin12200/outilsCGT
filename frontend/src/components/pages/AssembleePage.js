@@ -1,9 +1,23 @@
 // src/components/pages/AssembleePage.js
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import storageService from '../services/storageService';
 import styles from './AssembleePage.module.css';
+
+const ASSEMBLEES_KEY = 'assemblees';
+
+const agVide = {
+  date: '',
+  type: 'syndiques', // 'syndiques' | 'salaries'
+  objet: '',
+  participants: '',
+  decisions: ''
+};
 
 function AssembleePage() {
   const [activeTab, setActiveTab] = useState('pourquoi');
+  const [assemblees, setAssemblees] = useState([]);
+  const [formulaire, setFormulaire] = useState(null);
+  const chargeRef = useRef(false);
 
   // Définition des onglets
   const tabs = [
@@ -11,8 +25,54 @@ function AssembleePage() {
     { id: 'preparation', label: 'Préparation' },
     { id: 'animation', label: 'Animation' },
     { id: 'suivi', label: 'Suivi et actions' },
-    { id: 'outils', label: 'Outils pratiques' }
+    { id: 'outils', label: 'Outils pratiques' },
+    { id: 'registre', label: '📋 Mes AG' }
   ];
+
+  // Chargement du registre des AG (local puis partagé)
+  useEffect(() => {
+    const charger = async () => {
+      const local = storageService.loadFromLocal(ASSEMBLEES_KEY);
+      if (local?.assemblees) setAssemblees(local.assemblees);
+      const partage = await storageService.loadFromServer(ASSEMBLEES_KEY);
+      if (partage?.assemblees) setAssemblees(partage.assemblees);
+      chargeRef.current = true;
+    };
+    charger();
+  }, []);
+
+  const majListe = (liste) => {
+    // Les plus récentes en premier
+    const triee = [...liste].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+    setAssemblees(triee);
+    if (chargeRef.current) {
+      const donnees = { assemblees: triee, majLe: new Date().toISOString() };
+      storageService.saveLocally(ASSEMBLEES_KEY, donnees);
+      storageService.saveToServer(ASSEMBLEES_KEY, donnees);
+    }
+  };
+
+  const enregistrerAG = (e) => {
+    e.preventDefault();
+    if (!formulaire.date || !formulaire.objet.trim()) return;
+    if (formulaire.id) {
+      majListe(assemblees.map((ag) => (ag.id === formulaire.id ? formulaire : ag)));
+    } else {
+      majListe([
+        ...assemblees,
+        { ...formulaire, id: `ag-${Date.now()}-${Math.floor(Math.random() * 1000)}` }
+      ]);
+    }
+    setFormulaire(null);
+  };
+
+  const supprimerAG = (ag) => {
+    if (window.confirm(`Supprimer l'AG du ${new Date(ag.date).toLocaleDateString('fr-FR')} ?`)) {
+      majListe(assemblees.filter((a) => a.id !== ag.id));
+    }
+  };
+
+  const champAG = (nom) => (e) => setFormulaire((f) => ({ ...f, [nom]: e.target.value }));
 
   return (
     <div className={styles.container}>
@@ -561,6 +621,120 @@ function AssembleePage() {
                   </div>
                 </div>
               </div>
+            </div>
+          )}
+
+          {activeTab === 'registre' && (
+            <div>
+              <h2 className={styles.sectionTitle}>Le registre des AG du syndicat</h2>
+              <p className={styles.boxText}>
+                Gardez la trace de chaque assemblée : date, objet, participation, décisions.
+                C'est la mémoire démocratique du syndicat, partagée avec tous les militants.
+              </p>
+
+              {!formulaire && (
+                <button className={styles.registreBouton} onClick={() => setFormulaire({ ...agVide })}>
+                  + Enregistrer une AG
+                </button>
+              )}
+
+              {formulaire && (
+                <form className={styles.registreFormulaire} onSubmit={enregistrerAG}>
+                  <div className={styles.registreLigne}>
+                    <label className={styles.registreChamp}>
+                      Date *
+                      <input type="date" value={formulaire.date} onChange={champAG('date')} required />
+                    </label>
+                    <label className={styles.registreChamp}>
+                      Type d'AG
+                      <select value={formulaire.type} onChange={champAG('type')}>
+                        <option value="syndiques">AG des syndiqués</option>
+                        <option value="salaries">AG des salariés</option>
+                      </select>
+                    </label>
+                    <label className={styles.registreChamp}>
+                      Participants
+                      <input
+                        type="number"
+                        min="0"
+                        value={formulaire.participants}
+                        onChange={champAG('participants')}
+                        placeholder="nombre"
+                      />
+                    </label>
+                  </div>
+                  <label className={styles.registreChamp}>
+                    Objet de l'AG *
+                    <input
+                      type="text"
+                      value={formulaire.objet}
+                      onChange={champAG('objet')}
+                      placeholder="ex : Validation du cahier revendicatif"
+                      required
+                    />
+                  </label>
+                  <label className={styles.registreChamp}>
+                    Décisions prises / compte-rendu
+                    <textarea
+                      rows={3}
+                      value={formulaire.decisions}
+                      onChange={champAG('decisions')}
+                      placeholder="Les décisions votées, les actions décidées, les responsables..."
+                    />
+                  </label>
+                  <div className={styles.registreActions}>
+                    <button type="submit" className={styles.registreBouton}>
+                      {formulaire.id ? 'Enregistrer' : 'Ajouter au registre'}
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.registreBoutonSecondaire}
+                      onClick={() => setFormulaire(null)}
+                    >
+                      Annuler
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {assemblees.length === 0 && !formulaire && (
+                <p className={styles.boxText}>Aucune AG enregistrée pour l'instant.</p>
+              )}
+
+              <ul className={styles.registreListe}>
+                {assemblees.map((ag) => (
+                  <li key={ag.id} className={styles.registreCarte}>
+                    <div className={styles.registreCarteHaut}>
+                      <div>
+                        <strong>{new Date(ag.date).toLocaleDateString('fr-FR')}</strong>
+                        {' — '}
+                        <span className={ag.type === 'salaries' ? styles.badgeSalaries : styles.badgeSyndiques}>
+                          {ag.type === 'salaries' ? 'AG des salariés' : 'AG des syndiqués'}
+                        </span>
+                        {ag.participants && <span className={styles.registreMeta}> · {ag.participants} participant·es</span>}
+                      </div>
+                      <div className={styles.registreActions}>
+                        <button
+                          type="button"
+                          className={styles.registreBoutonSecondaire}
+                          onClick={() => setFormulaire({ ...ag })}
+                        >
+                          ✏️
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.registreBoutonSecondaire}
+                          onClick={() => supprimerAG(ag)}
+                        >
+                          🗑️
+                        </button>
+                      </div>
+                    </div>
+                    <p className={styles.registreObjet}>{ag.objet}</p>
+                    {ag.decisions && <p className={styles.registreDecisions}>{ag.decisions}</p>}
+                  </li>
+                ))}
+              </ul>
             </div>
           )}
         </div>

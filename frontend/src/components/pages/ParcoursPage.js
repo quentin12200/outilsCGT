@@ -121,22 +121,29 @@ async function chargerDonneesOutils() {
     const partage = await storageService.loadFromServer(cle);
     return partage ?? storageService.loadFromLocal(cle);
   };
-  const [carto, questionnaire, cahier, resultats] = await Promise.all([
+  const [carto, cartoSimple, questionnaire, cahier, resultats, retro, assemblees] = await Promise.all([
     lire('cartographieAvancee'),
+    lire('cartographieSimple'),
     lire('questionnaireReponses'),
     lire('cahierRevendicatif'),
-    lire('resultats')
+    lire('resultats'),
+    lire('retroplanning'),
+    lire('assemblees')
   ]);
-  return { carto, questionnaire, cahier, resultats };
+  return { carto, cartoSimple, questionnaire, cahier, resultats, retro, assemblees };
 }
 
 // Indicateurs affichés par étape à partir des données des outils
 function indicateursEtape(etapeId, outils) {
-  const services = Array.isArray(outils.carto) ? outils.carto.length : 0;
+  const servicesAvances = Array.isArray(outils.carto) ? outils.carto.length : 0;
+  const servicesSimples = (outils.cartoSimple?.services || []).filter((s) => s.name?.trim()).length;
+  const services = Math.max(servicesAvances, servicesSimples);
   const reponses = outils.questionnaire?.reponses?.length || 0;
   const revendications = outils.cahier?.revendications || [];
   const validees = revendications.filter((r) => r.statut === 'validee' || r.statut === 'deposee' || r.statut === 'gagnee').length;
   const resultatsSaisis = (outils.resultats?.totalVotes || 0) > 0;
+  const nbAG = outils.assemblees?.assemblees?.length || 0;
+  const dateEvenement = outils.retro?.dateEvenement;
 
   switch (etapeId) {
     case 'organisation':
@@ -151,7 +158,18 @@ function indicateursEtape(etapeId, outils) {
       return revendications.length > 0
         ? [`📖 ${revendications.length} revendication${revendications.length > 1 ? 's' : ''} au cahier${validees > 0 ? ` dont ${validees} validée${validees > 1 ? 's' : ''}` : ''}`]
         : [];
-    case 'elections':
+    case 'mobilisation': {
+      const indicateurs = [];
+      if (nbAG > 0) indicateurs.push(`👥 ${nbAG} AG enregistrée${nbAG > 1 ? 's' : ''}`);
+      if (dateEvenement) indicateurs.push(`📅 Échéance fixée au ${new Date(dateEvenement).toLocaleDateString('fr-FR')}`);
+      return indicateurs;
+    }
+    case 'elections': {
+      const indicateurs = [];
+      if (dateEvenement) indicateurs.push(`📅 Scrutin prévu le ${new Date(dateEvenement).toLocaleDateString('fr-FR')}`);
+      if (resultatsSaisis) indicateurs.push('📊 Résultats électoraux saisis');
+      return indicateurs;
+    }
     case 'bilan':
       return resultatsSaisis ? ['📊 Résultats électoraux saisis'] : [];
     default:

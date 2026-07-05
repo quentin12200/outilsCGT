@@ -1,8 +1,11 @@
 // src/components/Modules/SyndicalisationModule/SyndicalisationMain.js
-import React, { useState, useRef, forwardRef, useImperativeHandle } from 'react';
+import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import SyndicalisationStats from './SyndicalisationStats';
 import SyndicalisationForm from './SyndicalisationForm';
+import storageService from '../../services/storageService';
 import styles from './SyndicalisationMain.module.css';
+
+const SYNDICALISATION_KEY = 'syndicalisation';
 
 const SyndicalisationMain = forwardRef((props, ref) => {
   const [activeTab, setActiveTab] = useState('stats'); // 'stats' ou 'form'
@@ -24,6 +27,26 @@ const SyndicalisationMain = forwardRef((props, ref) => {
 
   const statsRef = useRef(null);
   const formRef = useRef(null);
+  const chargeRef = useRef(false);
+
+  // Chargement des données sauvegardées (locales puis partagées)
+  useEffect(() => {
+    const charger = async () => {
+      const local = storageService.loadFromLocal(SYNDICALISATION_KEY);
+      if (local?.currentMembers !== undefined) setSyndicalisationData(local);
+      const partage = await storageService.loadFromServer(SYNDICALISATION_KEY);
+      if (partage?.currentMembers !== undefined) setSyndicalisationData(partage);
+      chargeRef.current = true;
+    };
+    charger();
+  }, []);
+
+  // Sauvegarde automatique à chaque modification
+  useEffect(() => {
+    if (!chargeRef.current) return;
+    storageService.saveLocally(SYNDICALISATION_KEY, syndicalisationData);
+    storageService.saveToServer(SYNDICALISATION_KEY, syndicalisationData);
+  }, [syndicalisationData]);
 
   // Exposer les références et méthodes pour le parent
   useImperativeHandle(ref, () => ({

@@ -31,20 +31,22 @@ function FooterFooter() {
             <div className={styles.linkColumn}>
               <h4 className={styles.linkTitle}>Outils</h4>
               <ul className={styles.linkList}>
+                <li><Link to="/questionnaire" className={styles.footerLink}>Questionnaire</Link></li>
+                <li><Link to="/cahier-revendicatif" className={styles.footerLink}>Cahier revendicatif</Link></li>
                 <li><Link to="/assemblees" className={styles.footerLink}>Assemblées</Link></li>
                 <li><Link to="/carto-syndicalisation?tab=syndicalisation" className={styles.footerLink}>Syndicalisation</Link></li>
                 <li><Link to="/resultats" className={styles.footerLink}>Résultats</Link></li>
-                <li><Link to="/demarche" className={styles.footerLink}>Démarche</Link></li>
               </ul>
             </div>
-            
+
             <div className={styles.linkColumn}>
-              <h4 className={styles.linkTitle}>Campagne</h4>
+              <h4 className={styles.linkTitle}>Élections</h4>
               <ul className={styles.linkList}>
                 <li><Link to="/elections-cse" className={styles.footerLink}>Élections CSE</Link></li>
                 <li><Link to="/campagne-elections" className={styles.footerLink}>Campagne élections</Link></li>
-                <li><Link to="/cahier-revendicatif" className={styles.footerLink}>Cahier revendicatif</Link></li>
-                <li><Link to="/questionnaire" className={styles.footerLink}>Questionnaire</Link></li>
+                <li><Link to="/plan-avant" className={styles.footerLink}>Avant : préparer</Link></li>
+                <li><Link to="/plan-pendant" className={styles.footerLink}>Pendant : gagner</Link></li>
+                <li><Link to="/plan-apres" className={styles.footerLink}>Après : le bilan</Link></li>
               </ul>
             </div>
           </div>
