@@ -65,22 +65,18 @@ Cliquez sur **Publier**.
 
 ## 3. Donner la configuration à l'application
 
-Créez le fichier `frontend/.env.local` (il n'est pas committé dans git)
-avec les valeurs du bloc `firebaseConfig` copié à l'étape 1.3 :
+**Déjà fait** : la configuration du projet `outilsdemarche-e9671` est intégrée
+dans `frontend/src/firebase.js` (ces clés web ne sont pas des secrets : la
+sécurité repose sur les règles Firestore de l'étape 2).
 
-```
-REACT_APP_FIREBASE_API_KEY=AIza...
-REACT_APP_FIREBASE_AUTH_DOMAIN=outils-cgt-aveyron.firebaseapp.com
-REACT_APP_FIREBASE_PROJECT_ID=outils-cgt-aveyron
-REACT_APP_FIREBASE_STORAGE_BUCKET=outils-cgt-aveyron.appspot.com
-REACT_APP_FIREBASE_MESSAGING_SENDER_ID=1234567890
-REACT_APP_FIREBASE_APP_ID=1:1234567890:web:abcdef
-```
+Pour pointer un jour vers un autre projet Firebase sans toucher au code,
+définissez les variables `REACT_APP_FIREBASE_*` (fichier `frontend/.env.local`
+en local, ou **Settings > Environment Variables** sur Vercel) — elles ont
+priorité sur les valeurs intégrées. Modèle dans `frontend/.env.example`.
 
-> Ces clés web ne sont pas des secrets : la sécurité repose sur les règles
-> Firestore de l'étape 2. Sur Vercel (où le site est hébergé), ajoutez les
-> mêmes variables dans **Settings > Environment Variables** du projet, puis
-> relancez un déploiement pour qu'elles soient prises en compte.
+> ⚠️ Ne jamais mettre dans le code ou dans git une clé de **compte de
+> service** (fichier JSON contenant `private_key`) : celle-là est un vrai
+> secret d'administration, et l'application n'en a pas besoin.
 
 ## 4. Rebuilder et déployer
 
