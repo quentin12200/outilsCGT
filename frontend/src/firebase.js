@@ -23,6 +23,10 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID || '1:598409161770:web:66af9f1802f0435b1c6753'
 };
 
+// La base Firestore du projet porte l'identifiant « databasedemarche »
+// (et non « (default) ») : il faut le préciser à la connexion.
+const FIRESTORE_DB_ID = process.env.REACT_APP_FIRESTORE_DB || 'databasedemarche';
+
 // Firebase est considéré configuré si les deux clés essentielles sont là
 export const isFirebaseEnabled = Boolean(
   firebaseConfig.apiKey && firebaseConfig.projectId
@@ -35,7 +39,7 @@ let db = null;
 if (isFirebaseEnabled) {
   app = initializeApp(firebaseConfig);
   auth = getAuth(app);
-  db = getFirestore(app);
+  db = getFirestore(app, FIRESTORE_DB_ID);
 }
 
 export { app, auth, db };
