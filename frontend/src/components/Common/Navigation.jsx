@@ -1,12 +1,67 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import {
+  FaHome, FaRoute, FaTools, FaGraduationCap, FaVoteYea, FaUserCircle,
+  FaMapMarkedAlt, FaChartPie, FaClipboardList, FaBook, FaUsers,
+  FaCalendarAlt, FaChartLine, FaThLarge, FaBullhorn, FaHourglassStart,
+  FaFlagCheckered, FaClipboardCheck, FaTasks, FaSeedling, FaToolbox
+} from 'react-icons/fa';
 import styles from './Navigation.module.css';
 import cgtLogo from '../../assets/logo-cgt.png';
 
+// Structure complète du menu : l'ordre des outils suit la démarche CGT
+// (connaître ses forces → besoins → revendications → mobilisation → élections).
+const menu = [
+  { type: 'lien', label: 'Accueil', path: '/', icone: <FaHome /> },
+  { type: 'lien', label: 'Mon parcours', path: '/parcours', icone: <FaRoute /> },
+  {
+    type: 'dropdown',
+    id: 'outils',
+    label: 'Outils',
+    icone: <FaTools />,
+    items: [
+      { label: 'Cartographie', path: '/carto-syndicalisation?tab=cartographie', icone: <FaMapMarkedAlt /> },
+      { label: 'Syndicalisation', path: '/carto-syndicalisation?tab=syndicalisation', icone: <FaChartPie /> },
+      { label: 'Questionnaire des besoins', path: '/questionnaire', icone: <FaClipboardList /> },
+      { label: 'Cahier revendicatif', path: '/cahier-revendicatif', icone: <FaBook /> },
+      { label: 'Assemblées', path: '/assemblees', icone: <FaUsers /> },
+      { label: 'Rétro-planning', path: '/retro-planning', icone: <FaCalendarAlt /> },
+      { label: 'Résultats', path: '/resultats', icone: <FaChartLine /> },
+      { label: "Vue d'ensemble", path: '/vue-ensemble', icone: <FaThLarge /> }
+    ]
+  },
+  { type: 'lien', label: 'Démarche', path: '/demarche', icone: <FaGraduationCap /> },
+  {
+    type: 'dropdown',
+    id: 'elections',
+    label: 'Élections',
+    icone: <FaVoteYea />,
+    items: [
+      { label: 'Élections CSE', path: '/elections-cse', icone: <FaVoteYea /> },
+      { label: 'Campagne élections', path: '/campagne-elections', icone: <FaBullhorn /> },
+      { label: 'Avant : préparer', path: '/plan-avant', icone: <FaHourglassStart /> },
+      { label: 'Pendant : gagner', path: '/plan-pendant', icone: <FaFlagCheckered /> },
+      { label: 'Après : le bilan', path: '/plan-apres', icone: <FaClipboardCheck /> },
+      { label: "Plan d'actions", path: '/plan-actions', icone: <FaTasks /> },
+      { label: 'Plan implanter', path: '/plan-implanter', icone: <FaSeedling /> },
+      { label: 'Plan outils', path: '/plan-outils', icone: <FaToolbox /> }
+    ]
+  },
+  { type: 'lien', label: 'Compte', path: '/compte', icone: <FaUserCircle /> }
+];
+
+// Un lien est actif si son chemin (sans paramètres) correspond à la page courante
+function estActif(path, location) {
+  const [pathname, search] = path.split('?');
+  if (pathname !== location.pathname) return false;
+  // Pour les liens avec ?tab=..., comparer aussi l'onglet
+  if (search) return location.search.includes(search.split('=')[1]);
+  return true;
+}
+
 function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [toolsDropdownOpen, setToolsDropdownOpen] = useState(false);
-  const [campagneDropdownOpen, setCampagneDropdownOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
@@ -22,8 +77,7 @@ function Navigation() {
   // Fermer tous les menus lors d'un changement de page
   useEffect(() => {
     setIsMenuOpen(false);
-    setToolsDropdownOpen(false);
-    setCampagneDropdownOpen(false);
+    setOpenDropdown(null);
   }, [location]);
 
   // Désactiver le scroll du body en mode mobile
@@ -34,38 +88,28 @@ function Navigation() {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-    if (isMenuOpen) {
-      setToolsDropdownOpen(false);
-      setCampagneDropdownOpen(false);
-    }
+    if (isMenuOpen) setOpenDropdown(null);
   };
 
-  const toggleToolsDropdown = () => {
-    setToolsDropdownOpen(!toolsDropdownOpen);
-    if (campagneDropdownOpen) setCampagneDropdownOpen(false);
-  };
-
-  const toggleCampagneDropdown = () => {
-    setCampagneDropdownOpen(!campagneDropdownOpen);
-    if (toolsDropdownOpen) setToolsDropdownOpen(false);
+  const toggleDropdown = (id) => {
+    setOpenDropdown(openDropdown === id ? null : id);
   };
 
   const handleOverlayClick = () => {
     setIsMenuOpen(false);
-    setToolsDropdownOpen(false);
-    setCampagneDropdownOpen(false);
+    setOpenDropdown(null);
   };
 
   return (
     <>
       {isMenuOpen && (
-        <div 
-          className={`${styles.overlay} ${isMenuOpen ? styles.overlayActive : ''}`} 
+        <div
+          className={`${styles.overlay} ${isMenuOpen ? styles.overlayActive : ''}`}
           onClick={handleOverlayClick}
           aria-hidden="true"
         />
       )}
-      
+
       <nav className={`${styles.navbar} ${isScrolled ? styles.scrolled : ''}`}>
         <div className={styles.container}>
           <Link to="/" className={styles.logoContainer}>
@@ -73,7 +117,7 @@ function Navigation() {
             <h1 className={styles.title}>Outils CGT Aveyron</h1>
           </Link>
 
-          <button 
+          <button
             className={`${styles.mobileMenuButton} ${isMenuOpen ? styles.menuOpen : ''}`}
             onClick={toggleMenu}
             aria-label="Menu principal"
@@ -83,150 +127,57 @@ function Navigation() {
           </button>
 
           <ul className={`${styles.navList} ${isMenuOpen ? styles.menuOpen : ''}`}>
-            <li>
-              <Link to="/" className={styles.navItem}>
-                <i className={`${styles.icon} ${styles.homeIcon}`}></i>
-                Accueil
-              </Link>
-            </li>
+            {menu.map((entree) => {
+              if (entree.type === 'lien') {
+                const actif = estActif(entree.path, location);
+                return (
+                  <li key={entree.path}>
+                    <Link
+                      to={entree.path}
+                      className={`${styles.navItem} ${actif ? styles.navItemActif : ''}`}
+                      aria-current={actif ? 'page' : undefined}
+                    >
+                      <span className={styles.navIcon}>{entree.icone}</span>
+                      {entree.label}
+                    </Link>
+                  </li>
+                );
+              }
 
-            {/* Le chemin du syndicat */}
-            <li>
-              <Link to="/parcours" className={styles.navItem}>
-                <i className={`${styles.icon} ${styles.documentIcon}`}></i>
-                Mon parcours
-              </Link>
-            </li>
-
-            {/* Dropdown Outils */}
-            <li className={styles.dropdown}>
-              <button 
-                type="button" 
-                className={styles.navItem} 
-                onClick={toggleToolsDropdown}
-                aria-expanded={toolsDropdownOpen}
-              >
-                <i className={`${styles.icon} ${styles.mapIcon}`}></i>
-                Outils
-              </button>
-              {toolsDropdownOpen && (
-                <ul className={styles.dropdownMenu} role="menu">
-                  <li role="none">
-                    <Link to="/carto-syndicalisation?tab=cartographie" className={styles.dropdownItem} role="menuitem">
-                      Cartographie
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/carto-syndicalisation?tab=syndicalisation" className={styles.dropdownItem} role="menuitem">
-                      Syndicalisation
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/resultats" className={styles.dropdownItem} role="menuitem">
-                      Résultats
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/retro-planning" className={styles.dropdownItem} role="menuitem">
-                      Rétro-planning
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/assemblees" className={styles.dropdownItem} role="menuitem">
-                      Assemblées
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/elections-cse" className={styles.dropdownItem} role="menuitem">
-                      Élections CSE
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/vue-ensemble" className={styles.dropdownItem} role="menuitem">
-                      Vue d'ensemble
-                    </Link>
-                  </li>
-                </ul>
-              )}
-            </li>
-
-            {/* Lien Démarche */}
-            <li>
-              <Link to="/demarche" className={styles.navItem}>
-                <i className={`${styles.icon} ${styles.documentIcon}`}></i>
-                Démarche
-              </Link>
-            </li>
-
-            {/* Nouveau dropdown Campagne */}
-            <li className={styles.dropdown}>
-              <button 
-                type="button" 
-                className={styles.navItem}
-                onClick={toggleCampagneDropdown}
-                aria-expanded={campagneDropdownOpen}
-              >
-                <i className={`${styles.icon} ${styles.campagneIcon}`}></i>
-                Campagne
-              </button>
-              {campagneDropdownOpen && (
-                <ul className={styles.dropdownMenu} role="menu">
-                  <li role="none">
-                    <Link to="/campagne-elections" className={styles.dropdownItem} role="menuitem">
-                      Campagne élections
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/plan-avant" className={styles.dropdownItem} role="menuitem">
-                      Avant : préparer
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/plan-pendant" className={styles.dropdownItem} role="menuitem">
-                      Pendant : gagner
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/plan-apres" className={styles.dropdownItem} role="menuitem">
-                      Après : le bilan
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/plan-actions" className={styles.dropdownItem} role="menuitem">
-                      Plan d'actions
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/plan-implanter" className={styles.dropdownItem} role="menuitem">
-                      Plan implanter
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/plan-outils" className={styles.dropdownItem} role="menuitem">
-                      Plan outils
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/cahier-revendicatif" className={styles.dropdownItem} role="menuitem">
-                      Cahier revendicatif
-                    </Link>
-                  </li>
-                  <li role="none">
-                    <Link to="/questionnaire" className={styles.dropdownItem} role="menuitem">
-                      Questionnaire
-                    </Link>
-                  </li>
-                </ul>
-              )}
-            </li>
-
-            {/* Compte militant / espace syndicat */}
-            <li>
-              <Link to="/compte" className={styles.navItem}>
-                <i className={`${styles.icon} ${styles.campagneIcon}`}></i>
-                Compte
-              </Link>
-            </li>
+              // Dropdown : actif si l'une de ses pages est ouverte
+              const enfantActif = entree.items.some((item) => estActif(item.path, location));
+              const ouvert = openDropdown === entree.id;
+              return (
+                <li key={entree.id} className={styles.dropdown}>
+                  <button
+                    type="button"
+                    className={`${styles.navItem} ${enfantActif ? styles.navItemActif : ''}`}
+                    onClick={() => toggleDropdown(entree.id)}
+                    aria-expanded={ouvert}
+                  >
+                    <span className={styles.navIcon}>{entree.icone}</span>
+                    {entree.label}
+                    <span className={`${styles.chevron} ${ouvert ? styles.chevronOuvert : ''}`}>▾</span>
+                  </button>
+                  {ouvert && (
+                    <ul className={styles.dropdownMenu} role="menu">
+                      {entree.items.map((item) => (
+                        <li role="none" key={item.path}>
+                          <Link
+                            to={item.path}
+                            className={`${styles.dropdownItem} ${estActif(item.path, location) ? styles.dropdownItemActif : ''}`}
+                            role="menuitem"
+                          >
+                            <span className={styles.dropdownIcon}>{item.icone}</span>
+                            {item.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
       </nav>
