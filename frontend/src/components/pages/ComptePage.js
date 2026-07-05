@@ -18,7 +18,19 @@ function messageErreur(error) {
     return "Email ou mot de passe incorrect.";
   }
   if (code.includes('too-many-requests')) return "Trop de tentatives, réessayez dans quelques minutes.";
-  return error?.message || "Une erreur est survenue, réessayez.";
+  if (code.includes('operation-not-allowed')) {
+    return "La connexion par email/mot de passe n'est pas activée dans la console Firebase (Authentication → Sign-in method).";
+  }
+  if (code.includes('not-found') || code.includes('failed-precondition')) {
+    return "La base de données est introuvable : vérifiez que la base Firestore existe bien et que le site déployé est à jour. " +
+      `(détail : ${code})`;
+  }
+  if (code.includes('permission-denied')) {
+    return "Accès refusé par les règles de sécurité Firestore : vérifiez que les règles du guide FIREBASE.md sont publiées sur la bonne base. " +
+      `(détail : ${code})`;
+  }
+  // Erreur inconnue : afficher le détail technique pour pouvoir diagnostiquer
+  return `Une erreur est survenue${code ? ` (${code})` : ''} : ${error?.message || 'réessayez.'}`;
 }
 
 function ComptePage() {

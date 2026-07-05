@@ -178,6 +178,18 @@
   margin-bottom: 1rem;
 }
 
+.indicateurOutil {
+  display: inline-block;
+  background: #f0f7f1;
+  color: #15803d;
+  border: 1px solid #cfe8d4;
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0 0.5rem 0.75rem 0;
+}
+
 .listeTaches {
   list-style: none;
   padding: 0;

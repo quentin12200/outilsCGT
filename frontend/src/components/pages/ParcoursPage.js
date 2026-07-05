@@ -114,12 +114,58 @@ export const etapes = [
   }
 ];
 
+// Lit l'état réel des outils (local, puis version partagée du syndicat)
+// pour afficher dans chaque étape ce qui a déjà été fait.
+async function chargerDonneesOutils() {
+  const lire = async (cle) => {
+    const partage = await storageService.loadFromServer(cle);
+    return partage ?? storageService.loadFromLocal(cle);
+  };
+  const [carto, questionnaire, cahier, resultats] = await Promise.all([
+    lire('cartographieAvancee'),
+    lire('questionnaireReponses'),
+    lire('cahierRevendicatif'),
+    lire('resultats')
+  ]);
+  return { carto, questionnaire, cahier, resultats };
+}
+
+// Indicateurs affichés par étape à partir des données des outils
+function indicateursEtape(etapeId, outils) {
+  const services = Array.isArray(outils.carto) ? outils.carto.length : 0;
+  const reponses = outils.questionnaire?.reponses?.length || 0;
+  const revendications = outils.cahier?.revendications || [];
+  const validees = revendications.filter((r) => r.statut === 'validee' || r.statut === 'deposee' || r.statut === 'gagnee').length;
+  const resultatsSaisis = (outils.resultats?.totalVotes || 0) > 0;
+
+  switch (etapeId) {
+    case 'organisation':
+      return services > 0
+        ? [`🗺️ ${services} service${services > 1 ? 's' : ''} cartographié${services > 1 ? 's' : ''}`]
+        : [];
+    case 'besoins':
+      return reponses > 0
+        ? [`🗣️ ${reponses} réponse${reponses > 1 ? 's' : ''} au questionnaire`]
+        : [];
+    case 'revendications':
+      return revendications.length > 0
+        ? [`📖 ${revendications.length} revendication${revendications.length > 1 ? 's' : ''} au cahier${validees > 0 ? ` dont ${validees} validée${validees > 1 ? 's' : ''}` : ''}`]
+        : [];
+    case 'elections':
+    case 'bilan':
+      return resultatsSaisis ? ['📊 Résultats électoraux saisis'] : [];
+    default:
+      return [];
+  }
+}
+
 function ParcoursPage() {
   const { firebaseEnabled, user, syndicat } = useAuth();
   // tachesFaites : { 'org-services': true, ... }
   const [tachesFaites, setTachesFaites] = useState({});
   const [etapeOuverte, setEtapeOuverte] = useState(null);
   const [chargement, setChargement] = useState(true);
+  const [donneesOutils, setDonneesOutils] = useState({});
   const chargeRef = useRef(false);
 
   // Chargement : local d'abord, puis version partagée du syndicat si disponible
@@ -131,6 +177,7 @@ function ParcoursPage() {
       if (partage?.tachesFaites) setTachesFaites(partage.tachesFaites);
       chargeRef.current = true;
       setChargement(false);
+      setDonneesOutils(await chargerDonneesOutils());
     };
     charger();
   }, [syndicat?.id]);
@@ -245,6 +292,9 @@ function ParcoursPage() {
                 {ouverte && (
                   <div className={styles.etapeContenu}>
                     <p className={styles.etapeDescription}>{etape.description}</p>
+                    {indicateursEtape(etape.id, donneesOutils).map((indicateur) => (
+                      <p key={indicateur} className={styles.indicateurOutil}>{indicateur}</p>
+                    ))}
                     <ul className={styles.listeTaches}>
                       {etape.taches.map((tache) => (
                         <li key={tache.id} className={styles.tache}>
