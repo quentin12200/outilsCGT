@@ -5,6 +5,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import storageService from '../services/storageService';
+import useSyncTempsReel from '../../hooks/useSyncTempsReel';
 import styles from './PlanCampagneChecklist.module.css';
 
 function PlanCampagneChecklist({ cleStockage, titre, sousTitre, sections }) {
@@ -21,6 +22,11 @@ function PlanCampagneChecklist({ cleStockage, titre, sousTitre, sections }) {
     };
     charger();
   }, [cleStockage]);
+
+  // Temps réel : les cases cochées par les camarades apparaissent en direct
+  useSyncTempsReel(cleStockage, (donnees) => {
+    if (donnees?.faites) setFaites(donnees.faites);
+  });
 
   const basculer = (id) => {
     setFaites((precedent) => {

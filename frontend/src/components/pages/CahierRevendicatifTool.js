@@ -12,6 +12,7 @@ import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import storageService from '../services/storageService';
 import { useAuth } from '../../context/AuthContext';
+import useSyncTempsReel from '../../hooks/useSyncTempsReel';
 import { themesRevendicatifs, themeParId } from '../../data/themesRevendicatifs';
 import styles from './CahierRevendicatifTool.module.css';
 
@@ -72,6 +73,13 @@ function CahierRevendicatifTool() {
     };
     charger();
   }, [syndicat?.id]);
+
+  // Temps réel : les revendications ajoutées par les camarades apparaissent en direct
+  useSyncTempsReel(CAHIER_KEY, (donnees) => {
+    if (!donnees) return;
+    if (donnees.entreprise !== undefined) setEntreprise(donnees.entreprise || '');
+    if (donnees.revendications) setRevendications(donnees.revendications);
+  });
 
   const sauvegarder = useCallback((liste, nomEntreprise) => {
     const donnees = {

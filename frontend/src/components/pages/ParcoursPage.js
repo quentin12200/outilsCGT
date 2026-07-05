@@ -8,6 +8,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import storageService from '../services/storageService';
 import { useAuth } from '../../context/AuthContext';
+import useSyncTempsReel from '../../hooks/useSyncTempsReel';
 import styles from './ParcoursPage.module.css';
 
 const PARCOURS_KEY = 'parcoursSyndicat';
@@ -199,6 +200,11 @@ function ParcoursPage() {
     };
     charger();
   }, [syndicat?.id]);
+
+  // Temps réel : les coches des camarades apparaissent sans recharger
+  useSyncTempsReel(PARCOURS_KEY, (donnees) => {
+    if (donnees?.tachesFaites) setTachesFaites(donnees.tachesFaites);
+  });
 
   // Sauvegarde à chaque changement (locale toujours, partagée si possible)
   const sauvegarder = useCallback((nouvellesTaches) => {

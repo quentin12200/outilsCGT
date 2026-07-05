@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } f
 import SyndicalisationStats from './SyndicalisationStats';
 import SyndicalisationForm from './SyndicalisationForm';
 import storageService from '../../services/storageService';
+import useSyncTempsReel from '../../../hooks/useSyncTempsReel';
 import styles from './SyndicalisationMain.module.css';
 
 const SYNDICALISATION_KEY = 'syndicalisation';
@@ -28,6 +29,9 @@ const SyndicalisationMain = forwardRef((props, ref) => {
   const statsRef = useRef(null);
   const formRef = useRef(null);
   const chargeRef = useRef(false);
+  // Vrai quand la dernière modification vient d'un camarade (temps réel) :
+  // on ne re-sauvegarde pas pour éviter une boucle entre appareils.
+  const distantRef = useRef(false);
 
   // Chargement des données sauvegardées (locales puis partagées)
   useEffect(() => {
@@ -41,9 +45,20 @@ const SyndicalisationMain = forwardRef((props, ref) => {
     charger();
   }, []);
 
+  // Temps réel : les données saisies par un camarade apparaissent en direct
+  useSyncTempsReel(SYNDICALISATION_KEY, (donnees) => {
+    if (donnees?.currentMembers === undefined) return;
+    distantRef.current = true;
+    setSyndicalisationData(donnees);
+  });
+
   // Sauvegarde automatique à chaque modification
   useEffect(() => {
     if (!chargeRef.current) return;
+    if (distantRef.current) {
+      distantRef.current = false;
+      return;
+    }
     storageService.saveLocally(SYNDICALISATION_KEY, syndicalisationData);
     storageService.saveToServer(SYNDICALISATION_KEY, syndicalisationData);
   }, [syndicalisationData]);

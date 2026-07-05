@@ -6,6 +6,7 @@ import ServiceCard from './ServiceCard';
 import GlobalSummary from './GlobalSummary';
 import ActionPlan from './ActionPlan';
 import storageService from '../services/storageService';
+import useSyncTempsReel from '../../hooks/useSyncTempsReel';
 
 const CARTO_KEY = 'cartographieSimple';
 
@@ -42,28 +43,44 @@ const CartoMain = forwardRef((props, ref) => {
     below25: []
   });
   const chargeRef = useRef(false);
+  // Vrai quand la dernière modification vient d'un camarade (temps réel) :
+  // dans ce cas on ne re-sauvegarde pas, sinon deux appareils ouverts
+  // se renverraient la donnée en boucle.
+  const distantRef = useRef(false);
+
+  const restaurer = (donnees) => {
+    if (!donnees?.services?.length) return;
+    setServices(donnees.services);
+    if (donnees.submitted) {
+      setStats(calculerStats(donnees.services));
+      setSubmitted(true);
+    }
+  };
 
   // Chargement des données sauvegardées (locales puis partagées)
   useEffect(() => {
     const charger = async () => {
-      const restaurer = (donnees) => {
-        if (!donnees?.services?.length) return;
-        setServices(donnees.services);
-        if (donnees.submitted) {
-          setStats(calculerStats(donnees.services));
-          setSubmitted(true);
-        }
-      };
       restaurer(storageService.loadFromLocal(CARTO_KEY));
       restaurer(await storageService.loadFromServer(CARTO_KEY));
       chargeRef.current = true;
     };
     charger();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Temps réel : la cartographie modifiée par un camarade apparaît en direct
+  useSyncTempsReel(CARTO_KEY, (donnees) => {
+    distantRef.current = true;
+    restaurer(donnees);
+  });
 
   // Sauvegarde automatique à chaque modification
   useEffect(() => {
     if (!chargeRef.current) return;
+    if (distantRef.current) {
+      distantRef.current = false;
+      return;
+    }
     const donnees = { services, submitted, majLe: new Date().toISOString() };
     storageService.saveLocally(CARTO_KEY, donnees);
     storageService.saveToServer(CARTO_KEY, donnees);

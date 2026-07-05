@@ -7,6 +7,7 @@ import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import 'jspdf-autotable';
 import storageService from '../services/storageService';
+import useSyncTempsReel from '../../hooks/useSyncTempsReel';
 
 const RETRO_KEY = 'retroplanning';
 
@@ -30,6 +31,10 @@ function RetroplanningMain({ retroplanningType = 'elections' }) {
     joursApres: 0
   });
 
+  // Vrai quand la dernière modification vient d'un camarade (temps réel) :
+  // on ne re-sauvegarde pas pour éviter une boucle entre appareils.
+  const distantRef = useRef(false);
+
   // Chargement des données sauvegardées (locales puis partagées)
   useEffect(() => {
     const charger = async () => {
@@ -46,9 +51,22 @@ function RetroplanningMain({ retroplanningType = 'elections' }) {
     charger();
   }, []);
 
+  // Temps réel : le rétro-planning modifié par un camarade apparaît en direct
+  useSyncTempsReel(RETRO_KEY, (donnees) => {
+    if (!donnees) return;
+    distantRef.current = true;
+    if (donnees.dateEvenement !== undefined) setDateEvenement(donnees.dateEvenement);
+    if (donnees.customPhases) setCustomPhases(donnees.customPhases);
+    if (donnees.phasesAjoutees) setPhasesAjoutees(donnees.phasesAjoutees);
+  });
+
   // Sauvegarde automatique à chaque modification
   useEffect(() => {
     if (!chargeRef.current) return;
+    if (distantRef.current) {
+      distantRef.current = false;
+      return;
+    }
     const donnees = { dateEvenement, customPhases, phasesAjoutees, majLe: new Date().toISOString() };
     storageService.saveLocally(RETRO_KEY, donnees);
     storageService.saveToServer(RETRO_KEY, donnees);
