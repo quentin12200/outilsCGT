@@ -1,51 +1,337 @@
-.toolContainer {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 1.5rem;
-    background-color: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+.entete {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.titre {
+  font-size: 2rem;
+  color: #b71c1c;
+  margin-bottom: 0.5rem;
+}
+
+.sousTitre {
+  color: #555;
+  max-width: 640px;
+  margin: 0 auto 0.75rem;
+}
+
+.modeSauvegarde {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.barreHaut {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.entrepriseInput {
+  flex: 1;
+  min-width: 220px;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.bouton {
+  background: #b71c1c;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.bouton:hover:not(:disabled) {
+  background: #991b1b;
+}
+
+.boutonSecondaire {
+  background: white;
+  color: #b71c1c;
+  border: 1px solid #b71c1c;
+  padding: 0.6rem 1.1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.boutonSecondaire:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.statsLigne {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.stat {
+  background: white;
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  color: #444;
+  font-size: 0.9rem;
+}
+
+.stat strong {
+  color: #b71c1c;
+}
+
+.statFiltre {
+  background: white;
+  border: 1.5px solid transparent;
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  color: #444;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.statFiltre strong {
+  color: var(--couleur-statut, #b71c1c);
+}
+
+.statFiltreActif {
+  border-color: var(--couleur-statut, #b71c1c);
+  background: #fff8f8;
+}
+
+.filtre {
+  padding: 0.45rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: white;
+  margin-left: auto;
+}
+
+.lienQuestionnaire {
+  background: #fff8e6;
+  border-left: 4px solid #d97706;
+  border-radius: 0 8px 8px 0;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.92rem;
+  color: #555;
+}
+
+.formulaire {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(183, 28, 28, 0.15);
+  margin-bottom: 1.5rem;
+  border-top: 4px solid #b71c1c;
+}
+
+.formulaireTitre {
+  font-size: 1.2rem;
+  color: #b71c1c;
+  margin-bottom: 1rem;
+}
+
+.champ {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.champ input,
+.champ select,
+.champ textarea {
+  display: block;
+  width: 100%;
+  margin-top: 0.3rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.98rem;
+  font-family: inherit;
+  font-weight: 400;
+}
+
+.champ textarea {
+  resize: vertical;
+}
+
+.champ input:focus,
+.champ select:focus,
+.champ textarea:focus {
+  outline: none;
+  border-color: #b71c1c;
+  box-shadow: 0 0 0 2px rgba(183, 28, 28, 0.15);
+}
+
+.ligneQuadruple {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.formulaireActions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.vide {
+  background: white;
+  border-radius: 12px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  color: #666;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.sectionTheme {
+  margin-bottom: 1.5rem;
+}
+
+.themeTitre {
+  font-size: 1.25rem;
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.themeCompteur {
+  background: #eee;
+  color: #555;
+  font-size: 0.8rem;
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+}
+
+.listeRevendications {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.revendication {
+  background: white;
+  border-radius: 10px;
+  border-left: 5px solid var(--couleur-theme, #b71c1c);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
+  padding: 1rem 1.25rem;
+}
+
+.revendicationHaut {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.revendicationTitre {
+  font-size: 1.05rem;
+  color: #222;
+  margin: 0;
+}
+
+.badgeStatut {
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.revendicationDetails {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.revendicationDetails p {
+  margin: 0.25rem 0;
+}
+
+.revendicationBas {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+.meta {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.statutSelect {
+  padding: 0.3rem 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  background: white;
+}
+
+.boutonPetit {
+  background: white;
+  color: #b71c1c;
+  border: 1px solid #b71c1c;
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.82rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.boutonPetitDanger {
+  background: white;
+  color: #777;
+  border: 1px solid #ccc;
+  padding: 0.3rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.boutonPetitDanger:hover {
+  color: #b71c1c;
+  border-color: #b71c1c;
+}
+
+@media (max-width: 700px) {
+  .ligneQuadruple {
+    grid-template-columns: 1fr 1fr;
   }
-  
-  .toolHeader {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
+
+  .filtre {
+    margin-left: 0;
   }
-  
-  .toolIcon {
-    font-size: 2.5rem;
-    margin-right: 0.5rem;
-    color: #b71c1c;
-  }
-  
-  .toolTitle {
-    font-size: 1.8rem;
-    color: #b71c1c;
-    margin: 0;
-  }
-  
-  .toolDescription {
-    font-size: 1rem;
-    color: #444;
-    line-height: 1.5;
-    margin-bottom: 1rem;
-  }
-  
-  .toolDetails h3 {
-    font-size: 1.3rem;
-    color: #333;
-    margin-bottom: 0.5rem;
-  }
-  
-  .toolDetails ul {
-    list-style: disc;
-    margin-left: 1.5rem;
-    color: #333;
-  }
-  
-  .toolDetails li {
-    margin-bottom: 0.5rem;
-  }
-  
+}

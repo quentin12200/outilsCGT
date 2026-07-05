@@ -78,8 +78,9 @@ REACT_APP_FIREBASE_APP_ID=1:1234567890:web:abcdef
 ```
 
 > Ces clés web ne sont pas des secrets : la sécurité repose sur les règles
-> Firestore de l'étape 2. Sur Netlify, ajoutez les mêmes variables dans
-> **Site settings > Environment variables** pour que le site déployé les ait.
+> Firestore de l'étape 2. Sur Vercel (où le site est hébergé), ajoutez les
+> mêmes variables dans **Settings > Environment Variables** du projet, puis
+> relancez un déploiement pour qu'elles soient prises en compte.
 
 ## 4. Rebuilder et déployer
 
